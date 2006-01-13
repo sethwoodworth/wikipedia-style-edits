@@ -1,0 +1,169 @@
+\documentclass[11pt]{article}
+\usepackage{acl2005}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{prog}
+\usepackage{amsfonts,amssymb}
+
+\title{Exploiting Data from the Human Text-Editing Process}
+
+\author{Jason Eisner \and Asheesh Laroia \\
+	Department of Computer Science \\
+	Johns Hopkins University, Baltimore, MD 21218 \\ ~\\
+        DRAFT---DO NOT DISTRIBUTE---\today}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+blah blah 
+\end{abstract}
+
+\section{Introduction}
+
+A corpus of human edits to text, based on the revision logs of
+Wikipedia articles.  
+
+Describe benefits \ldots
+
+We are interested in studying the editing process, and in learning
+systems that can help to improve writing.  
+
+This corpus may also provide evidence about paraphrase, punctuation,
+contextual spelling correction, grammaticality, stylistics, syntactic
+constituency, and anaphora resolution.
+
+\section{Related Work}
+
+See thread started by Asheesh on Wed, 11 Jan 2006 02:35:54 -0500 (EST).
+
+\section{Corpus Preparation}
+
+\subsection{The raw Wikipedia corpus}
+
+Describe the raw corpus.
+
+Date, size (articles/revisions/GB), metadata, format ...
+
+\subsection{Extracting a corpus of edits}
+
+Note briefly that we have to deal with Wikipedia markup throughout.
+
+\subsubsection{Sentence alignment}
+
+Including sentence splitting.
+
+\subsubsection{Token alignment}
+
+Including tokenization.
+
+\subsubsection{Identifying content-preserving edits}
+
+\subsubsection{Identifying ``good'' edits}
+
+My guess is that most edits that don't affect content are probably
+good edits, because they're made only for the purpose of improving the
+writing.  Asheesh: ``No one trolls by adding commas.''
+
+But we might want to specially consider cases where something was
+edited back.  Not clear.  Edit wars?  Let's look for these examples to
+see whether there's an issue.
+
+We should probably eventually try to figure out which edits were good
+edits, using machine learning.  This is a binary classification in the
+simplest treatment.  We can seed by assuming that edits that have
+stuck around were good edits, and a priori that most edits are good
+edits.  Then learn which kinds of edits look good and which users tend
+to be good editors vs. trolls.  
+
+\subsection{Subcorpora for special types of edits}
+
+For each - how big?  why useful?  compare size and quality with
+corpora from previous work?
+
+\subsubsection{Spelling correction}
+
+\subsubsection{Punctuation correction}
+
+\subsubsection{Synonym substitution and paraphrase}
+
+Is this corpus big enough to help with smoothing?  (language models,
+translation models, document distance)
+
+Also consider substitution of NON-synonyms -- corrections to word
+choice.
+
+\subsubsection{Anaphoric expansion}
+
+\subsubsection{Syntactic restructuring}
+
+\subsubsection{Others???}
+
+\section{Experiments}
+
+\subsection{Studying edits}
+
+Do humans' edits improve probability under a language model?  Do they
+improve parsability?  What can we say about the relationship among
+grammaticality, good style, and probability?
+
+Social process: Who edits?  Which articles do they edit?  What kinds
+of edits do they make?  When?  Evidence of collaboration?  Wars?  On
+which articles?  Can we predict?
+
+\subsection{Judging writing}
+
+Build a model to predict what needs to be edited.
+
+Predict held-out edits.
+
+Predicting scores on human-scored SAT essays.  Compare with their
+essay rating software, and with a language model.
+
+Re-rank N-best output of generation/MT systems.  (Unnatural, 
+since their results don't look like human writing.)
+
+Improve a language model.
+
+MT evaluation: If there is no reference translation, ask how hard it
+would be to edit the output into something fluent.  If there is a
+reference translation, ask how hard it would be to achieve it by
+common human edits.
+
+\subsection{Automatically improving writing}
+
+Build a model to predict {\em how} to edit the things
+that need to be edited.
+
+Can we suggest new edits to improve spelling, punctuation, style,
+fluency, etc.?  (According to a human.)
+
+Can we do the same for the output of an generation/MT system?
+
+Compare us against the Word grammar checker (WordPerfect, too!)
+\begin{itemize}
+\item Can Word predict when there will be an edit?
+\item Can it predict the actual edit?
+\end{itemize}
+(Can we script Word grammar checking with e.g. Visual Basic?  Asheesh
+suggests Python + COM.  Maybe AppleScript would work for testing these
+against Word for Mac.)
+
+\subsection{Grammar induction}
+
+Assume that the rephrased version has higher probability than
+the original.  Also assume that most edits respect constituent 
+boundaries.  These are cues to learning a PCFG.
+
+\subsection{Others?}
+
+\section{Future Work}
+
+Keystroke logging.
+
+Edits to code.
+
+\bibliographystyle{acl}
+% \bibliography{~/jot/eisner}
+
+\end{document}
