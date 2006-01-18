@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys
 import re
 try:
@@ -30,7 +32,7 @@ outfile_number = 0
 def sevenzip(s, filename):
 	cmd = SEVENZIP + " -si a " + filename
 	pipe = os.popen(cmd, 'w')
-	pipe.write(s)
+	pipe.write('<chunk>\n' + s + '</chunk>') # without this, the result isn't valid XML, I suppose
 	pipe.close()
 
 # filter out everything before the first STARTAG
