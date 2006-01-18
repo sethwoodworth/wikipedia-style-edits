@@ -32,7 +32,7 @@ outfile_number = 0
 def sevenzip(s, filename):
 	cmd = SEVENZIP + " -si a " + filename
 	pipe = os.popen(cmd, 'w')
-	pipe.write('<chunk>\n' + s + '</chunk>') # without this, the result isn't valid XML, I suppose
+	pipe.write('<xml version="1.0" charset="utf-8">' + s + '</xml>') # without this, the result isn't valid XML, since it contains multiple top-level tags
 	pipe.close()
 
 # filter out everything before the first STARTAG
