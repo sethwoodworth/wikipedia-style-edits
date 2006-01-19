@@ -62,7 +62,7 @@ def fd2csv(fd):
         # if there's a title before a revision, use that and slurp
         if title_pos != -1 and \
            title_pos < revision_pos:
-            print 'looking for title',offset
+            #print 'looking for title',offset
             title = title_string(chunk)
             start = title_pos
             length = 0 # who cares?, so long as we don't match it next time
@@ -70,7 +70,7 @@ def fd2csv(fd):
             offset += start + length
             chunk += fd.read(SLURPSIZE - len(chunk))
         elif revision_pos != -1: # if title_match was None, or if it was after a revision
-            print 'looking for rev',offset
+            #print 'looking for rev',offset
             revision_id = id_value(chunk, revision_pos)
             start = revision_start(chunk, revision_pos)
             end = revision_end(chunk, start)
