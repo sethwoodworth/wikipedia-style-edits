@@ -84,7 +84,7 @@ Everything is Ok
 compressor | seconds of CPU | resulting size
 --------------------------------------------
 null	   | 0              | 338158787
-gzip       | 47.40	    | 113796167
+gzip	   | 47.40	    | 113796167
 bzip2	   | 367.37	    | 17924145
 7zip 4.20  | 295.15	    | 682897
 7zip 4.30  | 337.01	    | 684310
