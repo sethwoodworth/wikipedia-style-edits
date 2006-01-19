@@ -1,0 +1,10 @@
+== Questions ==
+
+=== Are all revisions of an article grouped together? ===
+
+Yes.  There's a <page> tag within which there are <revision> tags.
+
+== What distribution of pages/revisions? ==
+
+Make this first CXML program you write.
+

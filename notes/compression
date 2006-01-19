@@ -1,0 +1,12 @@
+From http://download.wikimedia.org/wikipedia/en/
+
+20051213_pages_full.xml.7z      2005-Dec-18 14:47:05    3.1G    application/octet-stream
+20051213_pages_full.xml.bz2     2005-Dec-18 14:47:05    16.0G   application/x-bzip
+
+I guess I'll use 7zip everywhere....
+
+== Time and space trials for gzip, bzip2, and p7zip ==
+
+
+
+
