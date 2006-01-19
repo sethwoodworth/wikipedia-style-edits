@@ -76,11 +76,11 @@ def fd2csv(fd):
             offset += start + length
             chunk += fd.read(SLURPSIZE - len(chunk))
         elif revision_pos != -1: # if title_match was None, or if it was after a revision
-            #print 'looking for rev',offset
+            print 'looking for rev',offset
             revision_id = id_value(chunk, revision_pos)
             start, end = revision_start_end(chunk, revision_pos)
             length = end - start
-            #print 'length',length
+            print 'length',length
             tup = (title, revision_id, start + offset, length)
             ret.append(tup)
             chunk = chunk[start + length:]
