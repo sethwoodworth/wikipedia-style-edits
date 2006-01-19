@@ -6,7 +6,88 @@ From http://download.wikimedia.org/wikipedia/en/
 I guess I'll use 7zip everywhere....
 
 == Time and space trials for gzip, bzip2, and p7zip ==
+paulproteus@eridani:/mnt/paul/compression-test$ cat /proc/cpuinfo
+processor       : 0
+vendor_id       : AuthenticAMD
+cpu family      : 6
+model           : 8
+model name      : AMD Sempron(tm)   2400+
+stepping        : 1
+cpu MHz         : 1674.002
+cache size      : 256 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 1
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 mmx fxsr sse syscall mp mmxext 3dnowext 3dnow
+bogomips        : 3309.56
+
+paulproteus@eridani:/mnt/paul/compression-test$ free
+             total       used       free     shared    buffers     cached
+Mem:        776360     735396      40964          0       2260     415560
+-/+ buffers/cache:     317576     458784
+Swap:      1461904       3528    1458376
 
 
 
+paulproteus@eridani:/mnt/paul/compression-test$ gzip --version
+gzip 1.3.5
+(2002-09-30)
+Copyright 2002 Free Software Foundation
+Copyright 1992-1993 Jean-loup Gailly
+This program comes with ABSOLUTELY NO WARRANTY.
+You may redistribute copies of this program
+under the terms of the GNU General Public License.
+For more information about these matters, see the file named COPYING.
+Compilation options:
+DIRENT UTIME STDC_HEADERS HAVE_UNISTD_H HAVE_MEMORY_H HAVE_STRING_H HAVE_LSTAT ASMV
+Written by Jean-loup Gailly.
+paulproteus@eridani:/mnt/paul/compression-test$ bzip2 --version
+bzip2, a block-sorting file compressor.  Version 1.0.2, 30-Dec-2001.
+
+   Copyright (C) 1996-2002 by Julian Seward.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms set out in the LICENSE file, which is included
+   in the bzip2-1.0 source distribution.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   LICENSE file for more details.
+
+
+
+
+paulproteus@eridani:/mnt/paul/compression-test$ cat 1 | time gzip -c > 1.gz ; cat 1 | time bzip2 -c > 1.bz2
+47.40user 1.34system 1:13.03elapsed 66%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+204minor)pagefaults 0swaps
+367.37user 2.74system 6:16.07elapsed 98%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (1major+1764minor)pagefaults 0swaps
+
+paulproteus@eridani:/mnt/paul/compression-test$ cat 1 | time 7z  a -si newer.7z
+
+7-Zip 4.20  Copyright (c) 1999-2005 Igor Pavlov  2005-05-30
+p7zip Version 4.20 (locale=en_US.UTF-8,Utf16=on,HugeFiles=on)
+Creating archive newer.7z
+
+Compressing
+
+Everything is Ok
+295.19user 3.63system 5:03.41elapsed 98%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+7776minor)pagefaults 0swaps
+
+compressor | seconds of CPU | resulting size
+--------------------------------------------
+null	   | 0              | 338158787
+gzip       | 47.40	    | 113796167
+bzip2	   | 367.37	    | 17924145
+7zip 4.20  | 295.15	    | 682897
+7zip 4.30  | 337.01	    | 684310
+
+Winner: 7zip 4.20.
 
