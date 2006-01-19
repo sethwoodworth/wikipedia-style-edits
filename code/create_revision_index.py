@@ -35,11 +35,13 @@ def id_value(s, start = 0):
 def revision_start_end(s, start = 0):
     full_tag = needle_position('<text xml:space="preserve">', s, start)
     short_tag = needle_position('<text xml:space="preserve" />', s, start)
-    if (full_tag < 0) or (short_tag < full_tag): # then we return info about the empty tag
-        return short_tag, short_tag
-    elif full_tag > -1:
-        return full_tag, revision_end(s, full_tag)
-    return -1
+    return full_tag, revision_end(s, full_tag)
+#    # if there is no full_tag, or if the short_tag happens first
+#    if (full_tag < 0) or (short_tag < full_tag): # then we return info about the short_tag
+#        return short_tag, short_tag
+#    elif full_tag > -1:
+#        return full_tag, revision_end(s, full_tag)
+#    return -1
 
 def revision_end(s, start = 0):
     needle = '</text>'
@@ -76,11 +78,11 @@ def fd2csv(fd):
             offset += start + length
             chunk += fd.read(SLURPSIZE - len(chunk))
         elif revision_pos != -1: # if title_match was None, or if it was after a revision
-            print 'looking for rev',offset
+            #print 'looking for rev',offset
             revision_id = id_value(chunk, revision_pos)
             start, end = revision_start_end(chunk, revision_pos)
             length = end - start
-            print 'length',length
+            #print 'length',length
             tup = (title, revision_id, start + offset, length)
             ret.append(tup)
             chunk = chunk[start + length:]
