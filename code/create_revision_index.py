@@ -24,10 +24,10 @@ def title_string(s):
 
 def revision_position(s, start = 0):
     start = s.find('<revision>')
-    end = s.find('</revision>', start)
-    if end != -1:
-        return start
-    return -1
+    #end = s.find('</revision>', start)
+    #if end != -1:
+    #    return start
+    return start
 
 def id_value(s, start = 0):
     return int(ider.search(s, start).group(1))
