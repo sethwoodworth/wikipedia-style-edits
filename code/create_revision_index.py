@@ -26,7 +26,7 @@ def needle_position(needle, haystack, start = 0, end=-1):
     return found
 
 def revision_position(s, start = 0, end = -1):
-    start = s.find('<revision>', s, start, end)
+    start = s.find('<revision>', start, end)
     return start
 
 def id_value(s, start = 0):
