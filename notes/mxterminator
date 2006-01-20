@@ -3,3 +3,5 @@ Its license sucks.  Plus, there's no source available.
 It prints each sentence from the input as a separate line on the output.
 
 It has no in-built notion of "sections" or paragraphs.
+
+Q. Unicode?  Utf-8 input?
