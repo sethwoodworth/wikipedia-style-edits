@@ -60,9 +60,10 @@ def fd2lists(fd):
     # now we get to use multiline regexes
 
     while chunk:
-        start, end = revision_start_end(chunk)
+        rev_pos = revision_position(chunk)
+        start, end = revision_start_end(chunk, rev_pos)
         if start > -1:
-            id = id_value(chunk) # might even be safe...
+            id = id_value(chunk, rev_pos)
             length = end - start
             assert(length >= 0)
             ret.append((offset + start, length, id))
