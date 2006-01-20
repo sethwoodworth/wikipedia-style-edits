@@ -3,7 +3,7 @@
 
 import re
 
-DEBUG=1
+DEBUG=0
 def debug(o):
     if DEBUG:
         print o
@@ -61,13 +61,11 @@ def fd2lists(fd):
 
     while chunk:
         start, end = revision_start_end(chunk)
-        print start
         if start > -1:
             id = id_value(chunk) # might even be safe...
             length = end - start
             assert(length >= 0)
             ret.append((offset + start, length, id))
-            print ret[-1]
             chunk = chunk[end:] # get away!
             offset += end
             chunk += fd.read(SLURPSIZE - len(chunk))
