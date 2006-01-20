@@ -50,7 +50,7 @@ def fd2lists(fd):
             title = title_string(chunk) # FIXME: call can be optimized to include title_pos
             start = title_pos
             length = 0 # who cares?, so long as we don't match it next time
-            ret.append((title_pos, title))
+            ret.append((offset + title_pos, title))
             chunk = chunk[title_pos:]
             offset += title_pos
             chunk += fd.read(SLURPSIZE - len(chunk))
