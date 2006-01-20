@@ -44,8 +44,6 @@ def fd2lists(fd):
     # now we get to use multiline regexes
 
     while chunk:
-        start = 0
-        length = 0
         title_pos = title_position(chunk)
         if title_pos > -1:
             debug("title at %d" % title_pos)
@@ -53,8 +51,8 @@ def fd2lists(fd):
             start = title_pos
             length = 0 # who cares?, so long as we don't match it next time
             ret.append((title_pos, title))
-            chunk = chunk[start + length:]
-            offset += start + length
+            chunk = chunk[title_pos:]
+            offset += title_pos
             chunk += fd.read(SLURPSIZE - len(chunk))
         else:
             return ret # we're done
