@@ -34,11 +34,12 @@ def id_value(s, start = 0):
 
 def revision_start_end(s, start = 0):
     full_tag = needle_position('<text xml:space="preserve">', s, start)
-    short_tag = s.find('<text xml:space="preserve" />', start)
+    short_tag = needle_position('<text xml:space="preserve" />', s, start)
     # if we found the short tag,
     if short_tag > -1:
-        # and, if the short tag appears *before* the long tag, pick that one
+        # and, if the short tag appears *before* the long tag
         if short_tag < full_tag:
+            # pick that one
             return short_tag, short_tag
     return full_tag, revision_end(s, full_tag)
 
