@@ -46,7 +46,6 @@ def fd2lists(fd):
     while chunk:
         title_pos = title_position(chunk)
         if title_pos > -1:
-            debug("title at %d" % title_pos)
             title = title_string(chunk) # FIXME: call can be optimized to include title_pos
             start = title_pos
             length = 0 # who cares?, so long as we don't match it next time
