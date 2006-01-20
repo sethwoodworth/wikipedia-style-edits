@@ -97,5 +97,7 @@ def fd2csv(fd):
 if __name__ == '__main__':
     import sys
     import csv
-    writer = csv.writer(sys.stdout)
-    writer.writerows(fd2csv(sys.stdin))
+    p = csv.parser()
+    values = fd2csv(sys.stdin)
+    for vals in values:
+        print p.join(vals)
