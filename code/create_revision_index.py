@@ -61,6 +61,7 @@ def fd2lists(fd):
 
     while chunk:
         rev_pos = revision_position(chunk)
+        print rev_pos
         if rev_pos > -1:
             id = id_value(chunk, rev_pos)
             start, end = revision_start_end(chunk, rev_pos)
