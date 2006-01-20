@@ -20,6 +20,7 @@ if __name__ == '__main__':
 
     for line in revs.xreadlines():
         offset, length, eyedee = revparser.parse(line)
+        offset, length = int(offset), int(length)
         # if the offset is less than the first titledata, then we're doomed
         if offset < titledata[0][0]:
             raise AssertionError("OMG")
