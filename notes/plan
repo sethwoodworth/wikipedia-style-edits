@@ -1,0 +1,31 @@
+Done:
+
+* Come to terms with the immensity of the data
+
+---
+Jobs to run:
+
+* For each 7z file, extract title index and revision index and join them
+* Draw a nice histogram of revisions per article
+
+---
+
+Code to write:
+
+* Import all metadata into a MySQL db for fast access
+** Hack mwdumper from mediawiki's CVS to not store actual content
+   (requires SF.net anonymous CVS to not be broken)
+
+* De-wikify/de-html revisions, then MXTerminate them
+** MXtermination 
+
+---
+Later:
+
+* 
+
+---
+
+Experiments to run:
+
+* Once sentences are mxterminated, 
