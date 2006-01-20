@@ -27,8 +27,6 @@ if __name__ == '__main__':
         # Now we know it's >= titledata[0][0]
         # if it's > titledata[1][0], then we should pop titledata
         elif len(titledata) > 1 and  offset > titledata[1][0]:
-            print 'I popped!'
-            print titledata[0]
             title = titledata.pop(0)[1]
         else:
             title = titledata[0][1]
