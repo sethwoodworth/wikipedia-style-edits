@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # Hacking at XML with regular expressions is great fun.
 
+import re
+
 DEBUG=1
 def debug(o):
     if DEBUG:
