@@ -32,7 +32,7 @@ def title_position(s, start = 0, end = -1):
 def title_string(s):
     return titler.search(s).group(1)
 
-def fd2list(fd):
+def fd2lists(fd):
     ''' Takes the file object called "fd" and returns
     a list of title events, e.g. [(35, "Alchemy"), (2003, "Banana")]'''
     ret = []
@@ -63,6 +63,6 @@ if __name__ == '__main__':
     import sys
     import csv
     p = csv.parser()
-    values = fd2csv(sys.stdin)
+    values = fd2lists(sys.stdin)
     for vals in values:
         print p.join(vals)
