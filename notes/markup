@@ -1,0 +1,11 @@
+I'm going to have to remove markup.
+
+I could render the Wiki markup straight to HTML and then eat the tags.
+
+What to do about tables?  (One argument: They're not sentences; throw them away.)
+
+What to do about bulleted lists?  They're often sentences; see http://en.wikipedia.org/wiki/Banana
+
+What to do about images and captions?  Most images have NPs as captions, not sentences.
+
+What to do about blockquotes?  http://en.wikipedia.org/wiki/Banana has a useless blockquote (useless for our purposes!)

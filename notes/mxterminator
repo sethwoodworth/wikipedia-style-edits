@@ -4,4 +4,6 @@ It prints each sentence from the input as a separate line on the output.
 
 It has no in-built notion of "sections" or paragraphs.
 
+It seems to tokenize the input on \s and strip all whitespace and put one space between words.
+
 Q. Unicode?  Utf-8 input?
