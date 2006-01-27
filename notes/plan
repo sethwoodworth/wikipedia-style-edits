@@ -5,10 +5,16 @@ Done:
 ---
 Jobs to run:
 
-* For each 7z file, extract title index and revision index and join them
+* (IN PROGRESS) For each 7z file, extract title index and revision index and join them
 * Draw a nice histogram of revisions per article
 
 ---
+
+NOW:
+
+* Create a hacked-up MW install that renders whatever input I give it
+
+--
 
 Code to write:
 
@@ -17,6 +23,7 @@ Code to write:
    (requires SF.net anonymous CVS to not be broken)
 
 * De-wikify/de-html revisions, then MXTerminate them
+* 
 ** MXtermination 
 
 ---
