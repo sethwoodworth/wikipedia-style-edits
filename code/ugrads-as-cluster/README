@@ -5,4 +5,17 @@ That is:
 cd ~/collab/code/
 sh -x ugrads-as-cluster/scriptname.sh
 
+The script depends on these facts:
+
+~/dnet/machines - a list of machines you can SSH to
+~/bin/bogosort - ESR's bogosort program
+~/bin/7za - a binary of p7zip
+paulproteus@fomalhaut.acm.jhu.edu is the machine that holds 7z files that we will decompress on use
+/mnt/paul/space/ on fomalhaut is where these files are stored
+
+Configuration:
+
+PROJECT - the name of the directory where results and chat will be stored
+JOBWAIT - expected time to completion of one job; not necessary, but recommended
+
 -- Asheesh.
