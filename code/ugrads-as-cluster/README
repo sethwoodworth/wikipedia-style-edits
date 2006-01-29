@@ -1,0 +1,8 @@
+The files in here should be run from one directory *above*.
+
+That is:
+
+cd ~/collab/code/
+sh -x ugrads-as-cluster/scriptname.sh
+
+-- Asheesh.
