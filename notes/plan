@@ -1,11 +1,11 @@
 Done:
 
 * Come to terms with the immensity of the data
-* For each 7z file, extract revision index
 
 ---
 Jobs to run:
 
+* For each 7z file, extract revision index
 * (IN PROGRESS) For each 7z file, extract title index
 * Given title and revision indices, combine them
 
@@ -15,7 +15,11 @@ Jobs to run:
 
 NOW:
 
+* Fix split script! :-(
 * Write regexes in Python that correctly split or transform wiki markup
+** Alter this to correctly handle confusing tags plus wiki tables
+** Link this to MXTERMINATOR
+* Write a wrapper for MXTERMINATOR I can use smartly on a per-paragraph basis
 
 --
 
