@@ -8,19 +8,29 @@
 # Time go over the MediaWiki markup list and make a list of how to
 # handle them: http://meta.wikimedia.org/wiki/Help:Editing
 
-# ''%s'' -> %s
+replacers = [] # compile these all with re.DOTALL and subn them against the input string *in order*
+
 # '''%s''' -> %s
+replacers.append((r"''(.*?)''", r"\1"))
+# ''%s'' -> %s
+replacers.append((r"''(.*?)''", r"\1"))
 # newlines or whitespace: collapse into a single whitespace
-# ": " at the beginning of a line: New paragraph
+replacers.append((r'\s+', ' '))
 # ~~~, ~~~~, ~~~~~ : remove? THINKME
+replacers.append(r'(~~~|~~~~|~~~~~)', '')
+# [[Page name]] -> Page name
+replacers.append(r'\[\[([^|]*?)\]\]', r'\1')
+# [[Page name|Some text]] -> Some text
+replacers.append(r'\[\[([^|]*?)\|(.*?)\]\]', r'\2')
+# [something://urljunk text] -> text
+replacers.append(r'\[[A-Za-z]*://[^\s]*\s(.*?)]', r'\1')
 # == section == (from 2 to 4 '=' allowed): sectionify
+# ": " at the beginning of a line: New paragraph
+
 # * (k >=1 '*' or '#' allowed): Paragraphify.  Terminated by '\n'
 # ; word : definition : Paragraphify both "word" and "definition"
 # : indented paragraph : Paragraphify; terminated by '\n'
 # ---- (-> HR): end paragraph, remove markup
-# [[Page name]] -> Page name
-# [[Page name|Some text]] -> Some text
-# [something://urljunk text] -> text
 # [something://urljunk] -> renders as [1], [2], etc.  THINKME: I think we should strip these entirely since they don't contribute to sentences.  Maybe [LINK] or something?
 # #REDIRECT [[Page name]] -> Page name THINKME
 # [[:Page name]] - treat as equivalent to [[Page name]]
