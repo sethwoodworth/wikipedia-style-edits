@@ -15,7 +15,7 @@ Jobs to run:
 
 NOW:
 
-* Fix split script! :-(
+* Fix split script! :-(  Rewrite it using a pull parser of some kind to pull on <page>
 * Write regexes in Python that correctly split or transform wiki markup
 ** Alter this to correctly handle confusing tags plus wiki tables
 ** Link this to MXTERMINATOR
