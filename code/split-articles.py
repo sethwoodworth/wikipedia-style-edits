@@ -8,7 +8,7 @@ except:
 	pass
 import os
 
-CHUNK_SIZE = 100 * 1024 * 1024 * 1024
+CHUNK_SIZE = 100 * 1024 * 1024
 STARTTAG = '<page>'
 ENDTAG = '</page>'
 SEVENZIP = "7z"
@@ -39,9 +39,9 @@ for line in sys.stdin:
 				# and is as such dangerous.  Buyer beware!
 
 				# declare our intentions
-				print 'Yay!  Writing file number', outfile_number
+				print 'Yay!  Writing file number', NEXT_OUTFILE
 				# now we write
-				sevenzip(THIS_CHUNK, str(outfile_number)) # compress it and save it
+				sevenzip(THIS_CHUNK, str(NEXT_OUTFILE)) # compress it and save it
 				
 				NEXT_OUTFILE += 1 # Sorta necessary :-)
 				THIS_CHUNK = '' # Clear it!
