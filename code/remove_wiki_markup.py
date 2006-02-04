@@ -36,13 +36,13 @@ replacers.append((r'^=([^\n]*?)=', r'\n\n\1\n\n'))
 # ": " at the beginning of a line: New paragraph
 replacers.append((r'^:', r'\n\n'))
 # * (k >=1 '*' or '#' allowed): Paragraphify.  Terminated by '\n'
-replacers.append((r'^[*#]+ ([^\n]*)', r'\n\n\1\n\n'))
+replacers.append((r'^[*#]+([^\n]*)', r'\n\n\1\n\n'))
 # ; word : definition : Paragraphify both "word" and "definition" FIXME multiline word
 replacers.append((r'^\s*;\s*([^\n]+):([^\n]*):\s*', r'\n\n\1\n\n\2\n\n'))
 # : indented paragraph : Paragraphify; terminated by '\n'
 replacers.append((r'^:([^\n]*?)', r'\n\n\1\n\n'))
 # ---- (-> HR): end paragraph, remove markup
-replacers.append((r'^----', r'\n\n\1'))
+replacers.append((r'^----', r'\n\n'))
 # [something://urljunk] -> [LINK]  THINKME: I think we could strip these entirely since they don't contribute to sentences.
 replacers.append((r'\[[a-z]+://[^]]*?]', '[LINK]'))
 # #REDIRECT [[Page name]] -> Page name THINKME
@@ -99,7 +99,7 @@ def remove_mediawiki_tables(intext):
             ret += '\n\n'
         if IN_TABLE == 0:
             ret += line + '\n'
-        else: # we're in a table
+        elif line: # we're in a table
 
             # Remove the silly "!" instead of "|" for heading junk
             if line[0] == '!':
@@ -114,16 +114,18 @@ def remove_mediawiki_tables(intext):
                 ret += line.split("|+", 1)[1] + '\n' # everything after it is text
             elif line[:2] == '|-':
                 pass # no text on this line, just formatting
-            elif line[:2] == '| ':
-                # it's a cell!
-                
-                ret += '\n'.join(unformatted_cell(line[2:]))
             elif line[:2] == '|}':
                 # TABLE OVER!
                 IN_TABLE -= 1
                 ret += '\n\n'
+            elif line[:1] == '|':
+                # it's a cell!
+                
+                ret += '\n'.join(unformatted_cell(line[1:]))
             else:
                 ret = ret + line + '\n' # I guess
+        else: # line was false
+            ret += '\n'
     ### And now a finite-state fixup for when people do '| align="right \n center" | zomg'
     regex = re.compile(r'^[a-zA-Z]+=[^\n]*\n\n\s*[^\n]* \|\n', re.MULTILINE + re.DOTALL)
     ret = regex.sub('\n\n', ret)
@@ -142,12 +144,24 @@ def de_htmlify(uns):
         uns = uns.replace('&#' + match + ';', unichr(int(match)))
     return uns
 
+def remove_template_references(s):
+    ret = ''
+    splitted = re.split('{{(.*?)}}', s)
+    for k in xrange(len(splitted)):
+        element = splitted[k]
+        if k % 2 == 0: # if it's even, replace it verbatim
+            ret += element + '\n\n'
+        else: # if it's odd, ignore
+            ret += '\n\n'.join(element.split('|')[1:]) + '\n\n'
+    return ret
+
 def sub(s):
     unicodetext = unicode(s, 'utf-8')
     # Remove HTML junk
     unicodetext = de_htmlify(unicodetext)
     # Clean out MW tables
     unicodetext = remove_mediawiki_tables(unicodetext)
+    unicodetext = remove_template_references(unicodetext)
     # Now do my magic markup model
     for regex, replacement in compileds:
         unicodetext = regex.sub(replacement, unicodetext)
