@@ -8,26 +8,10 @@ except:
 	pass
 import os
 
-BUFSIZE = 40960
+CHUNK_SIZE = 100 * 1024 * 1024 * 1024
 STARTTAG = '<page>'
 ENDTAG = '</page>'
-MINSIZE = 100 * 1024 * 1024
 SEVENZIP = "7z"
-
-# Method:
-## Read in the input XML in 4096-byte chunks, incrementing *byte-count*
-## always append the result to *growing-string*
-## See if it contains </page>
-## If it does, see if *byte-count* > 100M
-## if so, then:
-### increment *outfile-number*
-### append the string up to and including ENDTAG to *growing-string*
-### write *growing-string* to a file called *outfile-number*
-### set *growing-string* to everything after ENDTAG
-
-chunk = ''
-growing_string = ''
-outfile_number = 0
 
 def sevenzip(s, filename):
 	cmd = SEVENZIP + " -si a " + filename
@@ -35,28 +19,45 @@ def sevenzip(s, filename):
 	pipe.write('<xml version="1.0" charset="utf-8">' + s + '</xml>') # without this, the result isn't valid XML, since it contains multiple top-level tags
 	pipe.close()
 
-# filter out everything before the first STARTAG
-# this assumes BUFSIZE is big enough to include the first STARTTAG
-chunk = sys.stdin.read(BUFSIZE)
-trash, chunk = chunk.split(STARTTAG, 1) # a left split
-chunk = STARTTAG + chunk # STARTTAG removed by the split
-growing_string += chunk
+NEXT_OUTFILE = 1 # This is the first filename we'll use.  We'll increment it.
+LOOKS_USEFUL_YET = 0 # Set this to a true value when we've seen the first input
+THIS_CHUNK = '' # This stores the chunk that we want to save, or at least might want to save later
 
-while chunk:
-	if ENDTAG in chunk:
-		if len(growing_string) > MINSIZE:
-			outfile_number += 1
-			# declare our intentions
-			print 'Yay!  Writing file number', outfile_number
-			# now we write
-			start, end = chunk.rsplit(ENDTAG, 1) # a right split
-			growing_string += start + ENDTAG # removed by the splitting operation
-			sevenzip(growing_string, str(outfile_number)) # compress it and save it
-			# now we initialize state for next hundred megs
-			growing_string = end
-	else:
-		growing_string += chunk
-	# in all cases
-	chunk = sys.stdin.read(BUFSIZE)
-	# because chunk is set last in this loop, and the next thing that happens is the while(),
-	# we can be sure that every last byte gets processed.
+for line in sys.stdin:
+	# Once we've seen the STARTTAG, we know we're in business
+	if LOOKS_USEFUL_YET or (STARTTAG in line):
+		LOOKS_USEFUL_YET = 1
+		THIS_CHUNK += line
+		# Note that the iterator preserves the trailing '\n'.  That's so sweet of it.
+		if len(THIS_CHUNK) > CHUNK_SIZE:
+			# It's huge!
+			# Q. Should we save it?
+			if ENDTAG in line:
+				# A. IFF ENDTAG in line
+				# This works because ENDTAG is *always* on a line of its own.
+				# This fact presumes things beyond the XML nature of the document,
+				# and is as such dangerous.  Buyer beware!
+
+				# declare our intentions
+				print 'Yay!  Writing file number', outfile_number
+				# now we write
+				sevenzip(THIS_CHUNK, str(outfile_number)) # compress it and save it
+				
+				NEXT_OUTFILE += 1 # Sorta necessary :-)
+				THIS_CHUNK = '' # Clear it!
+
+# Now, we've stopped reading.
+# The last <page> is probably still trapped inside THIS_CHUNK
+# So let's solve this fencepost problem:
+
+if ENDTAG in THIS_CHUNK:
+	# Do a right-split to ignore trailing junk after </page>
+	THIS_CHUNK = THIS_CHUNK.rsplit(ENDTAG, 1) + ENDTAG + '\n'
+
+	# declare our intentions
+	print 'Yay!  Writing final file, number', outfile_number
+	# now we write
+	sevenzip(THIS_CHUNK, str(outfile_number)) # compress it and save it
+	THIS_CHUNK = '' # Clear it!
+
+# Now I think the jig is up.
