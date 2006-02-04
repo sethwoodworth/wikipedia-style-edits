@@ -43,11 +43,15 @@ replacers.append((r'^\s*;\s*([^\n]+):([^\n]*):\s*', r'\n\n\1\n\n\2\n\n'))
 replacers.append((r'^:([^\n]*?)', r'\n\n\1\n\n'))
 # ---- (-> HR): end paragraph, remove markup
 replacers.append((r'^----', r'\n\n\1'))
-# [something://urljunk] -> renders as [1], [2], etc.  THINKME: I think we should strip these entirely since they don't contribute to sentences.  Maybe [LINK] or something?
+# [something://urljunk] -> [LINK]  THINKME: I think we could strip these entirely since they don't contribute to sentences.
+replacers.append((r'\[[a-z]+://[^]]*?]', '[LINK]'))
 # #REDIRECT [[Page name]] -> Page name THINKME
+replacers.append((r'^#REDIRECT \[\[(.*?)]]\s*$', r'\n\n\1\n\n'))
+
+# HTML comments
+replacers.append((r'<!--(.*?)-->', ''))
 
 ## Waa - handle "Just show what I typed" - THINKME
-# Tables - handle each row as its own paragraph :-(
 # <math>.*</math> - keep as-is
 # Templates: {{.*?}} : split contents on '|'; first: discard; rest: paragraphs
 
@@ -56,17 +60,74 @@ replacers.append((r'^----', r'\n\n\1'))
 
 # <br> - treat as whitespace (THINKME)
 replacers.append((r'<br[^>]*>', ' '))
-# Tags to collapse away: <tt>, <b>, <strong>, <em>, <i>, <strike>, <s>, <span>, <u>, <big>, <center>, <font>, <hr>, <small>
-for tag in 'tt', 'b', 'strong', 'em', 'i', 'strike', 's', 'span', 'u', 'big', 'center', 'font', 'hr', 'small':
+# Tags to collapse away: <tt>, <b>, <strong>, <em>, <i>, <strike>, <s>, <span>, <u>, <big>, <center>, <font>, <hr>, <small>, <var>, <code>
+for tag in 'tt', 'b', 'strong', 'em', 'i', 'strike', 's', 'span', 'u', 'big', 'center', 'font', 'hr', 'small', 'var', 'code':
     replacers.append((r'<' + tag + r'[^>]*>(.*?)</' + tag + r'>', r'\1'))
 # Tags to keep: <sup>, <sub>
-# Tags to FIXME: HTML comments, <var>, <code>, 
+# Tables - handle each row as its own paragraph
 # Tags whose contents to treat as paragraphs: <blockquote>, <caption>, <cite>, <dl>, <dt>, <dd>, <h1>, <h2>, <h3>, <h4>, <h5>, <h6>, <li>, <ol>, <p>, <ul>, <pre>, <table>, <td>, <tr>, <tdata>, <th>
 for tag in 'blockquote', 'caption', 'cite', 'cite', 'dl', 'dt', 'dd', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ol', 'p', 'ul', 'pre', 'table', 'td', 'tr', 'tdata', 'th':
     replacers.append((r'<' + tag + r'[^>]*?>(.*?)</' + tag + r'>', r'\n\n\1\n\n'))
 # THINKME - <ruby>, <rb>, <rp>, <rt> - see http://www.w3.org/TR/1999/WD-ruby-19990322/
 
 compileds = [ (re.compile(regex, re.MULTILINE + re.DOTALL), replacement) for regex, replacement in replacers ]
+
+def unformatted_cell(cell):
+    ''' Input: A line from a mediawiki table, not including the leading "| "
+    Output: A list of lines suitable for joining on \n '''
+    if '|' not in cell:
+        return ['', '', cell, '', '']
+    if '||' in cell: # YOW!  Multiple cells got in here.
+        ret = []
+        for subthing in cell.split('||'):
+            subthing = subthing.strip()
+            ret.extend(unformatted_cell(subthing))
+        return ret
+    first, rest = cell.split('|', 1)
+    first, rest = first.strip(), rest.strip()
+    if re.search(r'^[a-z]*?=', first):
+        return ['', '', rest, '', '']
+    return ['', '', first, rest, '', '']
+
+def remove_mediawiki_tables(intext):
+    lines = intext.split('\n')
+    ret = ''
+    IN_TABLE = 0
+    for line in lines:
+        if line[:2] == '{|': # table begins
+            IN_TABLE += 1
+            ret += '\n\n'
+        if IN_TABLE == 0:
+            ret += line + '\n'
+        else: # we're in a table
+
+            # Remove the silly "!" instead of "|" for heading junk
+            if line[0] == '!':
+                line = '|' + line[1:]
+            line = line.replace('!!', '||')
+
+            # simple goals: Just turn this table into "paragraphs" separated by \n\n
+            # make sure to decrement IN_TABLE as appropriate
+            if line[:2] == '{|':
+                pass # no text on this line, just formatting
+            elif line[:2] == '|+':
+                ret += line.split("|+", 1)[1] + '\n' # everything after it is text
+            elif line[:2] == '|-':
+                pass # no text on this line, just formatting
+            elif line[:2] == '| ':
+                # it's a cell!
+                
+                ret += '\n'.join(unformatted_cell(line[2:]))
+            elif line[:2] == '|}':
+                # TABLE OVER!
+                IN_TABLE -= 1
+                ret += '\n\n'
+            else:
+                ret = ret + line + '\n' # I guess
+    ### And now a finite-state fixup for when people do '| align="right \n center" | zomg'
+    regex = re.compile(r'^[a-zA-Z]+=[^\n]*\n\n\s*[^\n]* \|\n', re.MULTILINE + re.DOTALL)
+    ret = regex.sub('\n\n', ret)
+    return ret
 
 import htmlentitydefs
 def de_htmlify(uns):
@@ -85,6 +146,8 @@ def sub(s):
     unicodetext = unicode(s, 'utf-8')
     # Remove HTML junk
     unicodetext = de_htmlify(unicodetext)
+    # Clean out MW tables
+    unicodetext = remove_mediawiki_tables(unicodetext)
     # Now do my magic markup model
     for regex, replacement in compileds:
         unicodetext = regex.sub(replacement, unicodetext)
