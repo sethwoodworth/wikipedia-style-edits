@@ -68,7 +68,8 @@ for tag in 'tt', 'b', 'strong', 'em', 'i', 'strike', 's', 'span', 'u', 'big', 'c
 # Tables - handle each row as its own paragraph
 # Tags whose contents to treat as paragraphs: <blockquote>, <caption>, <cite>, <dl>, <dt>, <dd>, <h1>, <h2>, <h3>, <h4>, <h5>, <h6>, <li>, <ol>, <p>, <ul>, <pre>, <table>, <td>, <tr>, <tdata>, <th>
 for tag in 'blockquote', 'caption', 'cite', 'cite', 'dl', 'dt', 'dd', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ol', 'p', 'ul', 'pre', 'table', 'td', 'tr', 'tdata', 'th':
-    replacers.append((r'<' + tag + r'[^>]*?>(.*?)</' + tag + r'>', r'\n\n\1\n\n'))
+    replacers.append((r'<' + tag + r'[^>]*?>', '\n\n'))
+    replacers.append((r'</' + tag + r'>', r'\n\n'))
 # THINKME - <ruby>, <rb>, <rp>, <rt> - see http://www.w3.org/TR/1999/WD-ruby-19990322/
 
 compileds = [ (re.compile(regex, re.MULTILINE + re.DOTALL), replacement) for regex, replacement in replacers ]
