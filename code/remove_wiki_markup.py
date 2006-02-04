@@ -62,7 +62,8 @@ replacers.append((r'<!--(.*?)-->', ''))
 replacers.append((r'<br[^>]*>', ' '))
 # Tags to collapse away: <tt>, <b>, <strong>, <em>, <i>, <strike>, <s>, <span>, <u>, <big>, <center>, <font>, <hr>, <small>, <var>, <code>
 for tag in 'tt', 'b', 'strong', 'em', 'i', 'strike', 's', 'span', 'u', 'big', 'center', 'font', 'hr', 'small', 'var', 'code':
-    replacers.append((r'<' + tag + r'[^>]*>(.*?)</' + tag + r'>', r'\1'))
+    replacers.append((r'<' + tag + r'[^>]*>', ''))
+    replacers.append((r'</' + tag + r'>', ''))
 # Tags to keep: <sup>, <sub>
 # Tables - handle each row as its own paragraph
 # Tags whose contents to treat as paragraphs: <blockquote>, <caption>, <cite>, <dl>, <dt>, <dd>, <h1>, <h2>, <h3>, <h4>, <h5>, <h6>, <li>, <ol>, <p>, <ul>, <pre>, <table>, <td>, <tr>, <tdata>, <th>
