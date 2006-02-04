@@ -13,7 +13,7 @@ import re
 replacers = [] # compile these all with re.DOTALL and re.MULTILINE and subn them against the input string *in order*
 
 # '''%s''' -> %s
-replacers.append((r"''(.*?)''", r"\1"))
+replacers.append((r"'''(.*?)'''", r"\1"))
 # ''%s'' -> %s
 replacers.append((r"''(.*?)''", r"\1"))
 # newlines or whitespace: collapse into a single whitespace - this is unnecessary because the Java will do it for us
