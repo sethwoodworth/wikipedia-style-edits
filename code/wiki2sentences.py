@@ -1,6 +1,6 @@
 #!/usr/bin/python
-from remove_wiki_markup import sub
-from text_normalize_filter import text_normalize_filter
+from lib.remove_wiki_markup import sub
+from lib.text_normalize_filter import text_normalize_filter
 # Stage 1:
 
 # Use SAX to write a program
