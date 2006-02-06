@@ -1,6 +1,4 @@
 #!/usr/bin/python
-from xml.dom import pulldom
-from xml.dom.ext import Print
 # Stage 1:
 
 # Use SAX to write a program
