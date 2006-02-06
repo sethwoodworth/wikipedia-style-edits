@@ -11,10 +11,10 @@ import eos.TestEOS;
 
 public class pain {
 	public static void main(String[] strings) {
-		Pattern terminate_this = Pattern.compile("\\S\\s+\\S\\s+\\S");
+		Pattern terminate_this = Pattern.compile("\\S\\s+\\S+\\s+\\S");
 		// Step 1: Create a scanner that will provide an iterator
 		// over the \n\n-separated junk on stdin
-		Scanner scanme = new Scanner(System.in).useDelimiter("\n\n+");
+		Scanner scanme = new Scanner(System.in).useDelimiter("\\n\\n+");
 		while (scanme.hasNext()) {
 			String lame = scanme.next();
 			// Time to babysit MXTERMINATOR's bugs
