@@ -13,6 +13,10 @@ from lib.text_normalize_filter import text_normalize_filter
 
 # Stage 4: Make it mxterminate the de-wiki-markup'd junk.
 
+def pipe_through_mxterm(s):
+	from lib.rwpopen import rwpopen
+	return rwpopen(s, './lib/mxterm.sh')
+
 if __name__ == "__main__":
     import sys
     from xml import sax
@@ -22,7 +26,7 @@ if __name__ == "__main__":
     #SAX events back into an XML document
     downstream_handler = XMLGenerator(encoding='utf-8')
     #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler, sub)
+    filter_handler = text_normalize_filter(parser, downstream_handler, pipe_through_mxterm)
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method
