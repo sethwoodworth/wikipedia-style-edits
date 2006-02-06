@@ -44,7 +44,7 @@ replacers.append((r'^:([^\n]*?)', r'\n\n\1\n\n'))
 # ---- (-> HR): end paragraph, remove markup
 replacers.append((r'^----', r'\n\n'))
 # [something://urljunk] -> [LINK]  THINKME: I think we could strip these entirely since they don't contribute to sentences.
-replacers.append((r'\[[a-z]+://[^]]*?]', '[LINK]'))
+replacers.append((r'\[[a-z]+://[^]\s]*?]', '[LINK]'))
 # #REDIRECT [[Page name]] -> Page name THINKME
 replacers.append((r'^#REDIRECT \[\[(.*?)]]\s*$', r'\n\n\1\n\n'))
 
@@ -58,19 +58,18 @@ replacers.append((r'<!--(.*?)-->', ''))
 
 # http://meta.wikimedia.org/wiki/Help:HTML_in_wikitext lists allowed HTML
 
-# <br> - treat as whitespace (THINKME)
-replacers.append((r'<br[^>]*>', ' '))
 # Tags to collapse away: <tt>, <b>, <strong>, <em>, <i>, <strike>, <s>, <span>, <u>, <big>, <center>, <font>, <hr>, <small>, <var>, <code>
-for tag in 'tt', 'b', 'strong', 'em', 'i', 'strike', 's', 'span', 'u', 'big', 'center', 'font', 'hr', 'small', 'var', 'code':
-    replacers.append((r'<' + tag + r'[^>]*>', ''))
-    replacers.append((r'</' + tag + r'>', ''))
+# <br> - treat as whitespace (THINKME)
+# THINKME - <ruby>, <rb>, <rp>, <rt> - see http://www.w3.org/TR/1999/WD-ruby-19990322/
+for tag in 'tt', 'b', 'strong', 'em', 'i', 'strike', 's', 'span', 'u', 'big', 'center', 'font', 'hr', 'small', 'var', 'code', 'ruby', 'rb', 'rp', 'rt', 'br':
+    replacers.append((r'<' + tag + r'[^>]*>', ' '))
+    replacers.append((r'</' + tag + r'>', ' '))
 # Tags to keep: <sup>, <sub>
 # Tables - handle each row as its own paragraph
 # Tags whose contents to treat as paragraphs: <blockquote>, <caption>, <cite>, <dl>, <dt>, <dd>, <h1>, <h2>, <h3>, <h4>, <h5>, <h6>, <li>, <ol>, <p>, <ul>, <pre>, <table>, <td>, <tr>, <tdata>, <th>
 for tag in 'blockquote', 'caption', 'cite', 'cite', 'dl', 'dt', 'dd', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'ol', 'p', 'ul', 'pre', 'table', 'td', 'tr', 'tdata', 'th':
     replacers.append((r'<' + tag + r'[^>]*?>', '\n\n'))
     replacers.append((r'</' + tag + r'>', r'\n\n'))
-# THINKME - <ruby>, <rb>, <rp>, <rt> - see http://www.w3.org/TR/1999/WD-ruby-19990322/
 
 compileds = [ (re.compile(regex, re.MULTILINE + re.DOTALL), replacement) for regex, replacement in replacers ]
 
