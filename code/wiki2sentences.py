@@ -1,14 +1,15 @@
 #!/usr/bin/python
+import remove_wiki_markup
 # Stage 1:
 
 # Use SAX to write a program
 # That echoes what input it gets.
 # Based on http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/265881
 # Stage 2:
-
-# Make it encode the <text> segments as CDATAs.
+# Not necessary.
 
 # Stage 3: Make it remove wiki markup.
+# Stage 3a: Make it de-wiki 
 
 # Stage 4: Make it mxterminate the de-wiki-markup'd junk.
 
@@ -20,20 +21,27 @@ class text_normalize_filter(XMLFilterBase):
     delivered merged into a single node
     """
     
-    def __init__(self, upstream, downstream):
+    def __init__(self, upstream, downstream, text_filter):
         XMLFilterBase.__init__(self, upstream)
         self._downstream = downstream
         self._accumulator = []
+        self.text_filter = text_filter
+        self.should_filter = False
         return
 
     def _complete_text_node(self):
         if self._accumulator:
-            self._downstream.characters(''.join(self._accumulator))
+            text = ''.join(self._accumulator)
+            if self.should_filter:
+                text = self.text_filter(text).strip()
+            self._downstream.characters(text)
             self._accumulator = []
         return
 
     def startElement(self, name, attrs):
         self._complete_text_node()
+        if name == 'text':
+            self.should_filter = True
         self._downstream.startElement(name, attrs)
         return
 
@@ -45,6 +53,7 @@ class text_normalize_filter(XMLFilterBase):
     def endElement(self, name):
         self._complete_text_node()
         self._downstream.endElement(name)
+        self.should_filter = False
         return
 
     def endElementNS(self, name, qname):
@@ -78,9 +87,9 @@ if __name__ == "__main__":
     parser = sax.make_parser()
     #XMLGenerator is a special SAX handler that merely writes
     #SAX events back into an XML document
-    downstream_handler = XMLGenerator()
+    downstream_handler = XMLGenerator(encoding='utf-8')
     #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler)
+    filter_handler = text_normalize_filter(parser, downstream_handler, remove_wiki_markup.sub)
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method

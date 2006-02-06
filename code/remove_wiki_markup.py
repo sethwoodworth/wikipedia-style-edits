@@ -19,7 +19,7 @@ replacers.append((r"''(.*?)''", r"\1"))
 # newlines or whitespace: collapse into a single whitespace - this is unnecessary because the Java will do it for us
 #replacers.append((r'\s+', ' '))
 # ~~~, ~~~~, ~~~~~ : remove? THINKME
-replacers.append((r'(~~~|~~~~|~~~~~)', ''))
+replacers.append((r'(~~~|~~~~|~~~~~)', ' '))
 # [[Page name]] -> Page name; plus [[:Page name]] - treat as equivalent to [[Page name]] - FIXME wrong for [[:::::::zomg]]
 replacers.append((r'\[\[:*([^|]*?)\]\]', r'\1'))
 # [[Page name|Some text]] -> Some text
@@ -157,7 +157,7 @@ def remove_template_references(s):
     return ret
 
 def sub(s):
-    unicodetext = unicode(s, 'utf-8')
+    unicodetext = unicode(s) # , 'utf-8')
     # Remove HTML junk
     unicodetext = de_htmlify(unicodetext)
     # Clean out MW tables
