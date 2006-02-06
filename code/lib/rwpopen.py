@@ -1,5 +1,5 @@
 # From http://www.faqts.com/knowledge_base/view.phtml/aid/4448
-
+import os
 """
 Packages: files;miscellaneous
 """

@@ -16,9 +16,14 @@ public class pain {
 		// over the \n\n-separated junk on stdin
 		Scanner scanme = new Scanner(System.in).useDelimiter("\\n\\n+");
 		while (scanme.hasNext()) {
-			String lame = scanme.next();
+			String lame = scanme.next();  
 			// Time to babysit MXTERMINATOR's bugs
-			// if "lame" has only two or one or zero words in it, MXTERMINATOR will
+
+			// Bug 1: If lame's last character isn't whitespace of some sort,
+			// MXTERMINATOR will eat the last word.
+			lame += "\n";
+
+			// Bug 2: if "lame" has only two or one or zero words in it, MXTERMINATOR will
 			// print an extra "null" or two.
 			Matcher m = terminate_this.matcher(lame);
 			if (m.find()) {
