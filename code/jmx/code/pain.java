@@ -28,6 +28,7 @@ public class pain {
 				eos.TestEOS.main(strings); // This is right, except that
 				// it prints the word "null" if there's only one input word
 				// also, the startup cost is tremendous! :-(
+				// Maybe I can do better by printing my own \n or something....
 			} else
 				System.out.println(lame);
 		}
