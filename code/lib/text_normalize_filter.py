@@ -7,18 +7,19 @@ class text_normalize_filter(XMLFilterBase):
     delivered merged into a single node
     """
     
-    def __init__(self, upstream, downstream, text_filter):
+    def __init__(self, upstream, downstream, text_filter, manualOverride = False):
         XMLFilterBase.__init__(self, upstream)
         self._downstream = downstream
         self._accumulator = []
         self.text_filter = text_filter
         self.should_filter = False
+	self.manualOverride = manualOverride # Set this to True if you want text_filter never to run
         return
 
     def _complete_text_node(self):
         if self._accumulator:
             text = ''.join(self._accumulator)
-            if self.should_filter:
+            if self.should_filter and not self.manualOverride:
                 text = self.text_filter(text).strip()
             self._downstream.characters(text)
             self._accumulator = []
