@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from lib.remove_wiki_markup import sub
 from lib.text_normalize_filter import text_normalize_filter
+from lib.pexpect import spawn
 # Stage 1:
 
 # Use SAX to write a program
@@ -13,24 +14,22 @@ from lib.text_normalize_filter import text_normalize_filter
 
 # Stage 4: Make it mxterminate the de-wiki-markup'd junk.
 
-cache = {}
-def pipe_through_opennlp(s):
-	global cache
-	if len(cache) > 5000:
-		cache = {} # dumb, I know
-	from lib.rwpopen import rwpopen
-	paragraphs = s.split('\n\n')
-	ret = []
-	for paragraph in paragraphs:
-		if paragraph in cache:
-			ret.append(cache[paragraph])
-		else:
-			result = rwpopen(paragraph, './lib/opennlp-wrap.sh')
-			cache[paragraph] = result
-			ret.append(cache[paragraph])
-	return '\n\n'.join(ret)
+class opennlp_pipe:
+	def __init__(self):
+		""" These tokens came from pwgen -C | sed 's/ //g' """
+		self.delimiter = 'bokohgepohkeebuuiecieweuboyiehivoosupuaxquahfeerowiequeeaeceimay'
+		self.pipe = spawn('./lib/opennlp-wrap.sh', searchwindowsize=100,maxread= (2 * 1024 * 1024) )
+		self.pipe.setecho(0)
+		self.buffer = ''
+	def handle(self, s):
+		self.pipe.send(s + '\n\n')
+		self.pipe.send('\n\n' + self.delimiter + '\n\n')
+		self.pipe.expect(self.delimiter)
+		return (self.pipe.before, self.pipe.after)
+
 
 if __name__ == "__main__":
+    sentence_splitter = opennlp_pipe()
     import sys
     from xml import sax
     from xml.sax.saxutils import XMLGenerator
@@ -39,7 +38,7 @@ if __name__ == "__main__":
     #SAX events back into an XML document
     downstream_handler = XMLGenerator(encoding='utf-8')
     #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler, pipe_through_opennlp)
+    filter_handler = text_normalize_filter(parser, downstream_handler, sentence_splitter.handle)
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method
