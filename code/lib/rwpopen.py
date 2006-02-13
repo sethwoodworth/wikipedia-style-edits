@@ -1,5 +1,8 @@
 # From http://www.faqts.com/knowledge_base/view.phtml/aid/4448
 import os
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 """
 Packages: files;miscellaneous
 """
