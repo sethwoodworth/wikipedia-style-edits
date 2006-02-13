@@ -30,7 +30,7 @@ fi
 # no matter what, sleep for some seconds
 sleep $PRE_SLEEP
 MY_UGRAD=$(~/bin/bogosort -n ~/dnet/machines | head -n1)
-ssh $MY_UGRAD "scp paulproteus@fomalhaut.am.jhu.edu:/mnt/paul/space/$file /tmp/$file ; hostname ;   ~/bin/7za e -so /tmp/$file | ( cd  ~/dnet/collab/code/ ; python wikitext2paragraphs.py  file:///dev/stdin ) | ~/bin/7za a -si > $RESULTS/${file%.7z}.paragraphs.7z ; scp $RESULTS/${file%.7z}.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/ "   &
+ssh $MY_UGRAD "scp paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/$file /tmp/$file ; hostname ;   ~/bin/7za e -so /tmp/$file | ( cd  ~/dnet/collab/code/ ; python wikitext2paragraphs.py  file:///dev/stdin ) | ~/bin/7za a -si > $RESULTS/${file%.7z}.paragraphs.7z ; scp $RESULTS/${file%.7z}.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/ "   &
 echo $file started on $MY_UGRAD
 done
 
