@@ -13,9 +13,22 @@ from lib.text_normalize_filter import text_normalize_filter
 
 # Stage 4: Make it mxterminate the de-wiki-markup'd junk.
 
-def pipe_through_mxterm(s):
+cache = {}
+def pipe_through_opennlp(s):
+	global cache
+	if len(cache) > 5000:
+		cache = {} # dumb, I know
 	from lib.rwpopen import rwpopen
-	return rwpopen(s, './lib/mxterm.sh')
+	paragraphs = s.split('\n\n')
+	ret = []
+	for paragraph in paragraphs:
+		if paragraph in cache:
+			ret.append(cache[paragraph])
+		else:
+			result = rwpopen(paragraph, './lib/opennlp-wrap.sh')
+			cache[paragraph] = result
+			ret.append(cache[paragraph])
+	return '\n\n'.join(ret)
 
 if __name__ == "__main__":
     import sys
@@ -26,7 +39,7 @@ if __name__ == "__main__":
     #SAX events back into an XML document
     downstream_handler = XMLGenerator(encoding='utf-8')
     #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler, pipe_through_mxterm)
+    filter_handler = text_normalize_filter(parser, downstream_handler, pipe_through_opennlp)
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method
