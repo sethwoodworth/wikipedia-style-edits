@@ -32,7 +32,7 @@ public class DataProcessor
 	    System.exit(1);
 	}
 
-	model = args[0];
+	String model = args[0];
 	DataProcessingWriter w = new DataProcessingWriter(XMLReaderFactory.createXMLReader()); // , model);
 
 

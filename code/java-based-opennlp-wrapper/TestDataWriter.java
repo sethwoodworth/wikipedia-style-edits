@@ -8,7 +8,6 @@ public class TestDataWriter
     {
 	DataProcessingWriter w = new DataProcessingWriter();
 
-	w.setIndentStep(2);
 	w.startDocument();
 	w.startElement("foo");
 	w.dataElement("bar", "1");

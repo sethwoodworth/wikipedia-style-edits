@@ -140,7 +140,7 @@ public class DataProcessingWriter extends XMLWriter
     /**
      * Create a new data writer for standard output.
      */
-    public DataProcessingWriter (String model)
+    public DataProcessingWriter () // String model)
     {
 	super();
 	sb = new StringBuffer();
@@ -154,7 +154,7 @@ public class DataProcessingWriter extends XMLWriter
      *
      * @param xmlreader The parent in the filter chain.
      */
-    public DataProcessingWriter (XMLReader xmlreader, String model)
+    public DataProcessingWriter (XMLReader xmlreader) // , String model)
     {
 	super(xmlreader);
 	sb = new StringBuffer();
