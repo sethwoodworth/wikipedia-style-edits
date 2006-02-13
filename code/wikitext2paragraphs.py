@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from lib.remove_wiki_markup import sub
+from lib.remove_wiki_markup import caching_sub as sub
 from lib.text_normalize_filter import text_normalize_filter
 # Stage 1:
 
