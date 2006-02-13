@@ -17,7 +17,7 @@ class sevenpipe:
 	def __init__(self):
 		self.so_far = 0
 		self.filename = str(NEXT_OUTFILE)
-		if NEXT_OUTFILE > 577: # already did <= 577
+		if NEXT_OUTFILE > 1606: # already did <= 1606
 			cmd = SEVENZIP + " -si a " + self.filename
 		else: # do a no-op for the ones we don't care about
 			cmd = 'cat > /dev/null'
