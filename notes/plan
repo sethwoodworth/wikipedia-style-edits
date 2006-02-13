@@ -36,3 +36,7 @@ Code to write:
 Later:
 
 * With mxterminated sentences, group 'em and diff 'em...
+* "River Suck" -> "Suck"; maybe noticeable because of wiki page contents.  We won't handle it well.
+
+--
+dewiki: cache recent paragraphs
