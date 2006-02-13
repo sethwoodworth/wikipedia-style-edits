@@ -103,7 +103,7 @@ public class DataProcessingWriter extends XMLWriter
 	}
 
     public String detect_sentences(String input) {
-	BufferedWriter output_buffer = new BufferedWriter(new StringWriter());
+	StringWriter sw = new StringWriter();
 	try {
     StringBuffer para = new StringBuffer();
     BufferedReader inReader = new BufferedReader(new StringReader(input));
@@ -113,10 +113,10 @@ public class DataProcessingWriter extends XMLWriter
           //System.err.println(para.toString());
           String[] sents = sdetector.sentDetect(para.toString());
           for (int si = 0, sn = sents.length; si < sn; si++) {
-            output_buffer.write(sents[si] + "\n");
+            sw.write(sents[si] + "\n");
           }
         }
-        output_buffer.write("\n");
+        sw.write("\n");
         para.setLength(0);
       }
       else {
@@ -126,24 +126,25 @@ public class DataProcessingWriter extends XMLWriter
     if (para.length() != 0) {
       String[] sents = sdetector.sentDetect(para.toString());
       for (int si = 0, sn = sents.length; si < sn; si++) {
-        output_buffer.write(sents[si] + "\n");
+        sw.write(sents[si] + "\n");
       }
     }
 		}
 	catch (IOException whatever) {
 		System.out.println("Abandon all hope for future plans.");
 	}
-	return output_buffer.toString();
+	return sw.toString();
 }
 
 
     /**
      * Create a new data writer for standard output.
      */
-    public DataProcessingWriter () // String model)
+    public DataProcessingWriter (String model)
     {
 	super();
 	sb = new StringBuffer();
+	init_sentence_model(model);
     }
 
 
@@ -154,10 +155,11 @@ public class DataProcessingWriter extends XMLWriter
      *
      * @param xmlreader The parent in the filter chain.
      */
-    public DataProcessingWriter (XMLReader xmlreader) // , String model)
+    public DataProcessingWriter (XMLReader xmlreader, String model)
     {
 	super(xmlreader);
 	sb = new StringBuffer();
+	init_sentence_model(model);
     }
 
 
@@ -167,10 +169,11 @@ public class DataProcessingWriter extends XMLWriter
      * @param writer The character stream where the XML document
      *        will be written.
      */
-    public DataProcessingWriter (Writer writer)
+    public DataProcessingWriter (Writer writer, String model)
     {
 	super(writer);
 	sb = new StringBuffer();
+	init_sentence_model(model);
     }
 
 
@@ -275,7 +278,7 @@ public class DataProcessingWriter extends XMLWriter
 		String result = sb.toString();
 		// Now call some function ...
 		// zomg
-		result = "zomg";
+		result = detect_sentences(result);
 		char [] processedChars = result.toCharArray();
 		super.characters(processedChars, 0, processedChars.length);
 		// finally, clear the string buffer
