@@ -20,7 +20,7 @@ done
 
 
 # randomly assign jobs to machines
-for file in $(ssh paulproteus@fomalhaut.acm.jhu.edu '(cd /mnt/paul/space/ ; ls) ' | ~/bin/bogosort -n )
+for file in $(ssh paulproteus@fomalhaut.acm.jhu.edu '(cd /mnt/paul/space/ ; ls *.7z) ' | ~/bin/bogosort -n )
 do
 JOBCOUNT=$(jobs | wc -l)
 if [[ $JOBCOUNT -ge $MAXJOBS ]]
