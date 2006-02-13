@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
+# FIXME: Remove links like [[de:Shannon]] , which are unlike
+# I like eating [[banana]]s.
+
 import re
+import types
 # "Python isn't all that slow."
 
 # The goal is to take lots of raw wikitext input,
@@ -142,7 +146,10 @@ def de_htmlify(uns):
     # Numbered Unicode entities
     finder = re.compile(r'&#(\d*?);')
     for match in finder.findall(uns):
-        uns = uns.replace('&#' + match + ';', unichr(int(match)))
+        try:
+             uns = uns.replace('&#' + match + ';', unichr(int(match)))
+        except:
+             pass # oh, well
     return uns
 
 def remove_template_references(s):
@@ -155,6 +162,21 @@ def remove_template_references(s):
         else: # if it's odd, ignore
             ret += '\n\n'.join(element.split('|')[1:]) + '\n\n'
     return ret
+
+cache = {}
+def caching_sub(s):
+	assert(type(s) == types.UnicodeType)
+	global cache
+	# we hope
+	if s in cache:
+		return cache[s]
+	# we check	
+	if len(cache) > 1000:
+		cache = {} # this is dumb.  oh, well.
+	# we fail
+	ret = sub(s)
+	cache[s] = ret
+	return ret
 
 def sub(s):
     unicodetext = unicode(s) # , 'utf-8')
