@@ -39,7 +39,7 @@ fi
 # no matter what, sleep for some seconds
 sleep $PRE_SLEEP
 MY_UGRAD=$(~/bin/bogosort -n ~/dnet/machines | head -n1)
-( ssh $MY_UGRAD "scp $SOURCE_MACHINE:$SOURCE_PATH/$file $WORKDIR/$file ; hostname ;   ~/bin/7za e -so $WORKDIR/$file | ( cd  ~/dnet/collab/code/ ; python paragraphs2sentences.sh  file:///dev/stdin ) | ~/bin/7za a -si $RESULTS/$file ; scp $RESULTS/$file $SOURCE_MACHINE:$DEST_PATH "  ; echo $file finished on $MY_UGRAD ) & 
+( ssh $MY_UGRAD "scp $SOURCE_MACHINE:$SOURCE_PATH/$file $WORKDIR/$file ; hostname ;   ~/bin/7za e -so $WORKDIR/$file | ( cd  ~/dnet/collab/code/ ; sh paragraphs2sentences.sh  file:///dev/stdin ) | ~/bin/7za a -si $RESULTS/$file ; scp $RESULTS/$file $SOURCE_MACHINE:$DEST_PATH "  ; echo $file finished on $MY_UGRAD ) & 
 echo $file started on $MY_UGRAD
 done
 
