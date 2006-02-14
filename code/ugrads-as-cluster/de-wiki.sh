@@ -1,10 +1,10 @@
 #!/bin/bash
 PROJECT=paragraphs
-JOBWAIT=20m
+JOBWAIT=9m
 
 CHATDIR="/tmp/dnet/$PROJECT/chat/"
 RESULTS="/tmp/dnet/$PROJECT/results/"
-MAXJOBS=36 # 18 times two
+MAXJOBS=30 # 18 times two
 PRE_SLEEP=12
 
 # For each computer, clear the CHATDIR and RESULTS directories
@@ -20,7 +20,7 @@ done
 
 
 # randomly assign jobs to machines
-for file in $(ssh paulproteus@fomalhaut.acm.jhu.edu '(cd /mnt/paul/space/ ; ls *.7z) ' | ~/bin/bogosort -n )
+for file in $(ssh paulproteus@fomalhaut.acm.jhu.edu '(cd /mnt/paul/space/ ; ls *.7z) ' | sort -n )
 do
 JOBCOUNT=$(jobs | wc -l)
 if [[ $JOBCOUNT -ge $MAXJOBS ]]
@@ -30,7 +30,7 @@ fi
 # no matter what, sleep for some seconds
 sleep $PRE_SLEEP
 MY_UGRAD=$(~/bin/bogosort -n ~/dnet/machines | head -n1)
-ssh $MY_UGRAD "scp paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/$file /tmp/$file ; hostname ;   ~/bin/7za e -so /tmp/$file | ( cd  ~/dnet/collab/code/ ; python wikitext2paragraphs.py  file:///dev/stdin ) | ~/bin/7za a -si > $RESULTS/${file%.7z}.paragraphs.7z ; scp $RESULTS/${file%.7z}.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/ "   &
+( ssh $MY_UGRAD "scp paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/$file /tmp/$file ; hostname ;   ~/bin/7za e -so /tmp/$file | ( cd  ~/dnet/collab/code/ ; python wikitext2paragraphs.py  file:///dev/stdin ) | ~/bin/7za a -si $RESULTS/${file%.7z}.paragraphs.7z ; scp $RESULTS/${file%.7z}.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/space/paragraphs/ "  ; echo $file finished on $MY_UGRAD ) & 
 echo $file started on $MY_UGRAD
 done
 
