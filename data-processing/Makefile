@@ -6,10 +6,17 @@
 
 TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 
+chunksizes := $(patsubst %.chunk.7z,%.chunk.size,$(wildcard *.chunk.7z))
+
 *.done:
 
 %.size: %.7z
 	$(7ZIP) l $*.7z |  head -n9 | tail -n1  | awk '{print $$4}' > $*.size
 
 chunk-total-size: $(chunksizes)
-	cat $(chunksizes) | awk ' { sum += $$1 ; } END {print sum; } ' > total-size
+	cat $(chunksizes) | awk ' { sum += $$1 ; } END {print sum; } ' > chunk-total-size
+	# FIXME: replace chunk-total-size with some variable
+
+makefile-test: 
+	-rm chunk-total-size
+	make chunk-total-size
