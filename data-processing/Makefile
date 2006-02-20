@@ -3,10 +3,10 @@
 
 7ZIP=/usr/bin/7za
 
-
 TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 
 chunksizes := $(patsubst %.chunk.7z,%.chunk.size,$(wildcard *.chunk.7z))
+sentences := $(patsubst %.chunk.7z,%.sentences.7z,$(wildcard *.chunk.7z))
 
 *.done:
 
@@ -20,3 +20,14 @@ chunk-total-size: $(chunksizes)
 makefile-test: 
 	-rm chunk-total-size
 	make chunk-total-size
+
+%.sentences.7z: %.paragraphs.7z
+	~/dnet/run_on_machine.sh $*.paragraphs.7z " ~/bin/7za e  -so  /tmp/$*.paragraphs.7z | \
+	( cd  ~/dnet/collab/code/ ; sh paragraphs2sentences.sh  file:///dev/stdin ) \
+	| ~/bin/7za a -si /tmp/$*.sentences.7z ; scp /tmp/$*.sentences.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.sentences.7z  "
+
+all-paragraphs: $(paragraphs)
+
+all-sentences: all-paragraphs $(sentences)
+
