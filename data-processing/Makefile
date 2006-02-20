@@ -6,6 +6,7 @@
 TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 
 chunksizes := $(patsubst %.chunk.7z,%.chunk.size,$(wildcard *.chunk.7z))
+paragraphs := $(patsubst %.chunk.7z,%.paragraphs.7z,$(wildcard *.chunk.7z))
 sentences := $(patsubst %.chunk.7z,%.sentences.7z,$(wildcard *.chunk.7z))
 
 *.done:
@@ -21,10 +22,16 @@ makefile-test:
 	-rm chunk-total-size
 	make chunk-total-size
 
+%.paragraphs.7z: %.chunk.7z
+	~/dnet/run_on_machine.sh $*.chunk.7z " ~/bin/7za e -so /tmp/$*.chunk.7z | \
+	( set -e ; cd ~/dnet/collab/code/ ; python wikitext2paragraphs.py  file:///dev/stdin ) \
+	| ~/bin/7za a -si /tmp/$*.paragraphs.7z && scp /tmp/$*.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.paragraphs.7z "
+
 %.sentences.7z: %.paragraphs.7z
 	~/dnet/run_on_machine.sh $*.paragraphs.7z " ~/bin/7za e  -so  /tmp/$*.paragraphs.7z | \
-	( cd  ~/dnet/collab/code/ ; sh paragraphs2sentences.sh  file:///dev/stdin ) \
-	| ~/bin/7za a -si /tmp/$*.sentences.7z ; scp /tmp/$*.sentences.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
+	( set -e ; cd  ~/dnet/collab/code/ ; sh paragraphs2sentences.sh  file:///dev/stdin ) \
+	| ~/bin/7za a -si /tmp/$*.sentences.7z && scp /tmp/$*.sentences.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.sentences.7z  "
 
 all-paragraphs: $(paragraphs)
