@@ -36,7 +36,7 @@ replacers.append((r'\[\[:*([^|]*?)\]\]', r'\1'))
 # [[Page name|Some text]] -> Some text
 replacers.append((r'\[\[([^|]*?)\|(.*?)\]\]', r'\2'))
 # [something://urljunk text] -> text
-replacers.append((r'\[[A-Za-z]*://[^\s]*\s(.*?)]', r'\1'))
+replacers.append((r'\[[A-Za-z]*?://[^\s]*\s(.*?)]', r'\1'))
 # == section == (from 1 to 6 '=' allowed): sectionify
 replacers.append((r'^======([^\n]*?)======', r'\n\n\1\n\n'))
 replacers.append((r'^=====([^\n]*?)=====', r'\n\n\1\n\n'))
