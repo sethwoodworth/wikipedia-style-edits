@@ -160,15 +160,39 @@ def de_htmlify(uns):
     return uns
 
 def remove_template_references(s):
-    ret = ''
-    splitted = re.split('{{(.*?)}}', s)
-    for k in xrange(len(splitted)):
-        element = splitted[k]
-        if k % 2 == 0: # if it's even, replace it verbatim
-            ret += element + '\n\n'
-        else: # if it's odd, ignore
-            ret += '\n\n'.join(element.split('|')[1:]) + '\n\n'
+    # THINKME:
+    # I can't really say anything strong about templates, and I know they'll be confusing.
+    # So for now I totally destroy template references.  I hope you won't mind.
+    ret = u''
+
+    if '{{' not in s:
+        return s
+
+    if '}}' not in s:
+        return s
+
+    # Now we know there could be templates involved.
+    # I'd remove them with a dumb regex,
+    # but I have to be sure that \n\n doesn't occur inside.
+
+    parts = s.split('}}')
+    # Now each part except the last
+    # had '}}' removed from it
+
+    while len(parts) > 1:
+        part = parts.pop(0)
+        if '{{' not in part:
+            ret += part + '}}'
+        else:
+            before, after = part.rsplit('{{', 1)
+            ret += before
+            if '\n\n' in after:
+                ret += '{{' + after + '}}'
+            else:
+                pass # eat the {{ whatever }}
+    ret += parts[0]
     return ret
+
 
 cache = {}
 def caching_sub(s):
