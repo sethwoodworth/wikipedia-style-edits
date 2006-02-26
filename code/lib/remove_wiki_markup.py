@@ -1,5 +1,10 @@
 #!/usr/bin/python
 
+## Known bugs )-:
+## * Doesn't handle <nowiki></nowiki> correctly at *all*
+## (For that reason, should move to some event-based model?
+## * Wrong on evil nested links like [[image:tst.png|right|thumb|50px|[[help:contents|demo]]]]
+
 # FIXME: Remove links like [[de:Shannon]] , which are unlike
 # I like eating [[banana]]s.
 
