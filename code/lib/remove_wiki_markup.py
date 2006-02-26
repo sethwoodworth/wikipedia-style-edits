@@ -50,7 +50,7 @@ replacers.append((r'^:([^\n]*?)', r'\n\n\1\n\n'))
 # ---- (-> HR): end paragraph, remove markup
 replacers.append((r'^----', r'\n\n'))
 # [something://urljunk] -> [LINK]  THINKME: I think we could strip these entirely since they don't contribute to sentences.
-replacers.append((r'\[[a-z]+://[^]\s]*?]', '[LINK]'))
+replacers.append((r'\[[a-z]+://[^]\s]*?]', ' [LINK] '))
 # #REDIRECT [[Page name]] -> Page name THINKME
 replacers.append((r'^#REDIRECT\s+\[\[(.*?)]]\s*$', r'\n\n\1\n\n'))
 
