@@ -25,7 +25,7 @@ replacers.append((r"''([^\n]*?)(\n|'')", r"\1"))
 # ~~~, ~~~~, ~~~~~ : remove? THINKME
 replacers.append((r'(~~~|~~~~|~~~~~)', ' '))
 # [[two lowercase letters or "Category"]] -> (nothing)
-replacers.append((r'\[\[([a-z][a-z]|Category):([^|]*?)\]\]', r''))
+replacers.append((r'\[\[([a-z][a-z]|[Cc]ategory):([^|]*?)\]\]', r''))
 # [[Page name]] -> Page name; plus [[:Page name]] - treat as equivalent to [[Page name]] - FIXME wrong for [[:::::::zomg]]
 replacers.append((r'\[\[:*([^|]*?)\]\]', r'\1'))
 # [[Page name|Some text]] -> Some text
@@ -52,7 +52,7 @@ replacers.append((r'^----', r'\n\n'))
 # [something://urljunk] -> [LINK]  THINKME: I think we could strip these entirely since they don't contribute to sentences.
 replacers.append((r'\[[a-z]+://[^]\s]*?]', '[LINK]'))
 # #REDIRECT [[Page name]] -> Page name THINKME
-replacers.append((r'^#REDIRECT \[\[(.*?)]]\s*$', r'\n\n\1\n\n'))
+replacers.append((r'^#REDIRECT\s+\[\[(.*?)]]\s*$', r'\n\n\1\n\n'))
 
 # HTML comments
 replacers.append((r'<!--(.*?)-->', ''))
