@@ -25,7 +25,7 @@ replacers.append((r"''([^\n]*?)(\n|'')", r"\1"))
 # ~~~, ~~~~, ~~~~~ : remove? THINKME
 replacers.append((r'(~~~|~~~~|~~~~~)', ' '))
 # [[two lowercase letters or "Category"]] -> (nothing)
-replacers.append((r'\[\[([a-z][a-z]|Category)*([^|]*?)\]\]', r''))
+replacers.append((r'\[\[([a-z][a-z]|Category):([^|]*?)\]\]', r''))
 # [[Page name]] -> Page name; plus [[:Page name]] - treat as equivalent to [[Page name]] - FIXME wrong for [[:::::::zomg]]
 replacers.append((r'\[\[:*([^|]*?)\]\]', r'\1'))
 # [[Page name|Some text]] -> Some text
