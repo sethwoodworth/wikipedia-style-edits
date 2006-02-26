@@ -212,7 +212,6 @@ def caching_sub(s):
 
 def sub(s):
     s += '\n' # why not?
-    s = s.replace('\r', ' ')
     unicodetext = unicode(s) # , 'utf-8')
     # Remove HTML junk
     unicodetext = de_htmlify(unicodetext)
