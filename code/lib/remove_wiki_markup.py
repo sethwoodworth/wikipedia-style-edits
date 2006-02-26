@@ -184,10 +184,11 @@ def remove_template_references(s):
         if '{{' not in part:
             ret += part + '}}'
         else:
-            before, after = part.rsplit('{{', 1)
+            index = part.rfind('{{')
+            before, after = part[:index], part[index:]
             ret += before
             if '\n\n' in after:
-                ret += '{{' + after + '}}'
+                ret += after + '}}'
             else:
                 pass # eat the {{ whatever }}
     ret += parts[0]
