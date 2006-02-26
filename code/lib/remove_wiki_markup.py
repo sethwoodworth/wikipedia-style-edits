@@ -211,6 +211,7 @@ def caching_sub(s):
 	return ret
 
 def sub(s):
+    s += '\n' # why not?
     unicodetext = unicode(s) # , 'utf-8')
     # Remove HTML junk
     unicodetext = de_htmlify(unicodetext)
