@@ -23,13 +23,13 @@ makefile-test:
 	make chunk-total-size
 
 %.paragraphs.7z: %.chunk.7z
-	~/dnet/run_on_machine.sh $*.chunk.7z " ~/bin/7za e -so /tmp/$*.chunk.7z | \
+	~/dnet/run_on_machine.sh $*.chunk.7z " set -e ; ~/bin/7za e -so /tmp/$*.chunk.7z | \
 	( set -e ; cd ~/dnet/collab/code/ ; nice python wikitext2paragraphs.py  file:///dev/stdin ) \
 	| nice ~/bin/7za a -si /tmp/$*.paragraphs.7z && scp /tmp/$*.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.paragraphs.7z "
 
 %.sentences.7z: %.paragraphs.7z
-	~/dnet/run_on_machine.sh $*.paragraphs.7z " ~/bin/7za e  -so  /tmp/$*.paragraphs.7z | \
+	~/dnet/run_on_machine.sh $*.paragraphs.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.paragraphs.7z | \
 	( set -e ; cd  ~/dnet/collab/code/ ; nice sh paragraphs2sentences.sh  file:///dev/stdin ) \
 	| nice ~/bin/7za a -si /tmp/$*.sentences.7z && scp /tmp/$*.sentences.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.sentences.7z  "
@@ -38,3 +38,6 @@ all-paragraphs: $(paragraphs)
 
 all-sentences: all-paragraphs $(sentences)
 
+%.revision-index.csv: %.7z
+	~/dnet/run_on_machine.sh $*.7z " set -e ; ~/bin/7za e -so /tmp/$*.7z | \
+	python ~/dnet/collab/code/create_revision_index.py " > $*.revision-index.csv
