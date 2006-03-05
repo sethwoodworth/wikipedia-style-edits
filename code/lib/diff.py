@@ -6,14 +6,19 @@ class Differ:
 	''' This class is a little special-purpose.'''
 	def __init__(self):
 		self.last = None
+		self.lastlast = None
 
 	def _save(self, datum):
-		""" Take datum as input.  Stash it away in a file somewhere. """
+		""" Take datum as input.  Stash it away in a file somewhere.
+		Also delete the old 'last'. """
 		filename = os.tempnam()
 		fd = open(filename, 'w')
 		fd.write(datum)
 		fd.write('\n') # just in case
 		fd.close()
+		if self.lastlast is not None:
+			os.unlink(self.lastlast)
+		self.lastlast = self.last
 		self.last = filename
 		return filename
 
