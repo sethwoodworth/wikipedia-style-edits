@@ -38,6 +38,9 @@ class Differ:
             return self._diff(thing)
 
     def _newdoc(self, d_id):
+        for maybedel in self.lastlast, self.last:
+            if maybedel is not None:
+                os.unlink(maybedel)
         self.lastlast = None
         self.last = None
         self.document_id = d_id
