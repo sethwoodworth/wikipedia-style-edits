@@ -93,5 +93,6 @@ def jaccard_from_one_sent_to_other(sent1, sent2):
     from nltk_lite import tokenize
     words1 = tokenize.wordpunct(sent1)
     words2 = tokenize.wordpunct(sent2)
+    
 
     print list(words1)
