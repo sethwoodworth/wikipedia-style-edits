@@ -26,13 +26,13 @@ makefile-test:
 %.paragraphs.7z: %.chunk.7z
 	~/dnet/run_on_machine.sh $*.chunk.7z " set -e ; ~/bin/7za e -so /tmp/$*.chunk.7z | \
 	( set -e ; cd ~/dnet/collab/code/ ; nice python wikitext2paragraphs.py  file:///dev/stdin ) \
-	| nice ~/bin/7za a -si /tmp/$*.paragraphs.7z && scp /tmp/$*.paragraphs.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
+	| nice ~/bin/7za a -si /tmp/$*.paragraphs.7z && scp /tmp/$*.paragraphs.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.paragraphs.7z "
 
 %.sentences.7z: %.paragraphs.7z
 	~/dnet/run_on_machine.sh $*.paragraphs.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.paragraphs.7z | \
 	( set -e ; cd  ~/dnet/collab/code/ ; nice sh paragraphs2sentences.sh  file:///dev/stdin ) \
-	| nice ~/bin/7za a -si /tmp/$*.sentences.7z && scp /tmp/$*.sentences.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
+	| nice ~/bin/7za a -si /tmp/$*.sentences.7z && scp /tmp/$*.sentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.sentences.7z  "
 
 all-paragraphs: $(paragraphs)
@@ -50,5 +50,5 @@ all-sentences: all-paragraphs $(sentences)
 %.diffedsentences.7z: %.sentences.7z
 	~/dnet/run_on_machine.sh $*.sentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.sentences.7z | \
 	( set -e ; cd  ~/dnet/collab/code/ ; python sentences2diffs.py  file:///dev/stdin ) \
-	| nice ~/bin/7za a -si /tmp/$*.diffedsentences.7z && scp /tmp/$*.diffedsentences.7z paulproteus@fomalhaut.acm.jhu.edu:/mnt/paul/wikipedia-data/makefile-test/ ; \
+	| nice ~/bin/7za a -si /tmp/$*.diffedsentences.7z && scp /tmp/$*.diffedsentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.diffedsentences.7z  "
