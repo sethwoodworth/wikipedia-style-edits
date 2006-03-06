@@ -52,3 +52,38 @@ class Differ:
             return ''
         # Okay, so now we actually diff.
         return commands.getoutput('diff --text -u --minimal %s %s' % (last, this))
+
+class DiffParser:
+    def __init__(self, s):
+        ''' Takes some string s as input and parses it. '''
+        self.hunks = [] # a list of (from, to) tuples
+        # Has no built-in idea of distance, but does understand different hunks
+        # self.hunks will be built in the order the lines appear in the diff
+
+        # Hey, wait!  The first two lines of any diff are wasted on filename junk.
+        lines = s.split('\n')
+        assert(lines[0][:3] == '---')
+        assert(lines[1][:3] == '+++')
+        lines = lines[2:]
+        self._parse(lines)
+        
+    def _parse(self, lines):
+        this_hunk_from = []
+        this_hunk_to = []
+        for line in lines:
+            if line:
+                if line[0] == '+':
+                    this_hunk_to.append(line[1:])
+                elif line[0] == '-':
+                    this_hunk_from.append(line[1:])
+                else:
+                    # we're out of a hunk; let's try to add the hunk we just made
+                    if this_hunk_from or this_hunk_to:
+                        self.hunks.append( (this_hunk_from, this_hunk_to) )
+                        this_hunk_from = []
+                        this_hunk_to = []
+        # Look ma, no return!
+        if this_hunk_from or this_hunk_to:
+            self.hunks.append( (this_hunk_from, this_hunk_to) )
+            this_hunk_from = []
+            this_hunk_to = []
