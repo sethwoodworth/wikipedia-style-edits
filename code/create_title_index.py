@@ -2,6 +2,7 @@
 # Hacking at XML with regular expressions is great fun.
 
 import re
+from lib.remove_wiki_markup import de_htmlify
 
 DEBUG=1
 def debug(o):
@@ -30,7 +31,10 @@ def title_position(s, start = 0, end = -1):
     return needle_position('<title>', s, start, end)
 
 def title_string(s):
-    return titler.search(s).group(1)
+    s = titler.search(s).group(1)
+    u = s.decode('utf-8')
+    s = de_htmlify(u).encode('utf-8')
+    return s
 
 def fd2lists(fd):
     ''' Takes the file object called "fd" and returns

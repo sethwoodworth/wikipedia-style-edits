@@ -40,3 +40,16 @@ Later:
 
 --
 dewiki: cache recent paragraphs
+
+---
+make 1010.paragraphs.7z
+make 1010.sentences.7z
+
+
+
+---
+
+Northup suggests:
+
+An animation that takes one revision and makes an animation of keys being pressed to make the changes in WP
+
