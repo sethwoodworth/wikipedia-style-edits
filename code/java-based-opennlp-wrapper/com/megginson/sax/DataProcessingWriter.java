@@ -126,7 +126,7 @@ public class DataProcessingWriter extends XMLWriter
     if (para.length() != 0) {
       String[] sents = sdetector.sentDetect(para.toString());
       for (int si = 0, sn = sents.length; si < sn; si++) {
-        sw.write(sents[si] + "\n");
+        sw.write(sents[si].trim() + "\n");
       }
     }
 		}
