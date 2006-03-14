@@ -1,0 +1,241 @@
+****************************************************************
+
+		A Simple English Axis Generator
+			    HOWTO
+
+****************************************************************
+
+This package demonstrates the generation of very basic English 
+axis files for use with GMA Geometric Mapping and Alignment.
+
+Contents: 
+	  HOWTO-axis (this file)
+	  runSimpleEnglish.sh (top level script)
+	  Example.e.txt (or your own text instead)
+	  tools/ directory with a few helpful scripts	  
+
+Requires: 
+	  Perl (preferably >= 5.8.1)
+
+	  English text files with names in the following format:
+		filename.e.txt
+	  
+	  Environment variables setup according to the instructions
+	  in the main GMA package, esp. $GMApath 
+	  
+
+Output:   English axis files with names in the following format:
+		filename.e.txt.axis
+
+In this file :
+		  I. INTRO TO AXIS FILES
+		 II. A SIMPLE EXAMPLE
+		III. BEYOND THE SIMPLE AXIS GENERATOR
+		
+
+****************************************************************
+
+Before starting to follow this document, make sure you have installed the
+necessary requirements.   You will also need to make sure to set the 
+$GMApath variable so this package can locate the files it needs.
+
+
+
+I. INTRO TO AXIS FILES
+
+The top-level program in GMA (GMA.java) uses two axis files, one for
+each half of the bitext.  The axis generator's job is to identify the
+atomic units of meaning in a text, and to assign them positions.  A
+text axis consists of all the units of meaning in a text with their
+positions.  SIMR requires axes to be formatted with one "tic mark" per
+line.  A tic mark consists of a semantic unit (a token) and its
+position in the text.  By convention, the position of a token is the
+position of its median character (I conjecture that this also works
+best in terms of accuracy).  Thus, a token's position is always a
+multiple of 0.5.  For example, if an English text consists of the
+single sentence "This is a test." then the axis for this text might
+look like this:
+
+2.5    This
+6.5    is
+9      a
+12.5   test
+15     .
+
+Deciding what is or is not an atomic semantic unit is not a trivial
+task, especially for non-Western languages.  For languages that are
+written with spaces between words, a simple approximation is to assign
+a position to every space-delimited token.  Such a simple axis
+generator, called axis.plain, is included in the tools/ directory of
+this package, and not coincidentally is also the method used in this 
+package by runSimpleEnglish.sh.
+
+It calls the `tokposlen_WithEOLMark` program in the same directory.  
+You are encouraged to customize this simple axis generator for your 
+particular text type(s), or to write others from scratch.  Axis 
+generators need to be built only once per language (with possible 
+specialization for different kinds of mark-up), rather than once per 
+language pair.
+
+****************************************************************
+II. A SIMPLE EXAMPLE
+
+Here is a simple english text file that will be used to illustrate how
+runSimpleEnglish is used.  The forward slash '/' characters at the end of 
+the lines indicate a line continuation but have been broken up for the 
+sake of readability.   This file can be found on the website under resources,
+English Only.
+
+/somedir/Example.e.txt:
+
+    PART ONE 
+    I remember him looking round the cover and whistling to himself/
+    as he did so , and then breaking out in that old sea - song that/      
+    he sang so often afterwards : " Fifteen men on the dead man 's chest/
+    -- Yo - ho - ho , and a bottle of rum ! " in the high , old tottering/
+    voice that seemed to have been tuned and broken at the capstan bars .
+    Much company , mate ? " My father told him no , very little company ,/
+    the more was the pity . 
+    I ' ll stay here a bit , " he continued . 
+    What you mought call me ? You mought call me captain . 
+    Oh , I see what you 're at -- there " ; and he threw down three or four/ 
+    gold pieces on the threshold . 
+    " You can tell me when I ' ve worked through that , " says he , looking/
+    as fierce as a commander . 
+    And that was all we could learn of our guest . 
+
+
+How to run the axis generator on the command line:
+
+>> ./runSimpleEnglish.sh /somedir
+
+Creates:
+
+/somedir/Example.e.txt.axis
+
+Here is an excerpt of that file:
+
+0 <EOS>
+2.5 PART
+7 ONE
+9.5 <EOS>
+11 I
+16.5 remember
+23 him
+29 looking
+36 round
+41 the
+46 cover
+51 and
+58 whistling
+64.5 to
+70 himself
+75.5 as
+78.5 he
+82 did
+85.5 so
+88 ,
+.
+.
+.
+and so on
+
+
+****************************************************************
+
+III.  BEYOND THE SIMPLE AXIS GENERATOR
+
+Axis generators should be designed with the matching predicate in
+mind.  If the matching predicate uses cognates, then every word that
+might have a cognate in the other half of the bitext should be
+assigned its own axis position.  This rule applies to punctuation and
+numbers as well as to "lexical" cognates.  In the case of lexical
+cognates, the axis generator typically needs to invoke a
+language-specific tokenization program to identify words in the text.
+If no such program is available in advance, then writing it may
+constitute a significant part of the porting effort.  The effort may
+be lessened, however, by the realization that it is acceptable for the
+tokenization program to overgenerate just as it is acceptable for the
+matching predicate.
+
+For example, when tokenizing German text, it is not necessary for the
+tokenizer to know which compound words are translated as a unit.  If a
+German lexicon indicates that a word has another word as a substring,
+then the tokenizer should simply generate an extra axis position for
+that substring.  More specifically, suppose we want to tokenize the
+German word "Kindergarten," a noun-noun compound that literally means
+"childrens' garden."  "Kindergarten" is translated into some languages
+as a unit; e.g.  English has borrowed it verbatim.  In other
+languages, the concept is expressed compositionally; e.g., the French
+translation is "jardin d'enfants," three words that literally mean
+"garden of children."  Suppose that we have a German lexicon where the
+component nouns "Kinder" and "Garten" are also listed.  To maximize
+the chances of "Kindergarten" in the German half of a bitext being
+matched to a cognate in the opposite half of the bitext, independently
+of what language that other half is in, the tokenizer should generate
+one axis position for "Kindergarten," and extra axis positions for
+"Kinder" and for "garten."  If the axis generator sees "kindergarten"
+stretching from the 50th character to the 62nd character in a German
+text, it should output
+
+53.5 kinder
+56.5 kindergarten
+59.5 garten
+
+Where there are three or more words forming a compound, it is possible
+that one of the component words will have exactly the same median
+character position as the whole compound.  This is not a problem.  An
+axis may list more than one token for a given position. 
+
+Token positions on an axis must be listed lowest to highest.  Tokens
+at the same position must be adjacent in the list.
+
+When lexical cognates are not being used, the axis generator only
+needs to identify punctuation, numerals, and those character strings
+in the text which also appear on the relevant side of the translation
+lexicon. (Multi-word expressions in the translation lexicon can be
+treated just like any other character string.)  It would be pointless
+to plot other words on the axes because the matching predicate could
+never match them anyway.  Therefore, for languages like Chinese and
+Japanese, which are written without spaces between words, tokenization
+boils down to matching strings in the text with strings in the
+translation lexicon.  In this manner, SIMR circumvents the difficult
+word identification problems in these languages.
+ 
+Although SIMR doesn't care about segment boundaries, they are central
+to the process that converts SIMR's bitext maps to segment alignments.
+Therefore, the input axes must carry segment boundary information in
+the form of markers, such as <EOS>.  These markers must have a text
+position just like any other text token.  The exact string to be used
+as the end-of-segment marker is a parameter in the top-level
+GMA config file.  SIMR knows to ignore these markers, but they are
+necessary for the GSA post-processor, so your axis generator must
+supply them.  For example, if you're mapping the two-segment text
+
+This is segment one.
+This is segment two.
+
+then your axis generator should produce something like this:
+
+2.5  This
+6.5  is
+12   segment
+18   one
+20   .
+21   <EOS>
+23.5 This
+27.5 is
+33   segment
+39   two
+41   .
+42   <EOS>
+
+If your segments happen to be sentences, you might want to check out
+Adwait Ratnaparkhi's mxterminator software for disambiguating
+end-of-sentence punctuation.  You can find it at 
+http://www.cis.upenn.edu/~adwait/statnlp.html.
+
+****************************************************************
+
+Our website:
+http:www/nlp.cs.nyu.edu/GMA

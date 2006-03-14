@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+
+#######################################################################
+# Author:  I. Dan Melamed
+# Computes: median positions of tokens in a text
+# Streams:  output of tokposlen_WithEOLMark
+#######################################################################
+
+print "0 <EOS>\n"; # origin
+while (<>) {
+    if (/<(.*)>[^<>]*pos = (\d+).*len = (\d+)/) {
+        $tok = $nt = $1;
+        $start = $2;
+        $len = $3;
+        $pos = $start + ($len - 1) * .5;
+        if ($len == 0) {
+          print "$pos <EOS>\n";
+        } else {
+          print "$pos $tok\n";
+        };
+    } else {
+        die "$0: Problem with input: $_";
+    };
+};

@@ -1,0 +1,21 @@
+#!/usr/local/bin/perl
+
+# gives position and length of tokens separated by whitespace
+# positions start at 1
+
+$p = 1;
+while (<>) {
+    $li += length;
+    @tok=split(/\s/);
+    for (@tok) {
+	if (($l = length) > 0) {  # here $_ is the @tok element
+	    printf("%-25s %-8s pos = %-8d len = %-3d\n", "<$_>", "????", $p, $l);
+	};
+	$p+=$l+1;
+    };
+    if ($p < $li) {
+	$p = $li;
+    };
+    printf("%-25s %-8s pos = %-8d len = %-3d\n", "<>", "LINE", $p - 1, 0);
+};
+
