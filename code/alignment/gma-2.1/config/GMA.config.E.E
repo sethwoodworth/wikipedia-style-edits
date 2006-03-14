@@ -38,7 +38,8 @@
 ##
 ####################
 
-eosMarker = <EOS>
+eosMarker = eshoquai
+
 
 # SIMR parameters
 #
