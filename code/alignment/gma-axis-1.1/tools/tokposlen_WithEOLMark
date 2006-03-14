@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/bin/perl
 
 # gives position and length of tokens separated by whitespace
 # positions start at 1
