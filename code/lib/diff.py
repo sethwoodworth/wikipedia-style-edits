@@ -1,6 +1,5 @@
 import os
 import commands
-# This thing should
 
 class Differ:
     ''' This class is a little special-purpose.'''
