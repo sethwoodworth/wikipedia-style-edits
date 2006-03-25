@@ -52,3 +52,10 @@ all-sentences: all-paragraphs $(sentences)
 	( set -e ; cd  ~/dnet/collab/code/ ; python sentences2diffs.py  file:///dev/stdin ) \
 	| nice ~/bin/7za a -si /tmp/$*.diffedsentences.7z && scp /tmp/$*.diffedsentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.diffedsentences.7z  "
+
+%.matchedsentences.7z: %.diffedsentences.7z
+	~/dnet/run_on_machine.sh $*.diffedsentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.diffedsentences.7z | \
+	( set -e ; cd  ~/dnet/collab/code/ ; python diffs2matchedsentences.py  file:///dev/stdin ) \
+	| nice ~/bin/7za a -si /tmp/$*.matchedsentences.7z && scp /tmp/$*.matchedsentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.matchedsentences.7z  "
+
