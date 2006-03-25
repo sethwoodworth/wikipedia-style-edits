@@ -1,5 +1,5 @@
-from operator import itemgetter
-from heapq import nlargest
+#from operator import itemgetter
+#from heapq import nlargest
 
 class bag(object):
 
@@ -88,10 +88,11 @@ class bag(object):
     def itercounts(self):
         return self._data.iteritems()     
 
-    def mostcommon(self, n=None):
-        if n is None:
-            return sorted(self.itercounts(), key=itemgetter(1), reverse=True)
-        it = enumerate(self.itercounts())
-        nl = nlargest(n, ((cnt, i, elem) for (i, (elem, cnt)) in it))
-        return [(elem, cnt) for cnt, i, elem in nl]
-
+#    def mostcommon(self, n=None):
+#        if n is None:
+#            return sorted(self.itercounts(), key=itemgetter(1), reverse=True)
+#        it = enumerate(self.itercounts())
+#        nl = nlargest(n, ((cnt, i, elem) for (i, (elem, cnt)) in it))
+#        return [(elem, cnt) for cnt, i, elem in nl]
+## Commented out by Asheesh because it doesn't work in Python 2.3 and I
+## don't need it
