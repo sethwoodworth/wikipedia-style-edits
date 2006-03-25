@@ -53,8 +53,6 @@ def hunks2sentencepairs(hunks):
     all_news = {} # same deal
     for hunk in hunks:
         for new in hunk.news:
-            if new == '':
-                print 'YOW'
             if new not in all_news:
                 all_news[new] = []
             all_news[new].append(hunk)
