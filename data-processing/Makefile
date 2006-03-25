@@ -4,6 +4,8 @@
 
 7ZIP=/usr/bin/7za
 
+.PHONY : chunksizes paragraphs sentences all-paragraphs all-sentences
+
 TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 
 chunksizes := $(patsubst %.chunk.7z,%.chunk.size,$(wildcard *.chunk.7z))
