@@ -124,7 +124,7 @@ def hunks2sentencepairs(hunks):
                         break
                     
 
-    ret = [ HunkOfSentences(olds=old, news=new)
+    ret = [ HunkOfSentences(olds=[old], news=[new])
             for (old, new) in almost_ret ]
     return ret
 
