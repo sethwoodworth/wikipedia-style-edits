@@ -13,7 +13,8 @@ class HunkOfSentences:
         self.news = news
 
 def diff2hunks(s):
-    ''' This is for diff -u .'''
+    ''' This is for diff -u .  Also, I hate lines with only
+    whitespace.  I will remove them with extreme prejudice.'''
     almost_ret = []
     olds, news = [], []
     assert(not(olds is news))
@@ -35,7 +36,7 @@ def diff2hunks(s):
                 news.append(line[1:])
     if olds or news:
         almost_ret.append( (olds, news) )
-    ret = [ HunkOfSentences(olds=olds, news=news)
+    ret = [ HunkOfSentences(olds=[old for old in olds if old.strip()], news=[new for new in news if new.strip()])
             for (olds, news) in almost_ret ]
     return ret
 
