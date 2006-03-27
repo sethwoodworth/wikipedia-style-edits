@@ -111,7 +111,7 @@ def hunks2sentencepairs(hunks):
             competitors = make_sorted_competitors(new = new, olds = hunk.olds)
             KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new=new)
             if KEEP_GOING: # Then try all the other hunks, too.
-                olds = [ not_this_hunk.old for not_this_hunk in hunks if not_this_hunk is not hunk ] 
+                olds = [ not_this_hunk.olds for not_this_hunk in hunks if not_this_hunk is not hunk ] 
                 competitors = make_sorted_competitors(new = new, olds = olds)
                 append_good_competitor(src=competitors, dst=almost_ret, new=new)
 
