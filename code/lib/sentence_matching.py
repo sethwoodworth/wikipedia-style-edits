@@ -42,6 +42,7 @@ def diff2hunks(s):
 def make_sorted_competitors(new, olds):
     competitors = []
     for old in olds:
+        print type(old)
         competitors.append( (jaccard_two_sentences(old, new), old, olds) )
     competitors.sort()
     return competitors
