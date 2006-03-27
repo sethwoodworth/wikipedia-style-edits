@@ -39,6 +39,23 @@ def diff2hunks(s):
             for (olds, news) in almost_ret ]
     return ret
 
+def make_sorted_competitors(new, olds):
+    competitors = []
+    for old in olds:
+        competitors.append( (jaccard_two_sentences(old, new), old, olds) )
+    competitors.sort()
+    return competitors
+
+def append_good_competitor(src, dst, new):
+    for (jaccard, old, olds) in src:
+        if jaccard < CUTOFF: # forget it; it's only getting worse
+            return False
+        else: # First time we're >= CUTFF
+            dst.append( ([old], [new]) ) # FIXME: This will break for pairs.
+            olds.remove(old) # FIXME pairs
+            return True
+            
+
 # For each new sentence mentioned by the diff, keep the best "good"
 # match (if any!) from the old revision.
 def hunks2sentencepairs(hunks):
@@ -91,37 +108,12 @@ def hunks2sentencepairs(hunks):
     # First, within the hunk.
     for hunk in hunks:
         for new in hunk.news:
-            competitors = [ (jaccard_two_sentences(old, new), old)
-                            for old in hunk.olds ]
-            competitors.sort()
-            KEEP_GOING=1
-            for (jaccard, old) in competitors:
-                if jaccard < CUTOFF:
-                    # forget it, it's only getting worse
-                    break
-                else:
-                    # First time we're >= cutoff
-                    # only first time because of the "break"
-                    almost_ret.append( ([old], [new]) )
-                    hunk.olds.remove(old)
-                    KEEP_GOING = 0
-                    break
+            competitors = make_sorted_competitors(new = new, olds = hunk.olds)
+            KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new=new)
             if KEEP_GOING: # Then try all the other hunks, too.
-                competitors = []
-                for other_hunk in hunks:
-                    if other_hunk is not hunk:
-                        competitors.extend(
-                            [ (jaccard_two_sentences(old, new), old, other_hunk)
-                              for old in other_hunk.olds ])
-                competitors.sort()
-                for (jaccard, old, other_hunk) in competitors:
-                    if jaccard < CUTOFF:
-                        # Well, it's only getting worse.
-                        break
-                    else:
-                        almost_ret.append( ([old], [new]) )
-                        other_hunk.olds.remove(old)
-                        break
+                olds = [ not_this_hunk.old for not_this_hunk in hunks if not_this_hunk is not hunk ] 
+                competitors = make_sorted_competitors(new = new, olds = olds)
+                append_good_competitor(src=competitors, dst=almost_ret, new=new)
 
     ret = [ HunkOfSentences(olds=old, news=new)
             for (old, new) in almost_ret ]
