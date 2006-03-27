@@ -123,29 +123,6 @@ def hunks2sentencepairs(hunks):
                         other_hunk.olds.remove(old)
                         break
 
-    # Fine, let's try pairs of sentences.
-    # Mostly the same code as above.  Sorrry about the dumb code duplication.
-##     for hunk in hunks:
-##         for k in range(len(hunk.news) - 1):
-##             pair = hunk.news[k:k+2]
-##             assert(len(pair) == 2) # I sure hope so.
-            
-##             competitors = []  # grow within-hunk competitor pairs now
-##             for i in range(len(hunk.olds) - 1):
-##                 oldpair = hunk.olds[i:i+2]
-##                 assert(len(oldpair) == 2)
-##                 competitors.append( (jaccard_two_sentences(' '.join(oldpair),
-##                                                            ' '.join(newpair)),
-##                                      oldpair) )
-##             competitors.sort()
-##             KEEP_GOING = 1
-##             for (jaccard, oldpair) in competitors:
-##                 if jaccard < CUTOFF: # forget it, it's only getting worse
-##                     break
-##                 else: # only first time we're >= CUTOFF
-##                     almost_ret.append( oldpair
-                    
-
     ret = [ HunkOfSentences(olds=old, news=new)
             for (old, new) in almost_ret ]
     return ret
