@@ -39,11 +39,11 @@ def diff2hunks(s):
             for (olds, news) in almost_ret ]
     return ret
 
-def make_sorted_competitors(new, olds):
+def make_sorted_competitors(new, oldss):
     competitors = []
-    for old in olds:
-        print type(old)
-        competitors.append( (jaccard_two_sentences(old, new), old, olds) )
+    for olds in oldss:
+        for old in olds:
+            competitors.append( (jaccard_two_sentences(old, new), old, olds) )
     competitors.sort()
     return competitors
 
@@ -109,11 +109,11 @@ def hunks2sentencepairs(hunks):
     # First, within the hunk.
     for hunk in hunks:
         for new in hunk.news:
-            competitors = make_sorted_competitors(new = new, olds = hunk.olds)
+            competitors = make_sorted_competitors(new = new, oldss = [hunk.olds])
             KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new=new)
             if KEEP_GOING: # Then try all the other hunks, too.
                 olds = [ not_this_hunk.olds for not_this_hunk in hunks if not_this_hunk is not hunk ] 
-                competitors = make_sorted_competitors(new = new, olds = olds)
+                competitors = make_sorted_competitors(new = new, oldss = olds)
                 append_good_competitor(src=competitors, dst=almost_ret, new=new)
 
     ret = [ HunkOfSentences(olds=old, news=new)
