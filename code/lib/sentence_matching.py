@@ -204,6 +204,17 @@ def jaccard_two_sentences(from_s, to_s):
 # Possibly look for matches between 1 new and 2 old sentences, or
 # vice-versa.
 
+def format_hunk_list(l):
+    ret = ''
+    for hunk in l:
+        for old in hunk.olds:
+            assert('\n' not in old)
+            ret += '-' + old + '\n'
+        for new in hunk.news:
+            assert('\n' not in new)
+            ret += '+' + new + '\n'
+    return ret # That's a wrap!
+    
 
 def transform(s):
     ''' Takes the output of diff as input, since that what is XMLified.
@@ -212,14 +223,6 @@ def transform(s):
     Some number of lines preceded by "-" that indicate the thing that got replaced.
     Some number of lines preceded by "+" that indicate the thing that replaced it.
     There is no explicit delimeter except the unambiguous implicit delimiting based on + -> -.'''
-    ret = ''
     diffhunks = diff2hunks(s)
     sentencepairs = hunks2sentencepairs(diffhunks)
-    for hunk in sentencepairs:
-        for old in hunk.olds:
-            assert('\n' not in old)
-            ret += '-' + old + '\n'
-        for new in hunk.news:
-            assert('\n' not in new)
-            ret += '+' + new + '\n'
-    return ret # That's a wrap!
+    return format_hunk_list(sentencepairs)
