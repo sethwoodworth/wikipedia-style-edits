@@ -1,1 +1,7 @@
 * There are empty revisions.  They look like dumb page-deletion vandalism.  What to do?
+
+
+      <text xml:space="preserve">-Can Slackware really be held to be more popular or better-known than Debian?
++Therefore, "the best-known examples are Debian, Red Hat and SuSE." Can Slackware really be held to be more popular or better-known than Debian?</text>
+
+This is a problem with the maxent sentence termination model we're using.
