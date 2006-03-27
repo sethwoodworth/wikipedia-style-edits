@@ -27,6 +27,10 @@ def all_these_are_function_words(l):
     return True
 
 def subtract_same_position_bonus(value, i, j):
+    '''It would be nice to take word order into account.  If two words
+    are in the same position in the sentence (via a word-by-word
+    diff), then you could give them some more leeway on the edit
+    distance (e.g., accept nite vs. night ...).'''
     if i == j:
         return value - SAME_POSITION_BONUS
     return value
