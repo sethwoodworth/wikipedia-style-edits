@@ -1,4 +1,5 @@
 import re
+import sys
 ## Once you have a matched pair, mark it in the corpus as a STYLISTIC
 ## edit if each of the unmatched words on each side is either a spelling
 ## variant of something on the other side -- e.g., low edit distance to
@@ -64,15 +65,43 @@ def is_hunk_style_edit(hunk):
         competitors.sort()
         # Now latch onto the first good one:
         if not competitors:
-            return break # Get out of here!  Check for function words now.
+            break # Get out of here!  Check for function words now.
         best_distance, best_j = competitors[0]
         if best_distance <= MAX_EDIT_DISTANCE:
             # To avoid modifying the indices in terrible ways, we'll just
             # replace things we want "deleted" with the word "a", a known
             # function word
-            new_tokens[i] = "a"
-            old_tokens[j] = "a"
+            new_tokens[i] = u"a"
+            old_tokens[j] = u"a"
 
     # Now, see if what remains is just function words
     return all_these_are_function_words(new_tokens) and \
            all_these_are_function_words(old_tokens)
+
+from sentence_matching import HunkOfSentences, format_hunk_list
+
+def plus_and_minus2hunks(s):
+    lines = s.split('\n')
+    minuses = []
+    plusses = []
+    for line in lines:
+        # Look for minus lines first.
+        if line[0] == '-' and plusses: # then reset state
+            yield HunkOfSentences(olds=minuses, news=plusses)
+            minuses, plusses = [], []
+        if line[0] == '-':
+            minuses.append(line[1:])
+        elif line[0] == '+':
+            plusses.append(line[1:])
+    # at the end of the day, be sure to yield the last one
+    if minuses or plusses:
+        yield HunkOfSentences(olds=minuses, news=plusses)
+
+def sub(s):
+    """Input: Lines like what sentence_matching's transform() outputs.
+    
+    Output: Lines like what sentence_matching's transform() outputs,
+    but probably fewer such lines."""
+    the_good_ones = [ hunk for hunk in plus_and_minus2hunks(s)
+                      if is_hunk_style_edit(hunk) ]
+    return format_hunk_list(the_good_ones)
