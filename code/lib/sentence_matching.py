@@ -126,11 +126,11 @@ def hunks2sentencepairs(hunks):
                 KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new_set=[new])
             if KEEP_GOING: # Then try 1-from-2 matching within this hunk
                 competitors = make_sorted_competitors(new = new, oldss = [hunk.olds], oldslicelen=2)
-                KEEP_GOING = not append_good_competitors(src=competitors, dst=almost_ret,new_set=[new])
+                KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret,new_set=[new])
             if KEEP_GOING: # Then try 1-from-2 matching within this hunk
                 olds = [ not_this_hunk.olds for not_this_hunk in hunks if not_this_hunk is not hunk ]
                 competitors = make_sorted_competitors(new = new, oldss = olds, oldslicelen=2)
-                KEEP_GOING = not append_good_competitor(src=competitor, dst=almost_ret, new_set=[new])
+                KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new_set=[new])
     # Whew.  Now, we just need 2-from-1 matching and we're set.
     
     ret = [ HunkOfSentences(olds=old, news=new)
