@@ -54,6 +54,7 @@ def make_sorted_competitors(new, oldss, oldslicelen):
                 old_jaccard_this = old_set[0]
             competitors.append( (jaccard_two_sentences(old_jaccard_this, new), old_set, olds) )
     competitors.sort()
+    competitors.reverse() # YOW!  This way the best is first.
     return competitors
 
 def append_good_competitor(src, dst, new_set):

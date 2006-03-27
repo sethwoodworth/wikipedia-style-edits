@@ -63,6 +63,7 @@ def is_hunk_style_edit(hunk):
         competitors = [ (subtract_same_position_bonus(value, i, j), j)
                         for (value, j) in competitors ]
         competitors.sort()
+        competitors.reverse() # YOW!  Now the best is first.
         # Now latch onto the first good one:
         if not competitors:
             break # Get out of here!  Check for function words now.
