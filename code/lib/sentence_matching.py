@@ -56,16 +56,15 @@ def make_sorted_competitors(new, oldss, oldslicelen):
     competitors.sort()
     return competitors
 
-def append_good_competitor(src, dst, new):
+def append_good_competitor(src, dst, new_set):
     for (jaccard, old_set, olds) in src:
         if jaccard < CUTOFF: # forget it; it's only getting worse
             return False
         else: # First time we're >= CUTFF
-            dst.append( (old_set, [new]) ) # FIXME: This will break for pairs.
+            dst.append( (old_set, new_set) ) # FIXME: This will break for pairs.
             for old in old_set:
                 olds.remove(old)
             return True
-            
 
 # For each new sentence mentioned by the diff, keep the best "good"
 # match (if any!) from the old revision.
@@ -120,12 +119,13 @@ def hunks2sentencepairs(hunks):
     for hunk in hunks:
         for new in hunk.news:
             competitors = make_sorted_competitors(new = new, oldss = [hunk.olds], oldslicelen=1)
-            KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new=new)
+            KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new_set=[new])
             if KEEP_GOING: # Then try all the other hunks, too.
                 olds = [ not_this_hunk.olds for not_this_hunk in hunks if not_this_hunk is not hunk ] 
                 competitors = make_sorted_competitors(new = new, oldss = olds, oldslicelen=1)
-                append_good_competitor(src=competitors, dst=almost_ret, new=new)
-
+                KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new_set=[new])
+#            if KEEP_GOING: # Then try 1-from-2 matching within this hunk
+#                competitors = 
     ret = [ HunkOfSentences(olds=old, news=new)
             for (old, new) in almost_ret ]
     return ret
