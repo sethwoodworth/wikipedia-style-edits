@@ -17,13 +17,19 @@ import Levenshtein as lev # hard to type Levenshtein...
 f_word_regex = re.compile('^(' + '|'.join(f_words) + ')' + r'[^A-Za-z0-9]*$')
 is_f_word = f_word_regex.match
 
-MAX_EDIT_DISTANCE = 5 # That's pretty generous of me.
+MAX_EDIT_DISTANCE = 4 # That seems reasonable, eh?
+SAME_POSITION_BONUS = 2 # That special "oomph"
 
 def all_these_are_function_words(l):
     for thing in l:
         if thing not in f_words:
             return False
     return True
+
+def subtract_same_position_bonus(value, i, j):
+    if i == j:
+        return value - SAME_POSITION_BONUS
+    return value
 
 def is_hunk_style_edit(hunk):
     old_tokens = []
@@ -35,13 +41,34 @@ def is_hunk_style_edit(hunk):
 
     new_index = 0
     old_index = 0
-    while new_index < len(new):
-        new_word = new_tokens[new_index]
-        old_word = old_tokens[old_index]
-        if lev.distance(old_word, new_word) > MAX_EDIT_DISTANCE:
-            pass
-            
 
-    for k in range(len(new_tokens)):
-        if k >= len(old_tokens):
-            return all_these_are_function_words
+    # Remove all identical tokens
+    for new_token in new_tokens:
+        ## A data structure with faster than O(n) search would be useful here.
+        if new_token in old_tokens:
+            new_tokens.remove(new_token)
+            old_tokens.remove(new_token)
+
+    # Now look for spelling variants
+    ## Note: This will not catch "fumbledthe" -> "fumbled the"
+    for i in range(len(new_tokens)):
+        new_token = new_tokens[i]
+        competitors = [ (lev.distance(old_tokens[j], new_token), j)
+                        for j in range(len(old_tokens)) ]
+        competitors = [ (subtract_same_position_bonus(value, i, j), j)
+                        for (value, j) in competitors ]
+        competitors.sort()
+        # Now latch onto the first good one:
+        if not competitors:
+            return break # Get out of here!  Check for function words now.
+        best_distance, best_j = competitors[0]
+        if best_distance <= MAX_EDIT_DISTANCE:
+            # To avoid modifying the indices in terrible ways, we'll just
+            # replace things we want "deleted" with the word "a", a known
+            # function word
+            new_tokens[i] = "a"
+            old_tokens[j] = "a"
+
+    # Now, see if what remains is just function words
+    return all_these_are_function_words(new_tokens) and \
+           all_these_are_function_words(old_tokens)
