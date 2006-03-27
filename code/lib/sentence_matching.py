@@ -39,21 +39,31 @@ def diff2hunks(s):
             for (olds, news) in almost_ret ]
     return ret
 
-def make_sorted_competitors(new, oldss):
+def make_sorted_competitors(new, oldss, oldslicelen):
     competitors = []
     for olds in oldss:
-        for old in olds:
-            competitors.append( (jaccard_two_sentences(old, new), old, olds) )
+        if oldslicelen == 1:
+            try_this_many = len(olds)
+        elif oldslicelen == 2:
+            try_this_many = len(olds) - 1
+        for k in range(try_this_many):
+            old_set = olds[k:k + oldslicelen]
+            if len(old_set) > 1:
+                old_jaccard_this = ' '.join(old_set)
+            else:
+                old_jaccard_this = old_set[0]
+            competitors.append( (jaccard_two_sentences(old_jaccard_this, new), old_set, olds) )
     competitors.sort()
     return competitors
 
 def append_good_competitor(src, dst, new):
-    for (jaccard, old, olds) in src:
+    for (jaccard, old_set, olds) in src:
         if jaccard < CUTOFF: # forget it; it's only getting worse
             return False
         else: # First time we're >= CUTFF
-            dst.append( ([old], [new]) ) # FIXME: This will break for pairs.
-            olds.remove(old) # FIXME pairs
+            dst.append( (old_set, [new]) ) # FIXME: This will break for pairs.
+            for old in old_set:
+                olds.remove(old)
             return True
             
 
@@ -109,11 +119,11 @@ def hunks2sentencepairs(hunks):
     # First, within the hunk.
     for hunk in hunks:
         for new in hunk.news:
-            competitors = make_sorted_competitors(new = new, oldss = [hunk.olds])
+            competitors = make_sorted_competitors(new = new, oldss = [hunk.olds], oldslicelen=1)
             KEEP_GOING = not append_good_competitor(src=competitors, dst=almost_ret, new=new)
             if KEEP_GOING: # Then try all the other hunks, too.
                 olds = [ not_this_hunk.olds for not_this_hunk in hunks if not_this_hunk is not hunk ] 
-                competitors = make_sorted_competitors(new = new, oldss = olds)
+                competitors = make_sorted_competitors(new = new, oldss = olds, oldslicelen=1)
                 append_good_competitor(src=competitors, dst=almost_ret, new=new)
 
     ret = [ HunkOfSentences(olds=old, news=new)
