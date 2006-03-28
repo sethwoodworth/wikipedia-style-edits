@@ -11,9 +11,10 @@ class Differ:
     def _save(self, datum):
         """ Take datum as input.  Stash it away in a file somewhere.
         Also delete the old 'last'. """
+        assert(type(datum) == type(u''))
         filename = os.tempnam()
         fd = open(filename, 'w')
-        fd.write(datum)
+        fd.write(datum.encode('utf-8')) # Better explicit than implicit
         fd.write('\n') # just in case
         fd.close()
         if self.lastlast is not None:
@@ -50,7 +51,7 @@ class Differ:
         if last is None:
             return ''
         # Okay, so now we actually diff.
-        return commands.getoutput('diff --text -u --minimal %s %s' % (last, this))
+        return unicode(commands.getoutput('diff --text -u --minimal %s %s' % (last, this)), 'utf-8')
 
 class DiffParser:
     def __init__(self, s):
