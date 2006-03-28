@@ -28,7 +28,8 @@ class sevenpipe:
 		self.flush()
 
 	def flush(self):
-		self.pipe.write(''.join(self.buffer))
+		for thing in self.buffer:
+			self.pipe.write(thing)
 		self.buffered_now = 0
 		self.buffer = []
 
