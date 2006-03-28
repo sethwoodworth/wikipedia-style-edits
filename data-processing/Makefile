@@ -11,6 +11,9 @@ TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 chunksizes := $(patsubst %.chunk.7z,%.chunk.size,$(wildcard *.chunk.7z))
 paragraphs := $(patsubst %.chunk.7z,%.paragraphs.7z,$(wildcard *.chunk.7z))
 sentences := $(patsubst %.chunk.7z,%.sentences.7z,$(wildcard *.chunk.7z))
+whitespacenormalizedsentences := $(patsubst %.chunk.7z,%.whitespacenormalizedsentences.7z,$(wildcard *.chunk.7z))
+diffedsentences := $(patsubst %.chunk.7z,%.diffedsentences.7z,$(wildcard *.chunk.7z))
+matchedsentences := $(patsubst %.chunk.7z,%.matchedsentences.7z,$(wildcard *.chunk.7z))
 
 *.done:
 
@@ -37,9 +40,21 @@ makefile-test:
 	| nice ~/bin/7za a -si /tmp/$*.sentences.7z && scp /tmp/$*.sentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.sentences.7z  "
 
+%.whitespacenormalizedsentences.7z: %.sentences.7z
+	~/dnet/run_on_machine.sh $*.sentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.sentences.7z | \
+	( set -e ; cd  ~/dnet/collab/code/ ; nice python sentences2whitespacenormalized.py  file:///dev/stdin ) \
+	| nice ~/bin/7za a -si /tmp/$*.whitespacenormalizedsentences.7z && scp /tmp/$*.whitespacenormalizedsentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.whitespacenormalizedsentences.7z  "
+
 all-paragraphs: $(paragraphs)
 
 all-sentences: all-paragraphs $(sentences)
+
+all-whitespacenormalizedsentences: all-sentences $(whitespacenormalizedsentences)
+
+all-diffedsentences: all-whitespacenormalizedsentences $(diffedsentences)
+
+all-matchedsentences: all-diffedsentences $(matchedsentences)
 
 %.revision-index.csv: %.7z
 	~/dnet/run_on_machine.sh $*.7z " set -e ; ~/bin/7za e -so /tmp/$*.7z | \
@@ -49,8 +64,8 @@ all-sentences: all-paragraphs $(sentences)
 	~/dnet/run_on_machine.sh $*.7z " set -e ; ~/bin/7za e -so /tmp/$*.7z | \
 	python ~/dnet/collab/code/create_title_index.py " > $*.title-index.csv
 
-%.diffedsentences.7z: %.sentences.7z
-	~/dnet/run_on_machine.sh $*.sentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.sentences.7z | \
+%.diffedsentences.7z: %.whitespacenormalizedsentences.7z
+	~/dnet/run_on_machine.sh $*.whitespacenormalizedsentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.whitespacenormalizedsentences.7z | \
 	( set -e ; cd  ~/dnet/collab/code/ ; python sentences2diffs.py  file:///dev/stdin ) \
 	| nice ~/bin/7za a -si /tmp/$*.diffedsentences.7z && scp /tmp/$*.diffedsentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.diffedsentences.7z  "
