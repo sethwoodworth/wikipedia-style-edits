@@ -221,7 +221,7 @@ def sub(s):
     # Now do my magic markup model
     for regex, replacement in compileds:
         unicodetext = regex.sub(replacement, unicodetext)
-    return unicodetext.encode('utf-8')
+    return unicodetext
 
 
 # Each bullet point should be its own paragraph.
