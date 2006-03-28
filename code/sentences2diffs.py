@@ -1,9 +1,6 @@
 #!/usr/bin/python
 from lib.diff import Differ
 from lib.text_normalize_filter_with_article_name import text_normalize_filter
-import sys # HACK ALERT
-reload(sys)
-sys.setdefaultencoding('utf-8')
 # Stage 1:
 
 # Use SAX to write a program
