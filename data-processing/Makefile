@@ -1,10 +1,11 @@
 # Written by Asheesh Laroia
 
 # FIXME: Do something smarter and move these into place only if they're generated correctly, I guess
+## Strategy: Suffix many operations with "|| rm /tmp/whatever"
 
 7ZIP=/usr/bin/7za
 
-.PHONY : chunksizes paragraphs sentences all-paragraphs all-sentences
+.PHONY : chunksizes paragraphs sentences all-paragraphs all-sentences all-whitespacenormalizedsentences all-diffedsentences all-matchedsentences all-styleedits
 
 TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 
@@ -14,6 +15,7 @@ sentences := $(patsubst %.chunk.7z,%.sentences.7z,$(wildcard *.chunk.7z))
 whitespacenormalizedsentences := $(patsubst %.chunk.7z,%.whitespacenormalizedsentences.7z,$(wildcard *.chunk.7z))
 diffedsentences := $(patsubst %.chunk.7z,%.diffedsentences.7z,$(wildcard *.chunk.7z))
 matchedsentences := $(patsubst %.chunk.7z,%.matchedsentences.7z,$(wildcard *.chunk.7z))
+styleedits := $(patsubst %.chunk.7z,%.styleedits.7z,$(wildcard *.chunk.7z))
 
 *.done:
 
@@ -56,6 +58,9 @@ all-diffedsentences: all-whitespacenormalizedsentences $(diffedsentences)
 
 all-matchedsentences: all-diffedsentences $(matchedsentences)
 
+all-styleedits: $(styleedits)
+# No dependency.  Let's see...
+
 %.revision-index.csv: %.7z
 	~/dnet/run_on_machine.sh $*.7z " set -e ; ~/bin/7za e -so /tmp/$*.7z | \
 	python ~/dnet/collab/code/create_revision_index.py " > $*.revision-index.csv
@@ -75,4 +80,10 @@ all-matchedsentences: all-diffedsentences $(matchedsentences)
 	( set -e ; cd  ~/dnet/collab/code/ ; python diffs2matchedsentences.py  file:///dev/stdin ) \
 	| nice ~/bin/7za a -si /tmp/$*.matchedsentences.7z && scp /tmp/$*.matchedsentences.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.matchedsentences.7z  "
+
+%.styleedits.7z: %.matchedsentences.7z
+	~/dnet/run_on_machine.sh $*.matchedsentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.matchedsentences.7z | \
+	( set -e ; cd  ~/dnet/collab/code/ ; python matches2styleedits.py  file:///dev/stdin ) \
+	| nice ~/bin/7za a -si /tmp/$*.styleedits.7z && scp /tmp/$*.styleedits.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.styleedits.7z  "
 
