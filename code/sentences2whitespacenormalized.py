@@ -1,9 +1,6 @@
 #!/usr/bin/python
 from lib.diff import Differ
 from lib.text_normalize_filter import text_normalize_filter
-import sys # HACK ALERT
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 def sub(s):
     ''' This function takes a series of lines as input.  It outputs
