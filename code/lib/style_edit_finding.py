@@ -23,7 +23,7 @@ SAME_POSITION_BONUS = 2 # That special "oomph"
 
 def all_these_are_function_words(l):
     for thing in l:
-        if thing not in f_words:
+        if not is_f_word(thing):
             return False
     return True
 
