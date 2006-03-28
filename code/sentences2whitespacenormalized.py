@@ -36,7 +36,7 @@ if __name__ == "__main__":
     #SAX events back into an XML document
     downstream_handler = XMLGenerator(encoding='utf-8')
     #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler, d.feed)
+    filter_handler = text_normalize_filter(parser, downstream_handler, sub)
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method
