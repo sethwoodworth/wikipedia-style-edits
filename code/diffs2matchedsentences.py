@@ -5,9 +5,6 @@ except:
 	pass # oh, well
 from lib.sentence_matching import transform as sub
 from lib.text_normalize_filter import text_normalize_filter
-import sys # HACK ALERT
-reload(sys)
-sys.setdefaultencoding('utf-8')
 # Stage 1:
 
 # Use SAX to write a program
