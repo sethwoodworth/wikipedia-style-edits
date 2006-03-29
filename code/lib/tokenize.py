@@ -3,7 +3,6 @@ import commands
 import tempfile
 import os
 import string
-import rwpopen
 #import nltk.token
 #import nltk.tokenizer
 url = r'((http:\/\/)?[A-Za-z]+(\.[A-Za-z]+){1,3}(\/)?(:\d+)?)'
