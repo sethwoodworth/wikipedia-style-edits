@@ -1,16 +1,24 @@
 import bag
 import re
 from sets import Set
-CUTOFF=0.38
-# Function words from http://www.webconfs.com/stop-words.php
+CUTOFF=0.42 # ?...
+# Here's what I believe: I believe that the best match will be fairly
+# obvious, and that it's not a huge problem if the next stage of
+# processing gets given too many "matching" sentences.
 
+# I'm more worried about the opposite problem, in fact - that we
+# accidentally omit data from the next stage.
+
+# Eisner wanted the Jaccard value to be made available to later
+# processing.  Fine.
 
 # Diff the two revisions.
 ## This code forgets how far diff hunks were away from each other.
 class HunkOfSentences:
-    def __init__(self, olds, news):
+    def __init__(self, olds, news, confidence=-1):
         self.olds = olds
         self.news = news
+        self.confidence = confidence # Confidence of -1 means unknown
 
 def diff2hunks(s):
     ''' This is for diff -u .  Also, I hate lines with only
@@ -63,7 +71,7 @@ def append_good_competitor(src, dst, new_set):
         if jaccard < CUTOFF: # forget it; it's only getting worse
             return False
         else: # First time we're >= CUTFF
-            dst.append( (old_set, new_set) ) # FIXME: This will break for pairs.
+            dst.append( (old_set, new_set, jaccard) )
             for old in old_set:
                 olds.remove(old)
             return True
@@ -158,8 +166,8 @@ def hunks2sentencepairs(hunks):
                     hunk.news.remove(new_set[0]) ; hunk.news.remove(new_set[1])
             
     
-    ret = [ HunkOfSentences(olds=old, news=new)
-            for (old, new) in almost_ret ]
+    ret = [ HunkOfSentences(olds=old, news=new, confidence=value)
+            for (old, new, value) in almost_ret ]
     return ret
 
 from tokenize import tokenize
@@ -202,6 +210,7 @@ def jaccard_two_sentences(from_s, to_s):
 
 def format_hunk_list(l):
     ret = ''
+    ret += str(l.confidence) + "\n"
     for hunk in l:
         for old in hunk.olds:
             assert('\n' not in old)

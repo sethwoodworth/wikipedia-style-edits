@@ -83,20 +83,22 @@ from sentence_matching import HunkOfSentences, format_hunk_list
 
 def plus_and_minus2hunks(s):
     lines = s.split('\n')
+    confid = -1
     minuses = []
     plusses = []
     for line in lines:
-        # Look for minus lines first.
-        if line[0] == '-' and plusses: # then reset state
-            yield HunkOfSentences(olds=minuses, news=plusses)
+        # Look for a number line first.  
+        if line[0] != '-' and line[0] != '+' and plusses: # then reset state
+            yield HunkOfSentences(olds=minuses, news=plusses, confidence=confid)
+            confid = int(line)
             minuses, plusses = [], []
-        if line[0] == '-':
+        elif line[0] == '-':
             minuses.append(line[1:])
         elif line[0] == '+':
             plusses.append(line[1:])
     # at the end of the day, be sure to yield the last one
     if minuses or plusses:
-        yield HunkOfSentences(olds=minuses, news=plusses)
+        yield HunkOfSentences(olds=minuses, news=plusses, confidence=confid)
 
 def sub(s):
     """Input: Lines like what sentence_matching's transform() outputs.
