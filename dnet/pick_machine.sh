@@ -1,5 +1,5 @@
 #!/bin/sh
-MAX=19
+MAX=52
 
 # Calculate last_line + 1
 touch /tmp/last_line
