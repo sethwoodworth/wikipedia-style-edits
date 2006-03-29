@@ -10,4 +10,4 @@ let "LAST= LAST % $MAX + 1"
 echo $LAST > /tmp/last_line
 
 # Now print the machine
-head -n$LAST ~/dnet/machines  | tail -n1
+head -n$LAST ~/dnet/machines.randomized  | tail -n1
