@@ -180,8 +180,8 @@ t = tokenize.TreebankSedExpecter()
 def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
-    from_list = [s.lower() for s in t.filter_line(from_s)]
-    to_list   = [s.lower() for s in t.filter_line(to_s)  ]
+    from_list = [s.lower() for s in t.tokenize(from_s)]
+    to_list   = [s.lower() for s in t.tokenize(to_s)  ]
 
     # bag it
     from_bag = bag.bag(from_list)

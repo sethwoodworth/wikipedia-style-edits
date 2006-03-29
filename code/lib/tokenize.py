@@ -43,6 +43,8 @@ class TreebankSedExpecter:
         out = self.sed.readline().rstrip()
         unicode_out = unicode(out, 'utf-8')
         return unicode_out.strip()
+    def tokenize(self, u):
+        return self.filter_line(u).split()
 
 if __name__ == '__main__':
     import sys
