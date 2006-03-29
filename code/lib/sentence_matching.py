@@ -2,6 +2,7 @@ import bag
 import re
 from sets import Set
 CUTOFF=0.42 # ?...
+
 # Here's what I believe: I believe that the best match will be fairly
 # obvious, and that it's not a huge problem if the next stage of
 # processing gets given too many "matching" sentences.
@@ -170,13 +171,17 @@ def hunks2sentencepairs(hunks):
             for (old, new, value) in almost_ret ]
     return ret
 
-from tokenize import tokenize
+# LAME:
+# On module init, I'll open a pipe to sed.
+# Sosumi.
+import tokenize
+t = tokenize.TreebankSedExpecter()
 
 def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
-    from_list = [s.lower() for s in tokenize(from_s)]
-    to_list   = [s.lower() for s in tokenize(to_s)  ]
+    from_list = [s.lower() for s in t.filter_line(from_s)]
+    to_list   = [s.lower() for s in t.filter_line(to_s)  ]
 
     # bag it
     from_bag = bag.bag(from_list)
@@ -225,9 +230,10 @@ def transform(s):
     ''' Takes the output of diff as input, since that what is XMLified.
     Returns
     TAKE NOTE: The data format of this is:
+    Some NUMBER on a line of its own that represents confidence.
     Some number of lines preceded by "-" that indicate the thing that got replaced.
     Some number of lines preceded by "+" that indicate the thing that replaced it.
-    There is no explicit delimeter except the unambiguous implicit delimiting based on + -> -.'''
+    There is the explicit delimeter of confidence value.'''
     diffhunks = diff2hunks(s)
     sentencepairs = hunks2sentencepairs(diffhunks)
     return format_hunk_list(sentencepairs)
