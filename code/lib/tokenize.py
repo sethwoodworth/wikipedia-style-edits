@@ -28,19 +28,26 @@ def nltk_tokenize(u):
         ret.extend(thing.values())
     return ret
 
-def treebank_tokenize_lines(u):
-    if type(u) == type(''):
-        u = unicode(u)
-    assert(type(u) == type(u''))
-    s = u.encode('utf-8') # still sad
-    out = rwpopen.rwpopen(s, "sed", ["-f", "tokenizer.sed"])
-    unicode_out = unicode(out, 'utf-8')
-    return [line.strip().split(' ') for line in unicode_out.split('\n') if line]
+import pexpect
+class TreebankSedExpecter:
+    def __init__(self):
+        self.sed = pexpect.spawn("sed", ["-f", "tokenizer.sed"])
+        self.sed.setecho(False)
+        self.sed.delaybeforesend = 0
+
+    def filter_line(self, u):
+        if type(u) == type(''):
+            u = unicode(u)
+        assert(type(u) == type(u''))
+        s = u.encode('utf-8') # still sad
+        self.sed.sendline(u.rstrip())
+        out = self.sed.readline().rstrip()
+        unicode_out = unicode(out, 'utf-8')
+        return unicode_out.strip()
 
 if __name__ == '__main__':
     import sys
+    t = TreebankSedExpecter()
     for line in sys.stdin:
-        val = treebank_tokenize_lines(line)
-        if val:
-            print ' '.join(treebank_tokenize_lines(line)[0])
+        print t.filter_line(line)
     
