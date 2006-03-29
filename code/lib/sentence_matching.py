@@ -177,6 +177,14 @@ def hunks2sentencepairs(hunks):
 import tokenize
 t = tokenize.TreebankSedExpecter()
 
+def test_jaccard():
+    for from_s, to_s, exp_val in (
+        ("a a b b b b c c d d", "c c c x x b y z", 0.2),
+        ("ab b b", "ab b b", 1.0)):
+        assert(jaccard_two_sentences(from_s, to_s) == exp_val)
+    print "Everything is swell."
+
+
 def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
