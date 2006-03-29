@@ -1,5 +1,6 @@
 import bag
 import re
+from sets import Set
 CUTOFF=0.38
 # Function words from http://www.webconfs.com/stop-words.php
 
@@ -94,7 +95,7 @@ def hunks2sentencepairs(hunks):
         if new in all_olds:
             # Then remove from both containing hunks
             assert(not(all_olds[new][0].olds is all_news[new][0].news))
-            all_olds[new][0].olds.remove(new) # SOMETHING EVIL HAPPENS HERE
+            all_olds[new][0].olds.remove(new)
             all_news[new][0].news.remove(new)
             # Clean up all_olds and all_news
             for thing in all_olds[new]:
@@ -176,24 +177,17 @@ def jaccard_two_sentences(from_s, to_s):
     # B, the count of x is the min (respectively sum) of its counts in
     # A and B.)
 
-    # Iterating over only one bag is safe because we only consider things
-    # in both bags anyway.
-    intersection_counts = [ min(from_bag[thing], to_bag[thing])
-                            for thing in from_bag.iterunique() ]
-    union_counts = [ sum( (from_bag[thing], to_bag[thing]) )
-                   for thing  in from_bag.iterunique() ]
-
-    # "size" prefix to avoid shadowing builtin sum()
-    size_intersection = sum(intersection_counts)
-    size_union = sum(union_counts)
-
+    union_count = 0
+    intersection_count = 0
+    keys = Set()
+    keys.update(from_bag.iterunique())
+    keys.update(to_bag.iterunique())
+    for thing in keys:
+        union_count += max(to_bag[thing],from_bag[thing])
+        intersection_count += min(to_bag[thing],from_bag[thing])
+        
     # Jaccard's coefficient: size of intersection over size of union.
-    return float(size_intersection) / float(size_union)
-
-
-
-    
-
+    return float(intersection_count) / float(union_count)
 
 # Prefer a good match within the same diff hunk to a match from a
 # different diff hunk.
