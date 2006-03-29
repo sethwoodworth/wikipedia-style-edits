@@ -9,4 +9,4 @@ for from_s, to_s in (
     ('Towns and muncipalities','Towns and municipalities'),
     ('Air Canada A330', 'Airbus A330-300 of Air Canada (C-GHLM) on the approach to London (Heathrow) Airport.'),
     ('Martin Luther defended his teachings and calls for reform from April 16 - April 18, 1521, and refused to recant.','Luther was called upon to recant his teachings, yet he defended them and called for reform from April 16 - April 18, 1521.')):
-    print jaccard_two_sentences(from_s, to_s), "Via: {%s} {%s}" % (from_s, to_s)
+    print sentence_matching.jaccard_two_sentences(from_s, to_s), "Via: {%s} {%s}" % (from_s, to_s)
