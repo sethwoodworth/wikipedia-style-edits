@@ -3,6 +3,7 @@ import commands
 import tempfile
 import os
 import string
+import rwpopen
 #import nltk.token
 #import nltk.tokenizer
 url = r'((http:\/\/)?[A-Za-z]+(\.[A-Za-z]+){1,3}(\/)?(:\d+)?)'
@@ -32,14 +33,10 @@ def treebank_tokenize_lines(u):
         u = unicode(u)
     assert(type(u) == type(u''))
     s = u.encode('utf-8') # still sad
-    # Holy secure temp file handling, Batman!
-    fd, fname = tempfile.mkstemp()
-    os.write(fd, s)
-    os.close(fd)
-    out = commands.getoutput("sed -f tokenizer.sed < " + fname)
+    out = rwpopen.rwpopen(s, "sed", ["-f", "tokenizer.sed"])
     unicode_out = unicode(out, 'utf-8')
-    os.unlink(fname)
     return [line.strip().split(' ') for line in unicode_out.split('\n') if line]
+
 if __name__ == '__main__':
     import sys
     for line in sys.stdin:

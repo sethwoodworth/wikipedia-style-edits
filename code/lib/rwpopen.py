@@ -1,5 +1,6 @@
 # From http://www.faqts.com/knowledge_base/view.phtml/aid/4448
 import os
+import sys
 """
 Packages: files;miscellaneous
 """
