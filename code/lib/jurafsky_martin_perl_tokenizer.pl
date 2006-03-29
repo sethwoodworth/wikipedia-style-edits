@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+
+## Taken from http://www.cs.colorado.edu/~martin/SLP/Updates/3.pdf
+
 $letternumber = "[A-Za-z0-9]";
 $notletter = "[ˆA-Za-z0-9]";
 $alwayssep = "[\\?!()\";/\\|‘]";
