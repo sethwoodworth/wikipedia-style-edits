@@ -162,12 +162,13 @@ def hunks2sentencepairs(hunks):
             for (old, new) in almost_ret ]
     return ret
 
-tokenizer = re.compile(r'[\s-]')
+from tokenize import tokenize
+
 def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
-    from_list = [s.lower() for s in tokenizer.split(from_s)]
-    to_list   = [s.lower() for s in tokenizer.split(to_s)  ]
+    from_list = [s.lower() for s in tokenize(from_s)]
+    to_list   = [s.lower() for s in tokenize(to_s)  ]
 
     # bag it
     from_bag = bag.bag(from_list)
