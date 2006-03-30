@@ -111,7 +111,7 @@ def make_improved_old(old, new):
     do_these = only_typo_editops(eo)
 
     # Now, do them to old
-    return lev.apply_edit(eo, old, new)
+    return lev.apply_edit(do_these, old, new)
 
 def make_sorted_competitors(new, oldss, oldslicelen):
     competitors = []
