@@ -18,6 +18,12 @@ Data to analyze:
 * What do the matchedsentences look like?
 * Is "styleedits.7z" plausible?
 
+--
+
+Clean up better after explosions.
+
+* Look into explosions involving sed...
+
 ---
 
 Northup suggests:
