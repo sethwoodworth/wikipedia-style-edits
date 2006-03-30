@@ -54,11 +54,13 @@ def test_only_typo_editops():
     e2 = [('replace', 2, 2), ('replace', 3, 3), ('replace', 10, 10), ('replace', 11, 11)]
     e3 = [('insert', 0, 0), ('insert', 0, 1), ('insert', 0, 2), ('insert', 0, 3), ('insert', 0, 4)]
     e4 = [('insert', 0, 0), ('insert', 0, 1), ('insert', 0, 2), ('insert', 0, 3), ('insert', 0, 4), ('insert', 3, 8), ('insert', 3, 9)]
+    e5 = [('insert', 0, 0), ('insert', 0, 1), ('insert', 0, 2), ('insert', 0, 3), ('insert', 0, 4), ('insert', 2, 7), ('replace', 2, 8)]
 
     for everything, good in ( (e1, e1),
                               (e2, e2),
                               (e3, []),
                               (e4, e4[-2:]),
+                              (e5, []),
                               ):
         assert(only_typo_editops(everything) == good)
     print "Yay-uh!"
@@ -100,17 +102,18 @@ def only_typo_editops(eo):
     if len(last_good_edit) <= 2:
         ret += last_good_edit
     return ret
-    
-    ## 3. Modify the old version of the hunk by these typo edits, so that
-    ## it looks more like the new version.
 
 def make_improved_old(old, new):
-    '''edit distance junk'''
+    ''' 3. Modify the old version of the hunk by these typo edits, so
+    that it looks more like the new version.'''
     # Calculate the edit moves necessary
     eo = lev.editops(old, new)
 
     # Now, filter those through something that looks for only "typo edits"
-    
+    do_these = only_typo_editops(eo)
+
+    # Now, do them to old
+    return lev.apply_edit(eo, old, new)
 
 def make_sorted_competitors(new, oldss, oldslicelen):
     competitors = []
