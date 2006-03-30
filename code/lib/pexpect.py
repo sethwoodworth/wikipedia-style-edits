@@ -715,6 +715,8 @@ class spawn (object):
         This returns the number of bytes written.
         If a log file was set then the data is also written to the log.
         """
+        if type(str) == type(u''):
+            str = str.encode('utf-8')
         time.sleep(self.delaybeforesend)
         if self.logfile is not None:
             self.logfile.write (str)

@@ -36,9 +36,9 @@ class TreebankSedExpecter:
 
     def filter_line(self, u):
         if type(u) == type(''):
-            u = unicode(u)
+            u = unicode(u, 'utf-8')
         assert(type(u) == type(u''))
-        s = u.encode('utf-8') # still sad
+        #s = u.encode('utf-8') # still sad
         self.sed.sendline(u.rstrip())
         out = self.sed.readline().rstrip()
         unicode_out = unicode(out, 'utf-8')
