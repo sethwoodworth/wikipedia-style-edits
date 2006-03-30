@@ -49,6 +49,69 @@ def diff2hunks(s):
             for (olds, news) in almost_ret ]
     return ret
 
+def test_only_typo_editops():
+    e1 = [('delete', 2, 2), ('delete', 3, 2), ('replace', 10, 8), ('replace', 11, 9)]
+    e2 = [('replace', 2, 2), ('replace', 3, 3), ('replace', 10, 10), ('replace', 11, 11)]
+    e3 = [('insert', 0, 0), ('insert', 0, 1), ('insert', 0, 2), ('insert', 0, 3), ('insert', 0, 4)]
+    e4 = [('insert', 0, 0), ('insert', 0, 1), ('insert', 0, 2), ('insert', 0, 3), ('insert', 0, 4), ('insert', 3, 8), ('insert', 3, 9)]
+
+    for everything, good in ( (e1, e1),
+                              (e2, e2),
+                              (e3, []),
+                              (e4, e4[-2:]),
+                              ):
+        assert(only_typo_editops(everything) == good)
+    print "Yay-uh!"
+
+def only_typo_editops(eo):
+    ''' Input: a list of edit operations
+    Output: A list, perhaps empty, perhaps smaller, of edit operations'''
+    ret = []
+
+    ## 2. Look for typo edits in that alignment: places where at most
+    ## two chars were replaced by at most two chars (via any edit
+    ## operations) and this little region is buffered from any other
+    ## edit regions by at least three perfectly matched characters.
+    ## (Note that a local edit at the start of a sentence doesn't have
+    ## to be preceded by perfectly matched chars.)
+    before_this_pair_offset = -3
+    last_good_edit = []
+    for edit_op in eo:
+        type, from_offset, to_offset = edit_op
+        # If there's something growing
+        if last_good_edit:
+            # then, if we're three away from it, and it's the kind of thing we want to keep, keep it
+            if from_offset - last_good_edit[-1][1] >= 3:
+                print 'cucumber'
+                if len(last_good_edit) <= 2:
+                    ret += last_good_edit
+                last_good_edit = []
+        # If the from_offset is three away from the last edit we saw
+        if from_offset - before_this_pair_offset >= 3:
+            print 'hi'
+            # then add to the last_good_edit
+            last_good_edit.append(edit_op)
+        else:
+            print 'ho'
+            before_this_pair_offset = from_offset
+            if len(last_good_edit) <= 2:
+                ret += last_good_edit
+                last_good_edit = []
+    if len(last_good_edit) <= 2:
+        ret += last_good_edit
+    return ret
+    
+    ## 3. Modify the old version of the hunk by these typo edits, so that
+    ## it looks more like the new version.
+
+def make_improved_old(old, new):
+    '''edit distance junk'''
+    # Calculate the edit moves necessary
+    eo = lev.editops(old, new)
+
+    # Now, filter those through something that looks for only "typo edits"
+    
+
 def make_sorted_competitors(new, oldss, oldslicelen):
     competitors = []
     for olds in oldss:
