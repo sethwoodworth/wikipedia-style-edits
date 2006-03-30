@@ -125,6 +125,7 @@ def make_sorted_competitors(new, oldss, oldslicelen):
                 old_jaccard_this = ' '.join(old_set)
             else:
                 old_jaccard_this = old_set[0]
+            old_jaccard_this = apply_typo_edits(old_jaccard_this, new)
             competitors.append( (jaccard_two_sentences(old_jaccard_this, new), old_set, olds) )
     competitors.sort()
     competitors.reverse() # YOW!  This way the best is first.
@@ -252,7 +253,9 @@ def jaccard_two_sentences(from_s, to_s):
     # "Tokenize aggressively."
     from_list = [s.lower() for s in t.tokenize(from_s)]
     to_list   = [s.lower() for s in t.tokenize(to_s)  ]
+    return jaccard_two_lists(from_list, to_list)
 
+def jaccard_two_lists(from_list, to_list):
     # bag it
     from_bag = bag.bag(from_list)
     to_bag   = bag.bag(to_list)
