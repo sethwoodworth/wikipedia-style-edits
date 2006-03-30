@@ -46,7 +46,7 @@ class TreebankSedExpecter:
         except:
             out = '' # OW MY HEAD
             self.__init__()
-            print >> sys.stdout, "For some reason,", u.encode('utf-8'), "failed to get sedded."
+            print >> sys.stderr, "For some reason,", u.encode('utf-8'), "failed to get sedded."
             
         unicode_out = unicode(out, 'utf-8')
         return unicode_out.strip()
