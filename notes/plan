@@ -23,6 +23,7 @@ Data to analyze:
 Clean up better after explosions.
 
 * Look into explosions involving sed...
+* Look into \0-related explosions...?
 
 ---
 
