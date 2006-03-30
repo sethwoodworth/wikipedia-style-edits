@@ -275,6 +275,10 @@ def jaccard_two_lists(from_list, to_list):
         intersection_count += min(to_bag[thing],from_bag[thing])
         
     # Jaccard's coefficient: size of intersection over size of union.
+    if union_count == 0:
+        return 0
+    if intersection_count == 0:
+        return 0
     return float(intersection_count) / float(union_count)
 
 # Prefer a good match within the same diff hunk to a match from a
