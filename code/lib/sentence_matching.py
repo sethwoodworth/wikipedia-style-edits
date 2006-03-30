@@ -84,17 +84,14 @@ def only_typo_editops(eo):
         if last_good_edit:
             # then, if we're three away from it, and it's the kind of thing we want to keep, keep it
             if from_offset - last_good_edit[-1][1] >= 3:
-                print 'cucumber'
                 if len(last_good_edit) <= 2:
                     ret += last_good_edit
                 last_good_edit = []
         # If the from_offset is three away from the last edit we saw
         if from_offset - before_this_pair_offset >= 3:
-            print 'hi'
             # then add to the last_good_edit
             last_good_edit.append(edit_op)
         else:
-            print 'ho'
             before_this_pair_offset = from_offset
             if len(last_good_edit) <= 2:
                 ret += last_good_edit
