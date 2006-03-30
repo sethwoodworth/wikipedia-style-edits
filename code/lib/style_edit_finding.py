@@ -58,7 +58,7 @@ def is_hunk_style_edit(hunk):
     old_index = 0
 
     # Remove all identical tokens
-    for new_token in new_tokens:
+    for new_token in new_tokens[:]:
         ## A data structure with faster than O(n) search would be useful here.
         if new_token in old_tokens:
             new_tokens.remove(new_token)
