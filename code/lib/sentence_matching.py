@@ -289,8 +289,8 @@ def jaccard_two_lists(from_list, to_list):
 
 def format_hunk_list(l):
     ret = ''
-    ret += str(l.confidence) + "\n"
     for hunk in l:
+        ret += str(hunk.confidence) + "\n"
         for old in hunk.olds:
             assert('\n' not in old)
             ret += '-' + old + '\n'
