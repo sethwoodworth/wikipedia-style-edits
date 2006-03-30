@@ -100,7 +100,7 @@ def plus_and_minus2hunks(s):
         # Look for a number line first.  
         if line[0] != '-' and line[0] != '+' and plusses: # then reset state
             yield HunkOfSentences(olds=minuses, news=plusses, confidence=confid)
-            confid = int(line)
+            confid = float(line)
             minuses, plusses = [], []
         elif line[0] == '-':
             minuses.append(line[1:])
