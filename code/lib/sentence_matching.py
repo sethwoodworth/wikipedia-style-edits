@@ -126,7 +126,7 @@ def make_sorted_competitors(new, oldss, oldslicelen):
                 old_jaccard_this = ' '.join(old_set)
             else:
                 old_jaccard_this = old_set[0]
-            old_jaccard_this = apply_typo_edits(old_jaccard_this, new)
+            old_jaccard_this = make_improved_old(old_jaccard_this, new)
             competitors.append( (jaccard_two_sentences(old_jaccard_this, new), old_set, olds) )
     competitors.sort()
     competitors.reverse() # YOW!  This way the best is first.
