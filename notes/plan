@@ -13,39 +13,10 @@ Jobs to run:
 
 ---
 
-NOW:
+Data to analyze:
 
-* Fix split script! :-(  Rewrite it using a pull parser of some kind to pull on <page>
-* Write regexes in Python that correctly split or transform wiki markup
-** Alter this to correctly handle confusing tags plus wiki tables
-** Link this to MXTERMINATOR
-* Write a wrapper for MXTERMINATOR I can use smartly on a per-paragraph basis
-
---
-
-Code to write:
-
-* Import all metadata into a MySQL db for fast access
-** Hack mwdumper from mediawiki's CVS to not store actual content
-   (requires SF.net anonymous CVS to not be broken)
-
-* MXterminate the paragraphs 
-
-
----
-Later:
-
-* With mxterminated sentences, group 'em and diff 'em...
-* "River Suck" -> "Suck"; maybe noticeable because of wiki page contents.  We won't handle it well.
-
---
-dewiki: cache recent paragraphs
-
----
-make 1010.paragraphs.7z
-make 1010.sentences.7z
-
-
+* What do the matchedsentences look like?
+* Is "styleedits.7z" plausible?
 
 ---
 
