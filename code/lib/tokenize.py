@@ -40,7 +40,12 @@ class TreebankSedExpecter:
         assert(type(u) == type(u''))
         #s = u.encode('utf-8') # still sad
         self.sed.sendline(u.rstrip())
-        out = self.sed.readline().rstrip()
+        try:
+            out = self.sed.readline().rstrip()
+        except:
+            out = '' # OW MY HEAD
+            self.__init__()
+            
         unicode_out = unicode(out, 'utf-8')
         return unicode_out.strip()
     def tokenize(self, u):
