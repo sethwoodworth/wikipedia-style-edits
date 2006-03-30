@@ -100,6 +100,7 @@ def only_typo_editops(eo):
         ret += last_good_edit
     return ret
 
+import Levenshtein as lev # spellign Levnshtein...
 def make_improved_old(old, new):
     ''' 3. Modify the old version of the hunk by these typo edits, so
     that it looks more like the new version.'''
