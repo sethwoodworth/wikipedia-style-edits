@@ -28,10 +28,24 @@ def nltk_tokenize(u):
         ret.extend(thing.values())
     return ret
 
+import tempfile
+import os
+import commands
+def treebank_tmpfile_sed(s):
+    fname = tempfile.mktemp()
+    fd = open(fname, 'w')
+    fd.write(s.encode('utf-8'))
+    fd.close()
+    sedded = commands.getoutput('sed -f tokenizer.sed < ' + fname)
+    u = unicode(sedded, 'utf-8')
+    ret = u.split()
+    os.unlink(fname)
+    return ret
+
 import pexpect
 class TreebankSedExpecter:
     def __init__(self):
-        self.sed = pexpect.spawn("sed", ["-f", "tokenizer.sed"])
+        self.sed = pexpect.spawn("perl", ["-f", "tokenizer.pl"])
         self.sed.setecho(False)
         self.sed.delaybeforesend = 0.0001
 
