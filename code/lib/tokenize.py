@@ -33,7 +33,7 @@ class TreebankSedExpecter:
     def __init__(self):
         self.sed = pexpect.spawn("sed", ["-f", "tokenizer.sed"])
         self.sed.setecho(False)
-        self.sed.delaybeforesend = 0
+        self.sed.delaybeforesend = 0.02
 
     def filter_line(self, u):
         if type(u) == type(''):
