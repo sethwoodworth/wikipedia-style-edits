@@ -51,8 +51,8 @@ def is_hunk_style_edit(hunk):
     old_string = make_improved_old(old_string, new_string)
 
     # Then tokenize both
-    old_tokens = t.tokenize(old_string)
-    new_tokens = t.tokenize(new_string)
+    old_tokens = tokenize.treebank_tmpfile_sed(old_string)
+    new_tokens = tokenize.treebank_tmpfile_sed(new_string)
     
     new_index = 0
     old_index = 0
@@ -93,7 +93,7 @@ from sentence_matching import HunkOfSentences, format_hunk_list
 
 def plus_and_minus2hunks(s):
     lines = s.split('\n')
-    confid = 3.0
+
     minuses = []
     plusses = []
     for line in lines:
