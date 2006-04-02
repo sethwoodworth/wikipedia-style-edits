@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+import pdb
 # The idea is:
 # For each diffedsentences pair in the input file,
 # make a corresponding .html file that has deletions deletions in <strike>
@@ -48,14 +48,25 @@ class AccumulatingHtml:
                 etype, old_index, new_index = op
                 if last_saw < old_index:
                     growing_html += old[last_saw:old_index]
+#                    print growing_html
+#                    print old[last_saw]
+#                    print etype
+#                    print old_index
+#                    print new_index
+#                    print old[last_saw:old_index]
+#                    print 'huh'
+
+#                    pdb.set_trace()
                 last_saw = old_index
                 if etype == 'replace':
                     growing_html += '<strike>' + old[old_index] + '</strike>'
                     growing_html += '<strong>' + new[new_index] + '</strong>'
+                    last_saw += 1 
                 elif etype == 'insert':
                     growing_html += '<strong>' + new[new_index] + '</strong>'
                 elif etype == 'delete':
                     growing_html += '<strike>' + old[old_index] + '</strike>'
+                    last_saw += 1 # I think
             # finally, get any remaining junk
             if last_saw < len(old) - 1:
                 growing_html += old[last_saw:]
