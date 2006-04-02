@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2004 University of Melbourne
 # Author: Trevor Cohn <tacohn@cs.mu.oz.au>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.3 2005/02/11 11:39:02 trevorcohn1 Exp $
@@ -78,20 +78,20 @@ Usage example (see also demo())::
     print token
 
 Note that the tokens must have FEATURE attributes with numarray array-like
-objects. nltk_contrib.unimelb.tacohn.SparseArrays may be used for efficiency
+objects. lib.nltk_contrib.unimelb.tacohn.SparseArrays may be used for efficiency
 when required.
 """
 
-from nltk.chktype import chktype
-from nltk.probability import DictionaryProbDist
-from nltk.token import Token
+from lib.nltk.chktype import chktype
+from lib.nltk.probability import DictionaryProbDist
+from lib.nltk.token import Token
 import copy, numarray, math, random, sys, types
 import numarray.linear_algebra
 
 # Common functions
 
 _dot = numarray.dot
-# _dot = nltk_contrib.unimelb.tacohn.sparsearray.dot
+# _dot = lib.nltk_contrib.unimelb.tacohn.sparsearray.dot
 
 #======================================================================
 # Generic interfaces

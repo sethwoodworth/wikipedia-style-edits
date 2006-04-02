@@ -2,20 +2,20 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: probability.py,v 1.8 2004/07/13 16:18:50 edloper Exp $
 
 """
-Unit testing for L{nltk.probability}.
+Unit testing for L{lib.nltk.probability}.
 
 @group Frequency Distributions: test_FreqDist
 @group Probability Distributions: test_*ProbDist*
 """
 
-from nltk.probability import *
-from nltk.util import mark_stdout_newlines
+from lib.nltk.probability import *
+from lib.nltk.util import mark_stdout_newlines
 import random
 
 def test_FreqDist(): """
@@ -407,7 +407,7 @@ Unit tests for L{ProbabilisticMixIn}
 """
 
 def test_demo(): r"""
-Unit tests for L{nltk.probability.demo}.
+Unit tests for L{lib.nltk.probability.demo}.
 
     >>> random.seed(123456)
     >>> mark_stdout_newlines(demo)
@@ -459,9 +459,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.probability
-    if reload_module: reload(nltk.test.probability)
-    return doctest.DocTestSuite(nltk.test.probability)
+    import doctest, lib.nltk.test.probability
+    if reload_module: reload(lib.nltk.test.probability)
+    return doctest.DocTestSuite(lib.nltk.test.probability)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

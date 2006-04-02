@@ -3,7 +3,7 @@
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Trevor Cohn <tacohn@cs.mu.oz.au> (additions)
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: probability.py,v 1.53 2005/02/08 11:02:43 stevenbird Exp $
@@ -50,9 +50,9 @@ C{Tree}).
 @todo: Better handling of log probabilities.
 """
 
-from nltk.chktype import chktype as _chktype
+from lib.nltk.chktype import chktype as _chktype
 from sets import Set
-from nltk.util import sum_logs
+from lib.nltk.util import sum_logs
 import types, math, numarray
 
 ##//////////////////////////////////////////////////////

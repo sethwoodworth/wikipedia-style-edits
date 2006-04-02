@@ -4,7 +4,7 @@
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Steven Bird <sb@ldc.upenn.edu> (additions)
 #         Trevor Cohn <tacohn@cs.mu.oz.au> (additions)
-# URL: <http://nltk.sourceforge.net>
+# URL: <http://lib.nltk.sourceforge.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.5 2004/07/16 13:38:19 edloper Exp $
@@ -18,8 +18,8 @@ This module defines several implementations of the tokenizer
 interface, such as L{WhitespaceTokenizer}, which splits texts based on
 whitespace; and L{RegexpTokenizer}, which uses a regular expression to
 divide a token into pieces.  Several other modules also define
-specialized tokenizers, such as L{nltk.tree.TreebankTokenizer} and
-L{nltk.tagger.TaggedTokenizer}.  For a complete list of available
+specialized tokenizers, such as L{lib.nltk.tree.TreebankTokenizer} and
+L{lib.nltk.tagger.TaggedTokenizer}.  For a complete list of available
 tokenizers, see the reference documentation for L{TokenizerI}.
 
 @group Interfaces: TokenizerI
@@ -27,10 +27,10 @@ tokenizers, see the reference documentation for L{TokenizerI}.
                    AbstractTokenizer
 """
 
-from nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk import TaskI, PropertyIndirectionMixIn
 import re, sre_parse, sre_constants, sre_compile
-from nltk.chktype import chktype
-from nltk.token import *
+from lib.nltk.chktype import chktype
+from lib.nltk.token import *
 
 ##//////////////////////////////////////////////////////
 ##  Tokenizers
@@ -665,19 +665,19 @@ def demo(add_locs=False, add_contexts=False):
     
 if __name__ == '__main__':
     print '#'*70
-    print '##'+'nltk.tokenizer Demonstration'.center(66)+'##'
+    print '##'+'lib.nltk.tokenizer Demonstration'.center(66)+'##'
     print '##'+'(add_locs = True; add_contexts=False)'.center(66)+'##'
     print '#'*70
     demo(True, False)
     
     print '#'*70
-    print '##'+'nltk.tokenizer Demonstration'.center(66)+'##'
+    print '##'+'lib.nltk.tokenizer Demonstration'.center(66)+'##'
     print '##'+'(add_locs = False; add_contexts=False)'.center(66)+'##'
     print '#'*70
     demo(False)
     
     print '#'*70
-    print '##'+'nltk.tokenizer Demonstration'.center(66)+'##'
+    print '##'+'lib.nltk.tokenizer Demonstration'.center(66)+'##'
     print '##'+'(add_locs = False; add_contexts=True)'.center(66)+'##'
     print '#'*70
     demo(False, True)

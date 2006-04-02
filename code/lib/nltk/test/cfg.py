@@ -2,17 +2,17 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: cfg.py,v 1.8 2004/07/13 16:15:38 edloper Exp $
 
 """
-Unit testing for L{nltk.cfg}.
+Unit testing for L{lib.nltk.cfg}.
 """
 
-from nltk.cfg import *
-from nltk.util import mark_stdout_newlines
+from lib.nltk.cfg import *
+from lib.nltk.util import mark_stdout_newlines
 
 def test_Nonterminal(): """
 Unit testing for L{Nonterminal}.
@@ -289,7 +289,7 @@ LHS must sum to 1.
 """
 
 def test_demo(): """
-Unit test for L{nltk.cfg.demo}.
+Unit test for L{lib.nltk.cfg.demo}.
 
     >>> mark_stdout_newlines(demo)
     Some nonterminals: [<S>, <NP>, <VP>, <PP>, <N>, <V>, <P>, <Det>, <VP/NP>]
@@ -341,9 +341,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.cfg
-    if reload_module: reload(nltk.test.cfg)
-    return doctest.DocTestSuite(nltk.test.cfg)
+    import doctest, lib.nltk.test.cfg
+    if reload_module: reload(lib.nltk.test.cfg)
+    return doctest.DocTestSuite(lib.nltk.test.cfg)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: rdparser.py,v 1.16 2004/07/03 02:51:00 edloper Exp $
@@ -66,12 +66,12 @@ Keyboard Shortcuts::
       [q]\t Quit
 """
 
-from nltk.draw.tree import *
-from nltk.draw import *
-from nltk.parser import *
-from nltk.tokenizer import *
-from nltk.draw.cfg import *
-from nltk.draw.cfg import CFGEditor
+from lib.nltk.draw.tree import *
+from lib.nltk.draw import *
+from lib.nltk.parser import *
+from lib.nltk.tokenizer import *
+from lib.nltk.draw.cfg import *
+from lib.nltk.draw.cfg import CFGEditor
 import tkFont
 from Tkinter import *
         
@@ -871,7 +871,7 @@ def demo():
     Create a recursive descent parser demo, using a simple grammar and
     text.
     """    
-    from nltk.cfg import CFG
+    from lib.nltk.cfg import CFG
     grammar = CFG.parse("""
     # Grammatical productions.
         S -> NP VP

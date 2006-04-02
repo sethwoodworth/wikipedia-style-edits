@@ -2,16 +2,16 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: set.py,v 1.6 2004/03/18 21:02:35 edloper Exp $
 
 """
-Unit testing for L{nltk.set}.
+Unit testing for L{lib.nltk.set}.
 """
 
-from nltk.set import *
+from lib.nltk.set import *
 
 ##//////////////////////////////////////////////////////
 ##  Test code
@@ -21,7 +21,7 @@ import unittest
 
 class SetTestCase(unittest.TestCase):
     """
-    Unit test cases for L{nltk.set.Set}
+    Unit test cases for L{lib.nltk.set.Set}
     """
     def _makeset(self, *values):
         """
@@ -31,7 +31,7 @@ class SetTestCase(unittest.TestCase):
         return Set(*values)
     
     def testConstructor(self):
-        "nltk.set.Set: constructor tests"
+        "lib.nltk.set.Set: constructor tests"
         s1 = self._makeset(1,2,5,4,6,3)
         self.failUnlessEqual(len(s1), 6)
         self.failUnless(1 in s1 and 2 in s1 and 3 in s1 and
@@ -48,7 +48,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnless( (1,2,3) in s3)
 
     def testUnion(self):
-        "nltk.set.Set: union tests"
+        "lib.nltk.set.Set: union tests"
         s1 = self._makeset(1,3,5,7,9,11,13,15,17,19,21,23,25)
         s2 = self._makeset(2,3,5,7,11,13,17,19,23)
         s3 = self._makeset(2,4,9,16,25)
@@ -84,7 +84,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(s3 | s1 | s2, s1s2s3)
         
     def testIntersection(self):
-        "nltk.set.Set: intersection tests"
+        "lib.nltk.set.Set: intersection tests"
         s1 = self._makeset(1,3,5,7,9,11,13,15,17,19,21,23,25)
         s2 = self._makeset(2,3,5,7,11,13,17,19,23)
         s3 = self._makeset(2,4,9,16,25)
@@ -120,7 +120,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(s3 & s1 & s2, s1s2s3)
         
     def testDifference(self):
-        "nltk.set.Set: difference tests"
+        "lib.nltk.set.Set: difference tests"
         s1 = self._makeset(1,3,5,7,9,11,13,15,17,19,21,23,25)
         s2 = self._makeset(2,3,5,7,11,13,17,19,23)
         s3 = self._makeset(2,4,9,16,25)
@@ -149,7 +149,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(s1 - s2 - s3, s1s2s3)
 
     def testContains(self):
-        "nltk.set.Set: containership tests"
+        "lib.nltk.set.Set: containership tests"
         s = self._makeset(2,3,5,7,11,13,17,19,23)
 
         self.failUnless(s.contains(11))
@@ -173,14 +173,14 @@ class SetTestCase(unittest.TestCase):
         self.failIf(24 in s)
 
     def testCopy(self):
-        "nltk.set.Set: copy tests"
+        "lib.nltk.set.Set: copy tests"
         s1 = self._makeset(1,2,3)
         s2 = s1.copy()
         self.failUnlessEqual(s1, self._makeset(1,2,3))
         self.failUnlessEqual(s2, self._makeset(1,2,3))
 
     def testRepr(self):
-        "nltk.set.Set: representation tests (glass-box)."
+        "lib.nltk.set.Set: representation tests (glass-box)."
         
         s1 = self._makeset(1,2,3)
         s2 = self._makeset('a', 'b', (1, '3'))
@@ -198,7 +198,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(repr(self._makeset()), '{}')
 
     def testCount(self):
-        "nltk.set.Set: count tests"
+        "lib.nltk.set.Set: count tests"
         self.failUnlessEqual(self._makeset(1,2,3).count(), 3)
         self.failUnlessEqual(self._makeset(1,(2,3)).count(), 2)
         self.failUnlessEqual(self._makeset((1,2,3)).count(), 1)
@@ -212,7 +212,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(len(self._makeset()), 0)
 
     def testEqual(self):
-        "nltk.set.Set: equality comparison test"
+        "lib.nltk.set.Set: equality comparison test"
         s1 = self._makeset(1, 2, (3, 5))
         s2 = self._makeset(2, (3, 5))
         self.failIfEqual(s1, s2)
@@ -249,7 +249,7 @@ class SetTestCase(unittest.TestCase):
         self.failIf(cmp(self._makeset(), self._makeset()) != 0)
 
     def testElements(self):
-        "nltk.set.Set: elements accessor tests"
+        "lib.nltk.set.Set: elements accessor tests"
         eltsLists = ([1, 3, (5,6)],
                      [],
                      ['asdf', ('a', 's', 'd', 'f'), 123])
@@ -262,13 +262,13 @@ class SetTestCase(unittest.TestCase):
             self.failUnlessEqual(elts, s_elts)
 
     def testHash(self):
-        "nltk.set.Set: hash() tests"
+        "lib.nltk.set.Set: hash() tests"
         s1 = self._makeset(1,2,3)
         s2 = self._makeset(1,2,3)
         self.failUnlessEqual(hash(s1), hash(s2))
 
     def testPrecision(self):
-        "nltk.set.Set: precision() tests"
+        "lib.nltk.set.Set: precision() tests"
         s1 = self._makeset(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
         s2 = self._makeset(2, 4, 6, 8, 10, 12, 14, 16)
 
@@ -278,7 +278,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(s2.precision(s1), 5./10)
 
     def testRecall(self):
-        "nltk.set.Set: recall() tests"
+        "lib.nltk.set.Set: recall() tests"
         s1 = self._makeset(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
         s2 = self._makeset(2, 4, 6, 8, 10, 12, 14, 16)
 
@@ -288,7 +288,7 @@ class SetTestCase(unittest.TestCase):
         self.failUnlessEqual(s2.recall(s1), 5./8)
 
     def testFMeasure(self):
-        "nltk.set.Set: f_measure() tests"
+        "lib.nltk.set.Set: f_measure() tests"
         s1 = self._makeset(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
         s2 = self._makeset(2, 4, 6, 8, 10, 12, 14, 16)
 
@@ -316,13 +316,13 @@ class SetTestCase(unittest.TestCase):
 
 class MutableSetTestCase(SetTestCase):
     """
-    Unit test cases for L{nltk.set.MutableSet}
+    Unit test cases for L{lib.nltk.set.MutableSet}
     """
     def _makeset(self, *values):
         return MutableSet(*values)
 
     def testInsert(self):
-        "nltk.set.MutableSet: insertion tests"
+        "lib.nltk.set.MutableSet: insertion tests"
         s1 = MutableSet(5,7)
         self.failUnlessEqual(s1.insert(3), 1)
         self.failUnlessEqual(s1.insert(5), 0)
@@ -345,12 +345,12 @@ class MutableSetTestCase(SetTestCase):
                                      1, 'b', 'a', 'abc'))
 
     def testHash(self):
-        "nltk.set.MutableSet: hash() tests"
+        "lib.nltk.set.MutableSet: hash() tests"
         s1 = MutableSet(1,2,3)
         self.failUnlessRaises(TypeError, hash, s1)
 
     def testCopy(self):
-        "nltk.set.MutableSet: copy tests"
+        "lib.nltk.set.MutableSet: copy tests"
         s1 = MutableSet(1,2,3)
 
         s2 = s1.copy()
@@ -361,7 +361,7 @@ class MutableSetTestCase(SetTestCase):
         self.failUnlessEqual(s2, MutableSet(1,2,3,5))
 
     def testEqual(self):
-        "nltk.set.MutableSet: equality comparison test"
+        "lib.nltk.set.MutableSet: equality comparison test"
         s1 = MutableSet(1, 2, (3, 5))
         s2 = MutableSet(2, (3, 5))
 

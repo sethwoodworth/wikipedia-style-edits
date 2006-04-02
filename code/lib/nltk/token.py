@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: token.py,v 1.70 2004/07/17 19:33:51 edloper Exp $
@@ -54,9 +54,9 @@ used to distinguish two tokens whose properties are otherwise equal
 
 import types, copy
 from sets import Set
-from nltk.chktype import chktype
-from nltk.util import FrozenDict
-from nltk import TaskI
+from lib.nltk.chktype import chktype
+from lib.nltk.util import FrozenDict
+from lib.nltk import TaskI
 
 ######################################################################
 ## Token

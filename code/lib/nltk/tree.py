@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tree.py,v 1.55 2005/04/18 23:20:19 stevenbird Exp $
@@ -26,14 +26,14 @@ single subtree can be shared by multiple parents.  Different tree
 classes should never be mixed within a single tree.
 """
 
-from nltk.token import Token, CharSpanLocation, FrozenToken
-from nltk.token import TreeContextPointer
-from nltk.tokenizer import TokenizerI
-from nltk import PropertyIndirectionMixIn
-from nltk.probability import ProbabilisticMixIn, ImmutableProbabilisticMixIn
+from lib.nltk.token import Token, CharSpanLocation, FrozenToken
+from lib.nltk.token import TreeContextPointer
+from lib.nltk.tokenizer import TokenizerI
+from lib.nltk import PropertyIndirectionMixIn
+from lib.nltk.probability import ProbabilisticMixIn, ImmutableProbabilisticMixIn
 import re
-from nltk.chktype import chktype
-from nltk.chktype import classeq as _classeq
+from lib.nltk.chktype import chktype
+from lib.nltk.chktype import classeq as _classeq
 import types
 
 ######################################################################
@@ -260,7 +260,7 @@ class Tree(list):
         """
         Open a new window containing a graphical diagram of this tree.
         """
-        from nltk.draw.tree import draw_trees
+        from lib.nltk.draw.tree import draw_trees
         draw_trees(self)
 
     def __repr__(self):
@@ -692,14 +692,14 @@ def demo():
     """
     A demonstration showing how C{Tree}s and C{Tree}s can be
     used.  This demonstration creates a C{Tree}, and loads a
-    C{Tree} from the L{treebank<nltk.corpus.treebank>} corpus,
+    C{Tree} from the L{treebank<lib.nltk.corpus.treebank>} corpus,
     and shows the results of calling several of their methods.
     """
-    import nltk.tree; reload(nltk.tree) # [XX]
-    from nltk.util import DemoInterpreter
+    import lib.nltk.tree; reload(lib.nltk.tree) # [XX]
+    from lib.nltk.util import DemoInterpreter
     d = DemoInterpreter()
     d.start('Tree Demo')
-    d.silent("from nltk.tree import *")
+    d.silent("from lib.nltk.tree import *")
     
     # Demonstrate tree parsing.
     d("s = '(S (NP (DT the) (NN cat)) "+
@@ -741,7 +741,7 @@ def demo():
     d.end()
 
     # Demonstrate the treebank token reader.
-    d.silent("from nltk.tokenreader.treebank import *")
+    d.silent("from lib.nltk.tokenreader.treebank import *")
     d("reader = TreebankTokenReader(add_locs=True, SUBTOKENS='WORDS')")
     d("treetok = reader.read_token(tree.pp_treebank())")
     d("print treetok.exclude('LOC')['WORDS']")

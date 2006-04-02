@@ -21,10 +21,10 @@
 #     http://www.omniscia.org/~vivake/python/PorterStemmer.py
 #
 # Additional modifications were made to incorporate this module into
-# nltk.  All such modifications are marked with "--NLTK--".  The nltk
+# lib.nltk.  All such modifications are marked with "--NLTK--".  The lib.nltk
 # version of this module is maintained by the NLTK development staff,
 # and is available from the NLTK webpage:
-#     <http://nltk.sourceforge.net>
+#     <http://lib.nltk.sourceforge.net>
 
 """Porter Stemming Algorithm
 
@@ -67,10 +67,10 @@ Later additions:
    Invariants proceed, succeed, exceed. Also suggested by Hiranmay Ghosh.
 
 Additional modifications were made to incorperate this module into
-nltk.  All such modifications are marked with \"--NLTK--\".  The nltk
+lib.nltk.  All such modifications are marked with \"--NLTK--\".  The lib.nltk
 version of this module is maintained by the NLTK development staff,
 and is available from the NLTK webpage:
-     <http://nltk.sourceforge.net>
+     <http://lib.nltk.sourceforge.net>
 """
 
 ## --NLTK--
@@ -82,14 +82,14 @@ import re
 import string
 
 ## --NLTK--
-## Import the nltk.stemmer module, which defines the stemmer interface;
-## and nltk.token, which defines the Token data type.
-import nltk.stemmer
-from nltk.token import Token
+## Import the lib.nltk.stemmer module, which defines the stemmer interface;
+## and lib.nltk.token, which defines the Token data type.
+import lib.nltk.stemmer
+from lib.nltk.token import Token
 
 ## --NLTK--
 ## Use AbstractStemmer as a base class.
-class PorterStemmer(nltk.stemmer.AbstractStemmer):
+class PorterStemmer(lib.nltk.stemmer.AbstractStemmer):
 
     ## --NLTK--
     ## Add a module docstring
@@ -120,7 +120,7 @@ class PorterStemmer(nltk.stemmer.AbstractStemmer):
         """
         ## --NLTK--
         ## Call the base class constructor.
-        nltk.stemmer.AbstractStemmer.__init__(self, **property_names)
+        lib.nltk.stemmer.AbstractStemmer.__init__(self, **property_names)
         
         self.b = ""  # buffer for word to be stemmed 
         self.k = 0
@@ -588,7 +588,7 @@ def demo():
     # Pick a file from the brown corpus, and tokenize it.
     # Keep at most 100 tokens.
     import random
-    from nltk.corpus import treebank
+    from lib.nltk.corpus import treebank
     item = random.choice(treebank.items('raw'))
     text = treebank.tokenize(item)
     text['SUBTOKENS'] = text['SUBTOKENS'][:100]

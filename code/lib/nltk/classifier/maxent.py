@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: maxent.py,v 1.32 2004/07/19 05:34:37 edloper Exp $
@@ -95,8 +95,8 @@ emperically consistant model which maximizes entropy.
 C{GISMaxentClassifierTrainer} uses Generalized Iterative Scaling; and
 C{IISMaxentClassifierTrainer} uses Improved Iterative Scaling.
 
-@warning: We plan to significantly refactor the nltk.classifier
-    package for the next release of nltk.
+@warning: We plan to significantly refactor the lib.nltk.classifier
+    package for the next release of lib.nltk.
 
 @group Classifiers: ConditionalExponentialClassifier
 @group Classifier Trainers: GISMaxentClassifierTrainer,
@@ -114,14 +114,14 @@ C{IISMaxentClassifierTrainer} uses Improved Iterative Scaling.
 #   - Add keyword arguments for IIS, for when to stop Newton's
 #      method. 
 
-from nltk.classifier import *
-from nltk.feature import *
-from nltk.probability import DictionaryProbDist
-from nltk.chktype import chktype as _chktype
-from nltk.token import Token
-from nltk.tokenizer import WhitespaceTokenizer
-from nltk.chktype import chktype as _chktype
-from nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.classifier import *
+from lib.nltk.feature import *
+from lib.nltk.probability import DictionaryProbDist
+from lib.nltk.chktype import chktype as _chktype
+from lib.nltk.token import Token
+from lib.nltk.tokenizer import WhitespaceTokenizer
+from lib.nltk.chktype import chktype as _chktype
+from lib.nltk import TaskI, PropertyIndirectionMixIn
 import time, types
 
 # Don't use from .. imports, because math and numarray provide
@@ -895,17 +895,17 @@ class IISMaxentClassifierTrainer(ClassifierTrainerI):
 ##  Demonstration
 ##//////////////////////////////////////////////////////
 
-from nltk.feature import *
-from nltk.feature.word import *
+from lib.nltk.feature import *
+from lib.nltk.feature.word import *
 
 def demo(items=30):
-    import nltk.corpus
+    import lib.nltk.corpus
     
     # Load the training data, and split it into test & train.
     print 'reading data...'
     toks = []
-    for item in nltk.corpus.brown.items()[:items]:
-        text = nltk.corpus.brown.read(item, add_contexts=True)
+    for item in lib.nltk.corpus.brown.items()[:items]:
+        text = lib.nltk.corpus.brown.read(item, add_contexts=True)
         toks += text['WORDS']
     
     toks = toks

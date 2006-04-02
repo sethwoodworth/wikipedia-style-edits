@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: chktype.py,v 1.18 2004/07/15 02:35:44 edloper Exp $
@@ -206,7 +206,7 @@ def chktype(n, arg, *types):
     @return: true
     @rtype: C{boolean}
     @raise TypeError: If C{arg} does not match {types}.
-    @see: nltk.type_safety_level
+    @see: lib.nltk.type_safety_level
     """
     if _type_safety_level <= 0: return 1
     

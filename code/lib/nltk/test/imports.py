@@ -2,20 +2,20 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: imports.py,v 1.3 2004/07/13 16:18:01 edloper Exp $
 
 """
-A test suite that checks to make sure that all imports of nltk modules
+A test suite that checks to make sure that all imports of lib.nltk modules
 use absolute paths.
 
-In particular, check that all nltk modules import each other with
+In particular, check that all lib.nltk modules import each other with
 statements that have the forms:
 
-    >>> import nltk.token
-    >>> from nltk.token import *
+    >>> import lib.nltk.token
+    >>> from lib.nltk.token import *
 
 and not the forms:
 
@@ -25,7 +25,7 @@ and not the forms:
 This convention ensures that the same module is not imported twice,
 even if it is imported with both relative and absolute paths.  It also
 reduces confusion if two modules have the same relative name (eg
-C{nltk.token} and C{nltk.speech.token}).
+C{lib.nltk.token} and C{lib.nltk.speech.token}).
 """
 
 ##//////////////////////////////////////////////////////
@@ -40,14 +40,14 @@ class ImportTestCase(unittest.TestCase):
         'Check that all imports use absolute names.'
         self._failures = []
         self._import_count = 0
-        self._find_nltk_modules()
+        self._find_lib.nltk_modules()
         for path in self._paths:
             contents = open(path).read()
             self._curpath = path
             self._IMPORT_RE.sub(self._check_import, contents)
 
         if self._failures:
-            msg = '\nBad imports: All nltk imports must use absolute names'
+            msg = '\nBad imports: All lib.nltk imports must use absolute names'
             for failure in self._failures:
                 msg += '\n  - %s\n        >>> import %s' % failure
             self.fail(msg)
@@ -69,25 +69,25 @@ class ImportTestCase(unittest.TestCase):
             if self._relnames.has_key(module):
                 self._failures.append((self._curpath, module))
         
-    def _find_nltk_modules(self):
-        "@return: A list of all submodules of the nltk package."
-        # Get the path of the nltk package.
-        import nltk
-        nltk_path = os.path.abspath(nltk.__path__[0])
+    def _find_lib.nltk_modules(self):
+        "@return: A list of all submodules of the lib.nltk package."
+        # Get the path of the lib.nltk package.
+        import lib.nltk
+        lib.nltk_path = os.path.abspath(lib.nltk.__path__[0])
 
-        # Find all modules in nltk.
+        # Find all modules in lib.nltk.
         self._paths = []
-        os.path.walk(nltk_path, self._walker, self._paths)
+        os.path.walk(lib.nltk_path, self._walker, self._paths)
 
         # Remove this module (its docstring would flag an error)
-        imports_path = os.path.join(nltk_path, 'test', 'imports.py')
+        imports_path = os.path.join(lib.nltk_path, 'test', 'imports.py')
         del self._paths[self._paths.index(imports_path)]
 
         # Convert each module name to a package name.
         self._relnames = {}
         for path in self._paths:
-            if path == os.path.join(nltk_path, '__init__.py'): continue
-            for name in self._find_relnames(path, nltk_path):
+            if path == os.path.join(lib.nltk_path, '__init__.py'): continue
+            for name in self._find_relnames(path, lib.nltk_path):
                 self._relnames[name] = 1
 
     def _find_relnames(self, path, root):
@@ -107,8 +107,8 @@ class ImportTestCase(unittest.TestCase):
     def _walker(self, paths, dirname, fnames):
         """
         A directory walker (for L{os.path.walk()}) that searches for
-        nltk modules.
-        @see: L{_find_nltk_modules}
+        lib.nltk modules.
+        @see: L{_find_lib.nltk_modules}
         """
         paths += [os.path.join(dirname, fname)
                   for fname in fnames

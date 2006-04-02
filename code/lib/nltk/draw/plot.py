@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: plot.py,v 1.17 2004/03/18 21:02:36 edloper Exp $
@@ -51,8 +51,8 @@ values.
     BLTPlotFrame
 """
 
-# This is used by "from nltk.draw.plot import *". to decide what to
-# import.  It also declares to nltk that only the Plot class is public.
+# This is used by "from lib.nltk.draw.plot import *". to decide what to
+# import.  It also declares to lib.nltk that only the Plot class is public.
 __all__ = ['Plot']
 
 # Implementation note:
@@ -66,7 +66,7 @@ __all__ = ['Plot']
 from types import *
 from math import log, log10, ceil, floor
 import Tkinter, sys, time
-from nltk.draw import ShowText, in_idle
+from lib.nltk.draw import ShowText, in_idle
 
 class PlotFrameI:
     """
@@ -646,7 +646,7 @@ class Plot:
         Dispaly an 'about' dialog window for the NLTK plot tool.
         """
         ABOUT = ("NLTK Plot Tool\n"
-                 "<http://nltk.sourceforge.net>")
+                 "<http://lib.nltk.sourceforge.net>")
         TITLE = 'About: Plot Tool'
         if isinstance(self._plot, BLTPlotFrame):
             ABOUT += '\n\nBased on the BLT Widget'

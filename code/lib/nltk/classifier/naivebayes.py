@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: naivebayes.py,v 1.24 2004/07/17 21:01:53 edloper Exp $
@@ -15,12 +15,12 @@ P(class|features) = ------------------------------
 
 """
 
-from nltk.classifier import *
-from nltk.feature import *
-from nltk.probability import *
-from nltk.token import Token
-from nltk.corpus import brown
-from nltk.chktype import chktype as _chktype
+from lib.nltk.classifier import *
+from lib.nltk.feature import *
+from lib.nltk.probability import *
+from lib.nltk.token import Token
+from lib.nltk.corpus import brown
+from lib.nltk.chktype import chktype as _chktype
 import types
 
 ##//////////////////////////////////////////////////////
@@ -181,17 +181,17 @@ class NaiveBayesClassifierTrainer(ClassifierTrainerI,
 ##  Test code
 ##//////////////////////////////////////////////////////
 
-from nltk.feature import *
-from nltk.feature.word import *
+from lib.nltk.feature import *
+from lib.nltk.feature.word import *
 
 def demo(items=30):
-    import nltk.corpus
+    import lib.nltk.corpus
     
     # Load the training data, and split it into test & train.
     print 'reading data...'
     toks = []
-    for item in nltk.corpus.brown.items()[:items]:
-        text = nltk.corpus.brown.read(item, add_contexts=True)
+    for item in lib.nltk.corpus.brown.items()[:items]:
+        text = lib.nltk.corpus.brown.read(item, add_contexts=True)
         toks += text['WORDS']
     toks = toks
     split = len(toks)-20

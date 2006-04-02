@@ -3,7 +3,7 @@
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Steven Bird <sb@ldc.upenn.edu>
 #         Edward Loper <edloper@ldc.upenn.edu> (minor additions)
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: cfg.py,v 1.21 2004/07/03 00:53:05 edloper Exp $
@@ -71,9 +71,9 @@ X{expanding} M{lhs} to M{rhs} in M{tree}.
 @sort: CFG, CFGProduction, Nonterminal, PCFG, PCFGProduction
 """
 
-from nltk.token import *
-from nltk.chktype import chktype as _chktype
-from nltk.chktype import classeq as _classeq
+from lib.nltk.token import *
+from lib.nltk.chktype import chktype as _chktype
+from lib.nltk.chktype import classeq as _classeq
 import re
 
 #################################################################
@@ -330,7 +330,7 @@ class CFG:
 
     @see: L{CFGProduction}
     @see: L{Nonterminal}
-    @see: L{nltk.parser}
+    @see: L{lib.nltk.parser}
     """
     def __init__(self, start, productions):
         """
@@ -381,7 +381,7 @@ class CFG:
 # PCFGs and PCFG productions
 #################################################################
 
-from nltk.probability import ImmutableProbabilisticMixIn
+from lib.nltk.probability import ImmutableProbabilisticMixIn
 class PCFGProduction(CFGProduction, ImmutableProbabilisticMixIn):
     """
     A probabilistic context free grammar production.

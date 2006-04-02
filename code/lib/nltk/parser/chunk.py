@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Steven Bird <sb@ldc.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: chunk.py,v 1.40 2004/11/10 17:20:08 trevorcohn1 Exp $
@@ -159,13 +159,13 @@ RegexpChunkParser
     tag_pattern2re_pattern
 """
 
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.parser import ParserI, AbstractParser
-from nltk.tree import Tree
-from nltk.tokenizer import TokenizerI, AbstractTokenizer
-from nltk.tokenizer import LineTokenizer, RegexpTokenizer, WhitespaceTokenizer
-from nltk.token import Token, FrozenToken, CharSpanLocation, SubtokenContextPointer
-from nltk.chktype import chktype
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.parser import ParserI, AbstractParser
+from lib.nltk.tree import Tree
+from lib.nltk.tokenizer import TokenizerI, AbstractTokenizer
+from lib.nltk.tokenizer import LineTokenizer, RegexpTokenizer, WhitespaceTokenizer
+from lib.nltk.token import Token, FrozenToken, CharSpanLocation, SubtokenContextPointer
+from lib.nltk.chktype import chktype
 from sets import Set
 import types, re
 
@@ -1342,7 +1342,7 @@ def demo_eval(chunkparser, text):
     # Evaluate our chunk parser.
     chunkscore = ChunkScore()
 
-    from nltk.tokenreader import ChunkedTaggedTokenReader
+    from lib.nltk.tokenreader import ChunkedTaggedTokenReader
     ctt = ChunkedTaggedTokenReader(chunk_node='NP', SUBTOKENS='WORDS')
     
     for sentence in text.split('\n'):

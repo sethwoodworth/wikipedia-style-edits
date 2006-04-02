@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2003 University of Melbourne
 # Author: Trevor Cohn <tacohn@cs.mu.oz.au>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: sense.py,v 1.6 2005/07/13 10:57:27 trevorcohn1 Exp $
@@ -31,8 +31,8 @@ module. This data is sourced from C{http://engr.smu.edu/~rada/semcor/}.
 import re
 import sgmllib
 import xml.sax
-from nltk.token import *
-from nltk.tokenreader import *
+from lib.nltk.token import *
+from lib.nltk.tokenreader import *
 
 # [XX] Register reprs for these?
 
@@ -445,13 +445,13 @@ def demo_SensevalTokenReader(files):
             print token
 
 def demo(add_locs = False):
-    import nltk.corpus, os.path
+    import lib.nltk.corpus, os.path
 
     print '*' * 80
     print 'SemcorTokenReader'
     print '*' * 80
     print
-    path = os.path.join(nltk.corpus.get_basedir(), 'semcor1.7', 'brown1', 'tagfiles')
+    path = os.path.join(lib.nltk.corpus.get_basedir(), 'semcor1.7', 'brown1', 'tagfiles')
     infile = os.path.join(path, 'br-a01')
     demo_SemcorTokenReader('sentence', [infile])
 
@@ -460,7 +460,7 @@ def demo(add_locs = False):
     print 'SensevalTokenReader'
     print '*' * 80
     print
-    path = os.path.join(nltk.corpus.get_basedir(), 'senseval')
+    path = os.path.join(lib.nltk.corpus.get_basedir(), 'senseval')
     infile = os.path.join(path, 'interest.pos')
     demo_SensevalTokenReader([infile])
 

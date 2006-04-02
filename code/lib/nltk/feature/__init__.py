@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.12 2004/09/19 08:12:01 stevenbird Exp $
@@ -24,9 +24,9 @@ boolean list), suitable for use with other processing tasks.
     *FeatureEncoder
 """
 
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.token import *
-from nltk.util import *
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.token import *
+from lib.nltk.util import *
 from sets import *
 
 ######################################################################
@@ -424,16 +424,16 @@ def learn_encoder(tokens, unseen_cutoff=0, **property_names):
 ######################################################################
 
 def demo():
-    import nltk.corpus
+    import lib.nltk.corpus
 
     # Load the training data, and split it into test & train.
-    text = nltk.corpus.brown.read('cr01', add_contexts=True)
+    text = lib.nltk.corpus.brown.read('cr01', add_contexts=True)
     toks = text['WORDS']
     split = len(toks) * 3/4
     train, test = toks[:split], toks[split:]
 
     # Create the feature detector.
-    from nltk.feature.word import BagOfContextWordsFeatureDetector
+    from lib.nltk.feature.word import BagOfContextWordsFeatureDetector
     detector = MergedFeatureDetector(
         PropertyFeatureDetector('TEXT'),
         PropertyFeatureDetector('TAG'),

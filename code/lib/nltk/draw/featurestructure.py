@@ -3,7 +3,7 @@
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: featurestructure.py,v 1.1 2004/07/17 14:14:06 edloper Exp $
@@ -13,11 +13,11 @@ Graphically display a feature structure.
 """
 
 # DEBUG
-import nltk.draw.graph; reload(nltk.draw.graph)
+import lib.nltk.draw.graph; reload(lib.nltk.draw.graph)
 
-from nltk.draw import *
-from nltk.draw.graph import GraphWidget, GraphEdgeWidget
-from nltk.featurestruct import *
+from lib.nltk.draw import *
+from lib.nltk.draw.graph import GraphWidget, GraphEdgeWidget
+from lib.nltk.featurestruct import *
 
 ##//////////////////////////////////////////////////////
 ##  FVMWidget

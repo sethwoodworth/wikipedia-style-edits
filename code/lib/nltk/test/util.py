@@ -2,19 +2,19 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: util.py,v 1.3 2004/07/13 16:24:35 edloper Exp $
 
 """
-Unit testing for L{nltk.util}.
+Unit testing for L{lib.nltk.util}.
 
 @group Sparse Lists: test_SparseList, test_SparseList*, metatest_SparseList*
 """
 
 import sys
-from nltk.util import *
+from lib.nltk.util import *
 
 def test_SparseListRepr(): """
 Unit tests for L{SparseList.__repr__}.  These tests are separated out
@@ -650,9 +650,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.util
-    if reload_module: reload(nltk.test.util)
-    return doctest.DocTestSuite(nltk.test.util)
+    import doctest, lib.nltk.test.util
+    if reload_module: reload(lib.nltk.test.util)
+    return doctest.DocTestSuite(lib.nltk.test.util)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

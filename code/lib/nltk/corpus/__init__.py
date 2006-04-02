@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@ldc.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.10 2005/07/13 10:57:26 trevorcohn1 Exp $
@@ -129,9 +129,9 @@ L{CorpusReaderI}.  The following corpus readers are currently defined:
 """
 
 import sys, os.path, re
-from nltk.token import *
-from nltk.tokenizer import RegexpTokenizer
-from nltk.tokenreader import *
+from lib.nltk.token import *
+from lib.nltk.tokenizer import RegexpTokenizer
+from lib.nltk.tokenreader import *
 
 #################################################################
 # Base Directory for Corpora
@@ -158,20 +158,20 @@ def get_basedir():
 if os.environ.has_key('NLTK_CORPORA'):
     set_basedir(os.environ['NLTK_CORPORA'])
 elif sys.platform.startswith('win'):
-    if os.path.isdir(os.path.join(sys.prefix, 'nltk')):
-        set_basedir(os.path.join(sys.prefix, 'nltk'))
-    elif os.path.isdir(os.path.join(sys.prefix, 'lib', 'nltk')):
-        set_basedir(os.path.join(sys.prefix, 'lib', 'nltk'))
+    if os.path.isdir(os.path.join(sys.prefix, 'lib.nltk')):
+        set_basedir(os.path.join(sys.prefix, 'lib.nltk'))
+    elif os.path.isdir(os.path.join(sys.prefix, 'lib', 'lib.nltk')):
+        set_basedir(os.path.join(sys.prefix, 'lib', 'lib.nltk'))
     else:
-        set_basedir(os.path.join(sys.prefix, 'nltk'))
-elif os.path.isdir('/usr/lib/nltk'):
-    set_basedir('/usr/lib/nltk')
-elif os.path.isdir('/usr/local/lib/nltk'):
-    set_basedir('/usr/local/lib/nltk')
-elif os.path.isdir('/usr/share/nltk'):
-    set_basedir('/usr/share/nltk')
+        set_basedir(os.path.join(sys.prefix, 'lib.nltk'))
+elif os.path.isdir('/usr/lib/lib.nltk'):
+    set_basedir('/usr/lib/lib.nltk')
+elif os.path.isdir('/usr/local/lib/lib.nltk'):
+    set_basedir('/usr/local/lib/lib.nltk')
+elif os.path.isdir('/usr/share/lib.nltk'):
+    set_basedir('/usr/share/lib.nltk')
 else:
-    set_basedir('/usr/lib/nltk')
+    set_basedir('/usr/lib/lib.nltk')
 
 #################################################################
 # Corpus Reader Interface
@@ -275,7 +275,7 @@ class CorpusReaderI:
         """
         @return: A token containing the contents of the given item.
         @param item: The name of the item to read.
-        @rtype: L{Token<nltk.token.Token>}
+        @rtype: L{Token<lib.nltk.token.Token>}
         """
         raise NotImplementedError, 'This corpus does not implement read()'
 
@@ -284,7 +284,7 @@ class CorpusReaderI:
         @return: A token containing the contents of the given item,
             with properties stored as iterators (where applicable).
         @param item: The name of the item to read.
-        @rtype: L{Token<nltk.token.Token>}
+        @rtype: L{Token<lib.nltk.token.Token>}
         """
         raise NotImplementedError, 'This corpus does not implement read()'
 
@@ -418,8 +418,8 @@ class SimpleCorpusReader(CorpusReaderI):
         @type rootdir: C{string}
         @param rootdir: The path to the root directory for the
             corpus.  If C{rootdir} is a relative path, then it is
-            interpreted relative to the C{nltk.corpus} base directory
-            (as returned by L{nltk.corpus.get_basedir()}).
+            interpreted relative to the C{lib.nltk.corpus} base directory
+            (as returned by L{lib.nltk.corpus.get_basedir()}).
         @type items_regexp: C{regexp} or C{string}
         @param items_regexp: A regular expression over paths that
             defines the set of files that should be listed as
@@ -494,7 +494,7 @@ class SimpleCorpusReader(CorpusReaderI):
 
         # Postpone actual initialization until the corpus is accessed;
         # this gives the user a chance to call set_basedir(), and
-        # prevents "import nltk.corpus" from raising an exception.
+        # prevents "import lib.nltk.corpus" from raising an exception.
         # We'll also want to re-initialize the corpus if basedir
         # ever changes.
         self._basedir = None
@@ -689,7 +689,7 @@ prepositional phrase.'''
 ###################################################
 ## Roget
 
-from nltk.corpus.rogetreader import RogetCorpusReader
+from lib.nltk.corpus.rogetreader import RogetCorpusReader
 roget = RogetCorpusReader('roget', 'roget/', 'roget15a.txt')
 
 ###################################################
@@ -723,7 +723,7 @@ del groups # delete temporary variable
 ###################################################
 ## Treebank (fragment distributed with NLTK)
 
-from nltk.corpus.tree import TreebankCorpusReader
+from lib.nltk.corpus.tree import TreebankCorpusReader
 treebank = TreebankCorpusReader('treebank', 'treebank/', False,
                                 description_file='README')
 

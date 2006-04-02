@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2004 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: word.py,v 1.8 2004/07/19 05:18:02 edloper Exp $
@@ -11,7 +11,7 @@
 Feature extractors for tokens that encode single words.
 """
 
-from nltk.feature import *
+from lib.nltk.feature import *
 
 class TextFeatureDetector(PropertyFeatureDetector):
     """

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.18 2004/07/13 16:27:26 edloper Exp $
@@ -14,12 +14,12 @@ bugs.
 
 Each module in this package tests a specific aspect of NLTK.  Modules
 are typically named for the module or class that they test (e.g.,
-L{nltk.test.token} performs tests on the L{nltk.token} module).
+L{lib.nltk.test.token} performs tests on the L{lib.nltk.token} module).
 
 This package can be run as a script from the command line, with the
 following syntax::
 
-    python nltk/test/__init__.py -v nltk/test/*.py
+    python lib.nltk/test/__init__.py -v lib.nltk/test/*.py
 
 This command is called by the \"C{test}\" target in the NLTK Makefile.
 """
@@ -37,7 +37,7 @@ def testsuite():
     for file in os.listdir(path):
         if not file.endswith('.py'): continue
         if file.startswith('__init__'): continue
-        try: exec('import nltk.test.%s as m' % file[:-3])
+        try: exec('import lib.nltk.test.%s as m' % file[:-3])
         except: print 'Error importing %s' % file
         # Add unittest tests.
         if hasattr(m, 'testsuite'):
@@ -50,8 +50,8 @@ def test(verbosity=0):
     Run unit tests for the NLP toolkit; print results to stdout/stderr.
     """
     # Ensure that the type safety level is set to full.
-    import nltk.chktype
-    nltk.chktype.type_safety_level(1000)
+    import lib.nltk.chktype
+    lib.nltk.chktype.type_safety_level(1000)
     
     global success
     runner = unittest.TextTestRunner(verbosity=verbosity)
@@ -85,13 +85,13 @@ def pp_summary(summary):
         percent = int(m.group(2))
         module_name = os.path.abspath(m.group(3))
         module_name = module_name.replace('\\', '/')
-        module_name = re.sub('.*/nltk/', 'nltk.', module_name)
+        module_name = re.sub('.*/lib.nltk/', 'lib.nltk.', module_name)
         module_name = module_name.replace('/__init__.py', '')
         module_name = module_name.replace('/','.')
         module_name = module_name.replace('.py', '')
-        if module_name.startswith('nltk.test'): return ''
+        if module_name.startswith('lib.nltk.test'): return ''
         lines.append([percent, numlines, module_name])
-    re.sub(' +(\S+) +(\S+)% +\S+ +\((\S*nltk\S+)\)\n', subfunc, summary)
+    re.sub(' +(\S+) +(\S+)% +\S+ +\((\S*lib.nltk\S+)\)\n', subfunc, summary)
     lines.sort()
     print
     print 'Coverage  Lines  Module'
@@ -109,7 +109,7 @@ def cli():
     """
     The command line interface for the NLP test suite.  Usage::
 
-        python nltk/test/__init__.py [-v] [-c] 
+        python lib.nltk/test/__init__.py [-v] [-c] 
     """
     verbosity = 0
     coverage = False

@@ -1,5 +1,5 @@
 import Tkinter
-import nltk.corpus
+import lib.nltk.corpus
 
 class CorpusFrame:
     """
@@ -142,11 +142,11 @@ class CorpusFrame:
 
 def demo():
     root = Tkinter.Tk()
-    cf = CorpusFrame(root, [nltk.corpus.stopwords,
-			    nltk.corpus.brown,
-			    nltk.corpus.chunking,
-			    nltk.corpus.names,
-			    nltk.corpus.treebank])
+    cf = CorpusFrame(root, [lib.nltk.corpus.stopwords,
+			    lib.nltk.corpus.brown,
+			    lib.nltk.corpus.chunking,
+			    lib.nltk.corpus.names,
+			    lib.nltk.corpus.treebank])
     return root.mainloop()
 
 if __name__ == '__main__':

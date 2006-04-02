@@ -1,6 +1,6 @@
-from nltk.token import *
-from nltk.corpus import CorpusReaderI, get_basedir
-from nltk.tokenreader import *
+from lib.nltk.token import *
+from lib.nltk.corpus import CorpusReaderI, get_basedir
+from lib.nltk.tokenreader import *
 import os.path, re
 
 #################################################################
@@ -21,7 +21,7 @@ class RogetCorpusReader(CorpusReaderI):
  
         # Postpone actual initialization until the corpus is accessed;
         # this gives the user a chance to call set_basedir(), and
-        # prevents "import nltk.corpus" from raising an exception.
+        # prevents "import lib.nltk.corpus" from raising an exception.
         # We'll also want to re-initialize the corpus if basedir
         # ever changes.
         self._basedir = None

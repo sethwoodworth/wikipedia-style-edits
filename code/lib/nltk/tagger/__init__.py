@@ -3,7 +3,7 @@
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Steven Bird <sb@ldc.upenn.edu> (minor additions)
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.8 2005/04/18 19:51:45 tresoldi Exp $
@@ -33,10 +33,10 @@ the L{TaggerI} interface.
 """
 
 import types, re
-from nltk.chktype import chktype
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.token import Token
-from nltk.probability import FreqDist, ConditionalFreqDist
+from lib.nltk.chktype import chktype
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.token import Token
+from lib.nltk.probability import FreqDist, ConditionalFreqDist
 
 ##//////////////////////////////////////////////////////
 ##  Tagger Interface
@@ -533,7 +533,7 @@ class BackoffTagger(SequentialTagger):
     def __repr__(self):
         return '<BackoffTagger: %s>' % self._subtaggers
     
-from nltk.eval import accuracy
+from lib.nltk.eval import accuracy
 def tagger_accuracy(tagger, gold_standard):
     """
     Score the accuracy of the tagger against the gold standard.
@@ -588,7 +588,7 @@ def demo(num_files=20):
         C{num_files>=500}, then all 500 files will be used.
     @rtype: None
     """
-    from nltk.corpus import brown
+    from lib.nltk.corpus import brown
     import sys, random
     num_files = max(min(num_files, 500), 3)
 
@@ -665,6 +665,6 @@ def demo(num_files=20):
 
 if __name__ == '__main__':
     # Standard boilerpate.  (See note in <http://?>)
-    #from nltk.tagger import *
+    #from lib.nltk.tagger import *
     demo()
 

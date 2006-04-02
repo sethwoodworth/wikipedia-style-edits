@@ -2,17 +2,17 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: chktype.py,v 1.5 2004/07/15 02:36:58 edloper Exp $
 
 """
-Unit testing for L{nltk.chktype}.
+Unit testing for L{lib.nltk.chktype}.
 """
 
-from nltk.chktype import *
-from nltk.util import mark_stdout_newlines
+from lib.nltk.chktype import *
+from lib.nltk.util import mark_stdout_newlines
 import types
 
 ##//////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ import types
 ##//////////////////////////////////////////////////////
 
 def test_chktype(): r"""
-Unit test cases for L{nltk.chktype}.
+Unit test cases for L{lib.nltk.chktype}.
 
 The amount of type checking performed is controlled by the type safety
 level, which is set with L{type_safety_level}:
@@ -374,9 +374,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.chktype
-    if reload_module: reload(nltk.test.chktype)
-    return doctest.DocTestSuite(nltk.test.chktype)
+    import doctest, lib.nltk.test.chktype
+    if reload_module: reload(lib.nltk.test.chktype)
+    return doctest.DocTestSuite(lib.nltk.test.chktype)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

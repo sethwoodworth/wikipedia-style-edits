@@ -4,7 +4,7 @@
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Steven Bird <sb@ldc.upenn.edu>
 #         Jean Mark Gawron <gawron@mail.sdsu.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: chart.py,v 1.36 2005/07/26 06:29:01 stevenbird Exp $
@@ -47,12 +47,12 @@ defines three chart parsers:
 """
 
 import re
-from nltk.chktype import chktype
-from nltk.token import Token
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.parser import ParserI, AbstractParser
-from nltk.tree import Tree
-from nltk.cfg import CFG, CFGProduction, Nonterminal, nonterminals
+from lib.nltk.chktype import chktype
+from lib.nltk.token import Token
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.parser import ParserI, AbstractParser
+from lib.nltk.tree import Tree
+from lib.nltk.cfg import CFG, CFGProduction, Nonterminal, nonterminals
 
 ########################################################################
 ##  Edges
@@ -793,7 +793,7 @@ class Chart(PropertyIndirectionMixIn):
 
     def dot_digraph(self):
         # Header
-        s = 'digraph nltk_chart {\n'
+        s = 'digraph lib.nltk_chart {\n'
         #s += '  size="5,5";\n'
         s += '  rankdir=LR;\n'
         s += '  node [height=0.1,width=0.1];\n'
@@ -1624,7 +1624,7 @@ def demo():
     # Tokenize a sample sentence.
     sent = Token(TEXT='I saw John with a dog with my cookie')
     print "Sentence:\n", sent
-    from nltk.tokenizer import WhitespaceTokenizer
+    from lib.nltk.tokenizer import WhitespaceTokenizer
     WhitespaceTokenizer(SUBTOKENS='WORDS').tokenize(sent)
 
     # Ask the user which parser to test

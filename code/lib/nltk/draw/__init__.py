@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.21 2004/04/24 16:53:46 edloper Exp $
@@ -20,11 +20,11 @@ well as a number of simpler widgets.  These canvas widgets make it
 easier to build new graphical tools and demos.  See the class
 documentation for L{CanvasWidget} for more information.
 
-The C{nltk.draw} module defines the abstract C{CanvasWidget} base
+The C{lib.nltk.draw} module defines the abstract C{CanvasWidget} base
 class, and a number of simple canvas widgets.  The remaining canvas
-widgets are defined by submodules, such as L{nltk.draw.tree}.
+widgets are defined by submodules, such as L{lib.nltk.draw.tree}.
 
-The C{nltk.draw} module also defines L{CanvasFrame}, which
+The C{lib.nltk.draw} module also defines L{CanvasFrame}, which
 encapsulates a C{Canvas} and its scrollbars.  It uses a
 L{ScrollWatcherWidget} to ensure that all canvas widgets contained on
 its canvas are within the scroll region.

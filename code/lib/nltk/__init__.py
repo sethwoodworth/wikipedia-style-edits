@@ -3,7 +3,7 @@
 # Copyright (C) 2005 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Steven Bird <sb@csse.unimelb.edu.au>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.44 2005/07/26 04:54:21 stevenbird Exp $
@@ -16,7 +16,7 @@ interfaced to annotated corpora.
 
 NLTK is primarily intended for use as a teaching tool.  Along with the
 tutorials and problem sets available from U{the NLTK
-webpage<http://nltk.sourceforge.net>}, NLTK provides ready-to-use
+webpage<http://lib.nltk.sourceforge.net>}, NLTK provides ready-to-use
 computational linguistics courseware.  Students can augment and
 replace existing components, learning structured programming by
 example, and manipulating sophisticated models from the outset.
@@ -57,15 +57,15 @@ Interfaces
 Natural language processing tasks (such as parsing or classifying
 texts) are defined by interfaces.  An X{interface} is a special type
 of base class that specifies a set of methods that must be supported.
-For example, the L{ParserI<nltk.parser.ParserI>} interface specifies
-that parsers must support the L{parse()<nltk.parser.ParserI.parse>}
+For example, the L{ParserI<lib.nltk.parser.ParserI>} interface specifies
+that parsers must support the L{parse()<lib.nltk.parser.ParserI.parse>}
 method.
 
 Each subclass of an interface provides an implementation for the
 natural language processing task defined by the interface.  For
-example, L{ShiftReduceParser<nltk.parser.ShiftReduceParser>},
-L{RecursiveDescentParser<nltk.parser.RecursiveDescentParser>}, and
-L{ChartParser<nltk.parser.chart.ChartParser>} are all implementations
+example, L{ShiftReduceParser<lib.nltk.parser.ShiftReduceParser>},
+L{RecursiveDescentParser<lib.nltk.parser.RecursiveDescentParser>}, and
+L{ChartParser<lib.nltk.parser.chart.ChartParser>} are all implementations
 of the C{ParserI} interface.
 
 @version: 1.4.4
@@ -84,7 +84,7 @@ of the C{ParserI} interface.
 @group Debugging: chktype, test
 """
 
-# Define some nltk-specific docstring fields:
+# Define some lib.nltk-specific docstring fields:
 #   - @inprop:  Specifies a property name that is used as input
 #               by a processing class.
 #   - @outprop: Specifies a property name that is used as output
@@ -122,7 +122,7 @@ __keywords__ = ['NLP', 'CL', 'natural language processing',
                 'computational linguistics', 'parsing', 'tagging',
                 'tokenizing', 'syntax', 'linguistics', 'language',
                 'natural language']
-__url__ = "http://nltk.sf.net/"
+__url__ = "http://lib.nltk.sf.net/"
 
 # Maintainer, contributors, etc.
 __maintainer__ = "Edward Loper"

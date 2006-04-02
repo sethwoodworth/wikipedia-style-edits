@@ -2,20 +2,20 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tokenizer.py,v 1.6 2004/07/16 13:38:19 edloper Exp $
 
 """
-Unit testing for L{nltk.tokenizer}.
+Unit testing for L{lib.nltk.tokenizer}.
 """
 
-from nltk.token import *
-from nltk.tokenizer import *
+from lib.nltk.token import *
+from lib.nltk.tokenizer import *
 
 def test_WhitespaceTokenizer(): r"""
-Unit test cases for L{nltk.tokenizer.WhitespaceTokenizer}.
+Unit test cases for L{lib.nltk.tokenizer.WhitespaceTokenizer}.
 
     >>> tokenizer = WhitespaceTokenizer(SUBTOKENS='WORDS')
 
@@ -79,7 +79,7 @@ The C{xtokenize} method generates an iterator instead of a list:
 """
 
 def test_RegexpTokenizer(): r"""
-Unit test cases for L{nltk.tokenizer.RegexpTokenizer}.
+Unit test cases for L{lib.nltk.tokenizer.RegexpTokenizer}.
 
 This tokenizer only keeps strings of word characters; everything else
 is treated as a separator:
@@ -121,9 +121,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.tokenizer
-    if reload_module: reload(nltk.test.tokenizer)
-    return doctest.DocTestSuite(nltk.test.tokenizer)
+    import doctest, lib.nltk.test.tokenizer
+    if reload_module: reload(lib.nltk.test.tokenizer)
+    return doctest.DocTestSuite(lib.nltk.test.tokenizer)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

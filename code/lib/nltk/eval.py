@@ -3,7 +3,7 @@
 # Copyright (C) 2004 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Steven Bird <sb@csse.unimelb.edu.au>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 
 
@@ -12,7 +12,7 @@ Utility functions for evaluating processing modules.
 """
 
 import sets, math
-from nltk.chktype import chktype
+from lib.nltk.chktype import chktype
 
 def accuracy(reference, test):
     """

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.6 2005/07/13 10:57:26 trevorcohn1 Exp $
@@ -53,12 +53,12 @@ class TokenReaderI:
 ## Import token reader implementations.
 ######################################################################
 
-from nltk.tokenreader.tokenizerbased import *
-from nltk.tokenreader.treebank import *
-from nltk.tokenreader.tagged import *
-from nltk.tokenreader.conll import *
-from nltk.tokenreader.ieer import *
-from nltk.tokenreader.sense import *
+from lib.nltk.tokenreader.tokenizerbased import *
+from lib.nltk.tokenreader.treebank import *
+from lib.nltk.tokenreader.tagged import *
+from lib.nltk.tokenreader.conll import *
+from lib.nltk.tokenreader.ieer import *
+from lib.nltk.tokenreader.sense import *
 
 ######################################################################
 ## Demo

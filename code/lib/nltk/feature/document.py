@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2004 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: document.py,v 1.6 2005/07/13 14:01:26 trevorcohn1 Exp $
@@ -11,7 +11,7 @@
 Feature extractors for tokens that encode documents.
 """
 
-from nltk.feature import *
+from lib.nltk.feature import *
 
 class BagOfContainedWordsFeatureDetector(AbstractFeatureDetector):
     """

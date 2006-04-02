@@ -3,7 +3,7 @@
 # Module written by Tiago Tresoldi <tresoldi@users.sf.net>,
 # based on NLTK's UnigramTagger and tutorials.
 #
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 
 """
@@ -13,10 +13,10 @@ substrings of tokens' text.
 @group Tagger: PrefixTagger, SuffixTagger
 """
 
-from nltk.token import Token
-from nltk.tagger import SequentialTagger
-from nltk.chktype import chktype
-from nltk.probability import ConditionalFreqDist
+from lib.nltk.token import Token
+from lib.nltk.tagger import SequentialTagger
+from lib.nltk.chktype import chktype
+from lib.nltk.probability import ConditionalFreqDist
 
 class AffixTagger (SequentialTagger):
     """

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.24 2005/02/08 11:02:23 stevenbird Exp $
@@ -46,9 +46,9 @@ new classifiers from a given set of training data.
 @todo: Add raw_classify methods.
 """
 
-from nltk.token import Token
-from nltk.chktype import chktype as _chktype
-from nltk.chktype import classeq as _classeq
+from lib.nltk.token import Token
+from lib.nltk.chktype import chktype as _chktype
+from lib.nltk.chktype import classeq as _classeq
 import math, types, sets
 
 ##//////////////////////////////////////////////////////

@@ -2,13 +2,13 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: token.py,v 1.20 2004/07/15 02:38:07 edloper Exp $
 
 """
-Unit testing for L{nltk.token}.
+Unit testing for L{lib.nltk.token}.
 
 @group Tokens: test_Token, test_SafeToken, test_SafeToken_checks,
                test_TokenReprLocError, test_FrozenToken,
@@ -17,8 +17,8 @@ Unit testing for L{nltk.token}.
 @group Demo: test_demo
 """
 
-from nltk.token import *
-from nltk.util import mark_stdout_newlines
+from lib.nltk.token import *
+from lib.nltk.util import mark_stdout_newlines
 
 def test_Token(): """
 Unit testing for L{Token}.
@@ -303,7 +303,7 @@ converted to tuples, and dicts to FrozenDicts.
     >>> Token(A={1: Token(B=12)}).freeze()
     <A={1: <B=12>}>
     >>> type(Token(A={1: Token(B=12)}).freeze()['A'])
-    <class 'nltk.util.FrozenDict'>
+    <class 'lib.nltk.util.FrozenDict'>
 
 Iterators are automatically converted to tuples:
 
@@ -866,7 +866,7 @@ Index locations are ordered, and can be compared with cmp:
     
 
 def test_demo(): r"""
-Unit tests for L{nltk.token.demo}.
+Unit tests for L{lib.nltk.token.demo}.
     
     >>> mark_stdout_newlines(demo)
     ______________________________________________________________________
@@ -906,9 +906,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.token
-    if reload_module: reload(nltk.test.token)
-    return doctest.DocTestSuite(nltk.test.token)
+    import doctest, lib.nltk.test.token
+    if reload_module: reload(lib.nltk.test.token)
+    return doctest.DocTestSuite(lib.nltk.test.token)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

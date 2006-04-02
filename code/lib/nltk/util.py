@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2003 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: util.py,v 1.14 2004/06/30 22:39:57 edloper Exp $

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: probabilistic.py,v 1.25 2004/07/19 05:18:44 edloper Exp $
@@ -52,14 +52,14 @@ search strategies.  Currently the following subclasses are defined:
       all parses.
 """
 
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.parser import ParserI, AbstractParser
-from nltk.cfg import PCFG, PCFGProduction, Nonterminal, nonterminals
-from nltk.token import Token, CharSpanLocation #ProbabilisticToken, Token
-from nltk.tree import ProbabilisticTree
-from nltk.parser.chart import Chart, LeafEdge, TreeEdge, AbstractChartRule
-from nltk.chktype import chktype as _chktype
-from nltk.tree import Tree
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.parser import ParserI, AbstractParser
+from lib.nltk.cfg import PCFG, PCFGProduction, Nonterminal, nonterminals
+from lib.nltk.token import Token, CharSpanLocation #ProbabilisticToken, Token
+from lib.nltk.tree import ProbabilisticTree
+from lib.nltk.parser.chart import Chart, LeafEdge, TreeEdge, AbstractChartRule
+from lib.nltk.chktype import chktype as _chktype
+from lib.nltk.tree import Tree
 import types
 
 ##//////////////////////////////////////////////////////
@@ -781,7 +781,7 @@ def demo():
     summary of the results are displayed.
     """
     import sys, time
-    from nltk.tokenizer import WhitespaceTokenizer
+    from lib.nltk.tokenizer import WhitespaceTokenizer
 
     # Define some nonterminals
     S, VP, NP, PP = nonterminals('S, VP, NP, PP')
@@ -904,9 +904,9 @@ def demo():
     print
     print 'Draw parses (y/n)? ',
     if sys.stdin.readline().strip().lower().startswith('y'):
-        import nltk.draw.tree
+        import lib.nltk.draw.tree
         print '  please wait...'
-        nltk.draw.tree.draw_trees(*parses)
+        lib.nltk.draw.tree.draw_trees(*parses)
 
     # Ask the user if we should print the parses.
     print

@@ -2,14 +2,14 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tree.py,v 1.2 2004/08/18 10:49:27 stevenbird Exp $
 
 import os.path, re
-from nltk.corpus import CorpusReaderI, get_basedir
-from nltk.tokenreader import *
+from lib.nltk.corpus import CorpusReaderI, get_basedir
+from lib.nltk.tokenreader import *
 
 class TreebankCorpusReader(CorpusReaderI):
     """
@@ -52,7 +52,7 @@ class TreebankCorpusReader(CorpusReaderI):
         
         # Postpone actual initialization until the corpus is accessed;
         # this gives the user a chance to call set_basedir(), and
-        # prevents "import nltk.corpus" from raising an exception.
+        # prevents "import lib.nltk.corpus" from raising an exception.
         # We'll also want to re-initialize the corpus if basedir
         # ever changes.
         self._basedir = None

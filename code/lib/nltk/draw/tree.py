@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tree.py,v 1.22 2004/11/10 12:05:59 stevenbird Exp $
@@ -11,9 +11,9 @@
 Graphically display a C{Tree}.
 """
 from Tkinter import *
-from nltk.tree import Tree
-from nltk.token import Token
-from nltk.draw import *
+from lib.nltk.tree import Tree
+from lib.nltk.token import Token
+from lib.nltk.draw import *
 import sys
 
 ##//////////////////////////////////////////////////////
@@ -774,7 +774,7 @@ class TreeWidget(CanvasWidget):
 
 class TreeView:
     def __init__(self, *trees):
-        from nltk.draw import CanvasFrame
+        from lib.nltk.draw import CanvasFrame
         from math import sqrt, ceil
     
         self._trees = trees

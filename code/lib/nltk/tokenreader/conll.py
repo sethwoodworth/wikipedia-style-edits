@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: conll.py,v 1.5 2004/11/18 16:11:24 trevorcohn1 Exp $
@@ -12,10 +12,10 @@ Token reader for the reading tokens encoded with CONLL2000-style
 strings.  (Under construction)
 """
 
-from nltk.token import *
-from nltk.tree import *
-from nltk.tokenreader import TokenReaderI
-from nltk import PropertyIndirectionMixIn
+from lib.nltk.token import *
+from lib.nltk.tree import *
+from lib.nltk.tokenreader import TokenReaderI
+from lib.nltk import PropertyIndirectionMixIn
 import re
 
 class ConllTokenReader(TokenReaderI, PropertyIndirectionMixIn):

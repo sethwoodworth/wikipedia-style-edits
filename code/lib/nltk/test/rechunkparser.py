@@ -2,23 +2,23 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: rechunkparser.py,v 1.10 2004/07/15 02:37:46 edloper Exp $
 
 """
-Unit testing for L{nltk.parser.chunk.RegexpChunkParser} and associated
+Unit testing for L{lib.nltk.parser.chunk.RegexpChunkParser} and associated
 functions and classes.
 """
 
-from nltk.parser.chunk import *
-from nltk.tokenreader import TaggedTokenReader
+from lib.nltk.parser.chunk import *
+from lib.nltk.tokenreader import TaggedTokenReader
 
 import unittest
 
 def testChunkString(): r"""
-Unit test cases for L{nltk.parser.chunk.ChunkString}.
+Unit test cases for L{lib.nltk.parser.chunk.ChunkString}.
 
 A chunk string is a string-based encoding of a chunking of a text.
 Chunk strings are constructed from lists of tagged tokens.
@@ -161,7 +161,7 @@ structure:
 """
 
 def test_tag_pattern2re_pattern(): r"""
-Unit test cases for L{nltk.parser.chunk.tag_pattern2re_pattern}
+Unit test cases for L{lib.nltk.parser.chunk.tag_pattern2re_pattern}
 
 C{tag_pattern2re_pattern} converts a tag pattern to a regexp, suitable
 for use with the C{re} module.
@@ -200,7 +200,7 @@ brackets and curly brackets:
 """
 
 def test_RegexpChunkParser(): r"""
-Unit test cases for L{nltk.parser.chunk.RegexpChunkParser} and associated
+Unit test cases for L{lib.nltk.parser.chunk.RegexpChunkParser} and associated
 rules.
 
 Set up a test sample.
@@ -635,9 +635,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.rechunkparser
-    if reload_module: reload(nltk.test.rechunkparser)
-    return doctest.DocTestSuite(nltk.test.rechunkparser)
+    import doctest, lib.nltk.test.rechunkparser
+    if reload_module: reload(lib.nltk.test.rechunkparser)
+    return doctest.DocTestSuite(lib.nltk.test.rechunkparser)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

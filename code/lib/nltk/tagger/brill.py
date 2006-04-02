@@ -4,7 +4,7 @@
 # Author: Christopher Maloof <cjmaloof@gradient.cis.upenn.edu>
 #         Edward Loper <edloper@gradient.cis.upenn.edu>
 #         Steven Bird <sb@ldc.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: brill.py,v 1.8 2004/07/17 20:12:03 edloper Exp $
@@ -18,11 +18,11 @@ Brill's transformational rule-based tagger.
 @group Trainers: BrillTaggerTrainer, FastBrillTaggerTrainer
 """
 
-from nltk.tagger import TaggerI, DefaultTagger, RegexpTagger, \
+from lib.nltk.tagger import TaggerI, DefaultTagger, RegexpTagger, \
      UnigramTagger, BackoffTagger, tagger_accuracy
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.token import Token
-from nltk.corpus import treebank
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.token import Token
+from lib.nltk.corpus import treebank
 
 from sets import Set # for sets
 import bisect        # for binary search through a subset of indices

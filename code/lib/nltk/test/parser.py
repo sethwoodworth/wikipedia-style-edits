@@ -2,20 +2,20 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: parser.py,v 1.4 2004/08/04 02:22:35 edloper Exp $
 
 """
-Unit testing for L{nltk.parser}.
+Unit testing for L{lib.nltk.parser}.
 """
 
-from nltk.parser import *
-from nltk.cfg import *
-from nltk.tokenizer import WhitespaceTokenizer
-from nltk.tokenreader import TaggedTokenReader
-from nltk.token import *
+from lib.nltk.parser import *
+from lib.nltk.cfg import *
+from lib.nltk.tokenizer import WhitespaceTokenizer
+from lib.nltk.tokenreader import TaggedTokenReader
+from lib.nltk.token import *
 
 # Build some shared grammars, etc.
 
@@ -76,8 +76,8 @@ grammar_productions1 = [
 pcfg1 = PCFG(S, grammar_productions1)
 
 def test_basic_parsers(): r"""
-Unit tests for L{nltk.parser.ShiftReduceParser} and
-L{nltk.parser.RecursiveDescentParser}.
+Unit tests for L{lib.nltk.parser.ShiftReduceParser} and
+L{lib.nltk.parser.RecursiveDescentParser}.
 
 Create a sample sentence:
 
@@ -118,9 +118,9 @@ Create a shift-reduce parser and parse the sentence.
 """
 
 def test_chart_parsers(): r"""
-Unit tests for L{nltk.parser.chart}
+Unit tests for L{lib.nltk.parser.chart}
 
-    >>> from nltk.parser.chart import *
+    >>> from lib.nltk.parser.chart import *
 
 Create a sample sentence:
 
@@ -149,7 +149,7 @@ Top down parser:
         
 Bottom-up parser:
 
-    >>> from nltk.parser.chart import *
+    >>> from lib.nltk.parser.chart import *
     >>> parser = ChartParser(cfg2, BU_STRATEGY, LEAF='TEXT')
     >>> for tree in parser.get_parse_list(sent):
     ...     print tree
@@ -171,9 +171,9 @@ Bottom-up parser:
 """
 
 def test_probabilistic_parsers(): r"""
-Unit tests for L{nltk.parser.probabilistic}
+Unit tests for L{lib.nltk.parser.probabilistic}
 
-    >>> from nltk.parser.probabilistic import *
+    >>> from lib.nltk.parser.probabilistic import *
 
 Create a sample sentence:
 
@@ -182,7 +182,7 @@ Create a sample sentence:
 
 Parse it:
 
-    >>> from nltk.parser.probabilistic import *
+    >>> from lib.nltk.parser.probabilistic import *
     >>> parser = InsidePCFGParser(pcfg1, LEAF='TEXT')
     >>> for tree in parser.get_parse_list(sent):
     ...     print tree
@@ -199,7 +199,7 @@ Parse it:
         (VP: (V: <saw>) (NP: (Det: <a>) (N: <man>)))
         (PP: (P: <in>) (NP: (Det: <the>) (N: <park>))))) (p=2.1294e-06)
 
-    >>> from nltk.parser.probabilistic import *
+    >>> from lib.nltk.parser.probabilistic import *
     >>> parser = ViterbiPCFGParser(pcfg1, LEAF='TEXT')
     >>> for tree in parser.get_parse_list(sent):
     ...     print tree
@@ -213,9 +213,9 @@ Parse it:
 """
 
 def test_regexp_chunk_parser(): r"""
-Unit tests for L{nltk.parser.chunk}
+Unit tests for L{lib.nltk.parser.chunk}
 
-    >>> from nltk.parser.chunk import *
+    >>> from lib.nltk.parser.chunk import *
 
 Create a sample sentence:
 
@@ -290,8 +290,8 @@ Do NP chunking with various rules:
 """
 
 def test_basic_parser_trace(): r"""
-Unit tests for L{nltk.parser.ShiftReduceParser} and
-L{nltk.parser.RecursiveDescentParser}.
+Unit tests for L{lib.nltk.parser.ShiftReduceParser} and
+L{lib.nltk.parser.RecursiveDescentParser}.
 
 Create a sample sentence:
 
@@ -516,9 +516,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.parser
-    if reload_module: reload(nltk.test.parser)
-    return doctest.DocTestSuite(nltk.test.parser)
+    import doctest, lib.nltk.test.parser
+    if reload_module: reload(lib.nltk.test.parser)
+    return doctest.DocTestSuite(lib.nltk.test.parser)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

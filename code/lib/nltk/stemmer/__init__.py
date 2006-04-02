@@ -3,7 +3,7 @@
 # Copyright (C) 2003 University of Melbourne
 # Author: Trevor Cohn <tacohn@cs.mu.oz.au>
 #         Edward Loper <edloper@gradient.cis.upenn.edu> (rewrite)
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.10 2004/07/17 20:06:46 edloper Exp $
@@ -20,9 +20,9 @@ morphological rules, and part-of-speech and sense ambiguities
 C{StemmerI} defines a standard interface for stemmers.
 """
 
-from nltk.chktype import chktype
-from nltk import TaskI, PropertyIndirectionMixIn
-from nltk.token import Token
+from lib.nltk.chktype import chktype
+from lib.nltk import TaskI, PropertyIndirectionMixIn
+from lib.nltk.token import Token
 import re
 
 ##//////////////////////////////////////////////////////
@@ -175,7 +175,7 @@ class RegexpStemmer(AbstractStemmer):
 
 def _demo_stemmer(stemmer):
     # Tokenize a sample text.
-    from nltk.tokenizer import WhitespaceTokenizer
+    from lib.nltk.tokenizer import WhitespaceTokenizer
     text = Token(TEXT='John was eating icecream')
     WhitespaceTokenizer().tokenize(text)
 
@@ -193,7 +193,7 @@ def demo():
     stemmer = RegexpStemmer('ing$|s$|e$')
     _demo_stemmer(stemmer)
 
-    from nltk.stemmer.porter import PorterStemmer
+    from lib.nltk.stemmer.porter import PorterStemmer
     stemmer = PorterStemmer()
     _demo_stemmer(stemmer)
 

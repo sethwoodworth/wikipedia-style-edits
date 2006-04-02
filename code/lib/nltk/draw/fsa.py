@@ -3,7 +3,7 @@
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
 #
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: fsa.py,v 1.19 2004/03/18 21:02:36 edloper Exp $
@@ -11,13 +11,13 @@
 """
 Graphically display a finite state automaton.
 
-This module may be renamed to nltk.draw.graph at some point in the
+This module may be renamed to lib.nltk.draw.graph at some point in the
 future, since it actually supports arbitrary graphs.
 """
 
 import math
-from nltk.draw import *
-from nltk.draw.graph import *
+from lib.nltk.draw import *
+from lib.nltk.draw.graph import *
 
 ##//////////////////////////////////////////////////////
 ##  Test code.
@@ -63,7 +63,7 @@ def fsawindow(fsa):
 
 # Test
 def demo():
-    import nltk.fsa
+    import lib.nltk.fsa
     import time, random
     t = time.time()
     regexps = ['(ab(c*)c)*dea(b+)e',
@@ -74,9 +74,9 @@ def demo():
     # Pick a random regexp, and draw it.
     regexp = random.choice(regexps)
     print 'trying', regexp
-    fsa = nltk.fsa.FSA("abcdef")
+    fsa = lib.nltk.fsa.FSA("abcdef")
     fsa.empty()
-    nltk.fsa.re2nfa(fsa, regexp)
+    lib.nltk.fsa.re2nfa(fsa, regexp)
 
     # Show the DFA
     dfa = fsa.dfa()
@@ -109,6 +109,6 @@ def demo():
     cf.mainloop()
 
 if __name__ == '__main__':
-    print ('nltk.fsa has been temporarily removed; '+
-           'so nltk.draw.fsa is disabled.')
+    print ('lib.nltk.fsa has been temporarily removed; '+
+           'so lib.nltk.draw.fsa is disabled.')
     #demo()

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tokenizerbased.py,v 1.2 2004/07/17 15:42:38 edloper Exp $
@@ -11,9 +11,9 @@
 Token readers whose behavior is based on tokenizers.
 """
 
-from nltk.token import *
-from nltk.tokenreader import TokenReaderI
-from nltk import PropertyIndirectionI
+from lib.nltk.token import *
+from lib.nltk.tokenreader import TokenReaderI
+from lib.nltk import PropertyIndirectionI
 
 class TokenizerBasedTokenReader(TokenReaderI, PropertyIndirectionI):
     """
@@ -89,7 +89,7 @@ class WhitespaceSeparatedTokenReader(TokenizerBasedTokenReader):
         [<tokens>, <separated>, <by>, <spaces>]
     """
     def __init__(self, **property_names):
-        from nltk.tokenizer import WhitespaceTokenizer
+        from lib.nltk.tokenizer import WhitespaceTokenizer
         tokenizer = WhitespaceTokenizer(**property_names)
         TokenizerBasedTokenReader.__init__(self, tokenizer)
 
@@ -103,7 +103,7 @@ class NewlineSeparatedTokenReader(TokenizerBasedTokenReader):
         [<tokens>, <separated>, <by>, <newlines>]
     """
     def __init__(self, **property_names):
-        from nltk.tokenizer import LineTokenizer
+        from lib.nltk.tokenizer import LineTokenizer
         tokenizer = LineTokenizer(**property_names)
         TokenizerBasedTokenReader.__init__(self, tokenizer)
         

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2004 University of Melbourne
 # Author: Phil Blunsom <pcbl@cs.mu.oz.au>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: multioutput.py,v 1.4 2005/04/02 22:52:13 stevenbird Exp $
@@ -23,11 +23,11 @@ Text Classification"
 from sys import *
 
 # NLTK
-from nltk.chktype import chktype
-from nltk.probability import *
-from nltk.hmm import HiddenMarkovModel 
-from nltk.hmm import HiddenMarkovModelTrainer 
-from nltk.token import Token
+from lib.nltk.chktype import chktype
+from lib.nltk.probability import *
+from lib.nltk.hmm import HiddenMarkovModel 
+from lib.nltk.hmm import HiddenMarkovModelTrainer 
+from lib.nltk.token import Token
 
 # Python
 from numarray import *
@@ -204,7 +204,7 @@ class MultiOutputHMMTrainer(HiddenMarkovModelTrainer):
         return model(self._symbols, self._states, A, B, pi)
 
 def load_pos():
-    from nltk.corpus import brown
+    from lib.nltk.corpus import brown
 
     tagged_tokens = []
     for item in brown.items()[:5]:

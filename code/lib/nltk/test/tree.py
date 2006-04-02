@@ -2,21 +2,21 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tree.py,v 1.12 2004/08/04 02:23:10 edloper Exp $
 
 """
-Unit testing for L{nltk.tree}.
+Unit testing for L{lib.nltk.tree}.
 
-@todo: Test L{nltk.tree.ProbabilisticTreeToken}
-@todo: Test L{nltk.tree.parse_treebank}
+@todo: Test L{lib.nltk.tree.ProbabilisticTreeToken}
+@todo: Test L{lib.nltk.tree.parse_treebank}
 """
 
-from nltk.tree import *
-from nltk.tokenizer import WhitespaceTokenizer
-from nltk.tokenreader import TreebankTokenReader
+from lib.nltk.tree import *
+from lib.nltk.tokenizer import WhitespaceTokenizer
+from lib.nltk.tokenreader import TreebankTokenReader
 
 ##//////////////////////////////////////////////////////
 ##  Test code
@@ -294,9 +294,9 @@ if __name__ == '__main__': sys.path[0] = None
 import unittest, doctest, trace
 
 def testsuite(reload_module=False):
-    import doctest, nltk.test.tree
-    if reload_module: reload(nltk.test.tree)
-    return doctest.DocTestSuite(nltk.test.tree)
+    import doctest, lib.nltk.test.tree
+    if reload_module: reload(lib.nltk.test.tree)
+    return doctest.DocTestSuite(lib.nltk.test.tree)
 
 def test(verbosity=2, reload_module=False):
     runner = unittest.TextTestRunner(verbosity=verbosity)

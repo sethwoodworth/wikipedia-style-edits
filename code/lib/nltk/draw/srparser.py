@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: srparser.py,v 1.18 2004/08/12 23:42:29 stevenbird Exp $
@@ -71,15 +71,15 @@ Possible future improvements:
     not in the grammar.
   - button/window to change and/or select grammar.  Select from
     several alternative grammars?  Or actually change the grammar?  If
-    the later, then I'd want to define nltk.draw.cfg, which would be
+    the later, then I'd want to define lib.nltk.draw.cfg, which would be
     responsible for that.
 """
 
-from nltk.draw.tree import *
-from nltk.draw import *
-from nltk.parser import *
-from nltk.draw.cfg import CFGEditor
-from nltk.tokenizer import WhitespaceTokenizer
+from lib.nltk.draw.tree import *
+from lib.nltk.draw import *
+from lib.nltk.parser import *
+from lib.nltk.draw.cfg import CFGEditor
+from lib.nltk.tokenizer import WhitespaceTokenizer
 from Tkinter import *
 import tkFont
         
@@ -772,7 +772,7 @@ def demo():
     text. 
     """
     
-    from nltk.cfg import Nonterminal, CFGProduction, CFG
+    from lib.nltk.cfg import Nonterminal, CFGProduction, CFG
     nonterminals = 'S VP NP PP P N Name V Det'
     (S, VP, NP, PP, P, N, Name, V, Det) = [Nonterminal(s)
                                            for s in nonterminals.split()]

@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: cfg.py,v 1.8 2004/05/07 17:38:28 edloper Exp $
@@ -51,11 +51,11 @@ Operations:
     - if connected to top & bottom, then disconnect
 """
 
-from nltk.draw import *
-from nltk.cfg import *
+from lib.nltk.draw import *
+from lib.nltk.cfg import *
 from Tkinter import *
-from nltk.tree import *
-from nltk.draw.tree import *
+from lib.nltk.tree import *
+from lib.nltk.draw.tree import *
 
 
 ######################################################################
@@ -663,7 +663,7 @@ class CFGDemo:
         self._top.mainloop(*args, **kwargs)
 
 def demo2():
-    from nltk.cfg import Nonterminal, CFGProduction, CFG
+    from lib.nltk.cfg import Nonterminal, CFGProduction, CFG
     nonterminals = 'S VP NP PP P N Name V Det'
     (S, VP, NP, PP, P, N, Name, V, Det) = [Nonterminal(s)
                                            for s in nonterminals.split()]
@@ -699,7 +699,7 @@ def demo2():
 ######################################################################
 
 def demo():
-    from nltk.cfg import Nonterminal, CFGProduction, CFG
+    from lib.nltk.cfg import Nonterminal, CFGProduction, CFG
     nonterminals = 'S VP NP PP P N Name V Det'
     (S, VP, NP, PP, P, N, Name, V, Det) = [Nonterminal(s)
                                            for s in nonterminals.split()]

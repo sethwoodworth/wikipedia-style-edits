@@ -2,18 +2,18 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: treebank.py,v 1.5 2004/07/17 19:44:54 edloper Exp $
 
 import re
-from nltk.token import *
-from nltk.tokenreader import TokenReaderI
-from nltk import PropertyIndirectionMixIn
-from nltk.chktype import chktype
-from nltk.tokenreader.tagged import ChunkedTaggedTokenReader
-from nltk.tree import Tree
+from lib.nltk.token import *
+from lib.nltk.tokenreader import TokenReaderI
+from lib.nltk import PropertyIndirectionMixIn
+from lib.nltk.chktype import chktype
+from lib.nltk.tokenreader.tagged import ChunkedTaggedTokenReader
+from lib.nltk.tree import Tree
 
 """
 Token readers for reading tokens encoded with treebank-style strings.

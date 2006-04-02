@@ -3,7 +3,7 @@
 # Copyright (C) 2003 University of Melbourne
 # Author: Trevor Cohn <tacohn@cs.mu.oz.au>
 #         Philip Blunsom <pcbl@cs.mu.oz.au>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: __init__.py,v 1.6 2005/04/11 14:28:28 trevorcohn1 Exp $
@@ -64,9 +64,9 @@ parameters or unsupervised learning using the Baum-Welch algorithm, a variant
 of EM.
 """
 
-from nltk.chktype import chktype
-from nltk.probability import *
-from nltk.token import Token
+from lib.nltk.chktype import chktype
+from lib.nltk.probability import *
+from lib.nltk.token import Token
 from numarray import *
 import re
 
@@ -903,7 +903,7 @@ def demo():
 
 
 def load_pos():
-    from nltk.corpus import brown
+    from lib.nltk.corpus import brown
 
     tagged_tokens = []
     for item in brown.items()[:5]:
@@ -985,7 +985,7 @@ def _untag(labelled_sequences):
 
 def demo_pos_bw():
     # demonstrates the Baum-Welch algorithm in POS tagging
-    from nltk.set import MutableSet
+    from lib.nltk.set import MutableSet
 
     print 'Training HMM (supervised)...'
     labelled_sequences, tag_set = load_pos()

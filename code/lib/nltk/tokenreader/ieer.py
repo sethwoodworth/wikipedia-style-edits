@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: ieer.py,v 1.3 2004/07/17 15:41:00 edloper Exp $
@@ -11,9 +11,9 @@
 Token reader for the reading tokens encoded with IEER-style strings.
 """
 
-from nltk.token import *
-from nltk.tokenreader import TokenReaderI
-from nltk import PropertyIndirectionMixIn
+from lib.nltk.token import *
+from lib.nltk.tokenreader import TokenReaderI
+from lib.nltk import PropertyIndirectionMixIn
 import re
 
 class IeerTokenReader(TokenReaderI, PropertyIndirectionMixIn):

@@ -3,7 +3,7 @@
 # Copyright (C) 2003 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>,
 #         Rob Speer (original code)
-# URL: <http://nltk.sourceforge.net>
+# URL: <http://lib.nltk.sourceforge.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: featurestructure.py,v 1.2 2004/07/22 16:39:19 purplebob Exp $
@@ -63,7 +63,7 @@ the L{FeatureBindings} class.
 # like to see some compelling use cases before we add it.
 
 import re
-from nltk.chktype import chktype as _chktype
+from lib.nltk.chktype import chktype as _chktype
 from types import NoneType
 
 #//////////////////////////////////////////////////////////////////////

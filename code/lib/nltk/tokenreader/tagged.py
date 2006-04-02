@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2001 University of Pennsylvania
 # Author: Edward Loper <edloper@gradient.cis.upenn.edu>
-# URL: <http://nltk.sf.net>
+# URL: <http://lib.nltk.sf.net>
 # For license information, see LICENSE.TXT
 #
 # $Id: tagged.py,v 1.5 2004/09/15 11:56:15 stevenbird Exp $
@@ -11,10 +11,10 @@
 Token readers for reading tagged tokens encoded with slashed tags.
 """
 
-from nltk.token import *
-from nltk.tree import Tree
-from nltk.tokenreader import TokenReaderI
-from nltk import PropertyIndirectionMixIn
+from lib.nltk.token import *
+from lib.nltk.tree import Tree
+from lib.nltk.tokenreader import TokenReaderI
+from lib.nltk import PropertyIndirectionMixIn
 import re
 
 class TaggedTokenReader(TokenReaderI, PropertyIndirectionMixIn):
