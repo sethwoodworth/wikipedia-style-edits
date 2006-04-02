@@ -16,10 +16,10 @@ CUTOFF=0.42 # ?...
 # Diff the two revisions.
 ## This code forgets how far diff hunks were away from each other.
 class HunkOfSentences:
-    def __init__(self, olds, news, confidence=-1):
+    def __init__(self, olds, news, confidence=2):
         self.olds = olds
         self.news = news
-        self.confidence = confidence # Confidence of -1 means unknown
+        self.confidence = confidence # Confidence of 2 means unknown
 
 def diff2hunks(s):
     ''' This is for diff -u .  Also, I hate lines with only

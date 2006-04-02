@@ -93,7 +93,7 @@ from sentence_matching import HunkOfSentences, format_hunk_list
 
 def plus_and_minus2hunks(s):
     lines = s.split('\n')
-    confid = -1
+    confid = 3.0
     minuses = []
     plusses = []
     for line in lines:
