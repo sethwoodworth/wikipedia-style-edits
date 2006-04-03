@@ -76,8 +76,9 @@ class AccumulatingHtml:
 
         return '<html><body>' + ret + '</body></html>'
     
-def htmlify(f):
-    htmlname = f + ".html"
+def htmlify(in_name, htmlname = None):
+    if htmlname is None:
+        htmlname = in_name + ".html"
     accumulated = AccumulatingHtml()
 
     from xml import sax
@@ -91,7 +92,7 @@ def htmlify(f):
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method
-    filter_handler.parse(open(f))
+    filter_handler.parse(open(in_name))
     s = accumulated.render()
     fd = open(htmlname, 'w')
     fd.write(s)
@@ -100,7 +101,8 @@ def htmlify(f):
 def main():
     import sys
     if len(sys.argv) <= 1:
-        usage()
+        print >> sys.stderr, "Going to act as a pipe filter."
+        htmlify('/dev/stdin', '/dev/stdout')
     else:
         filenames = sys.argv[1:] # That's right, multiple filenames
         for f in filenames:
