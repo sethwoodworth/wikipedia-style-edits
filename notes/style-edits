@@ -1,3 +1,5 @@
+From 86:
+
 -The term "Library and Information Science" should not be broken into these separate pieces.
 +The term library and information science should not be broken into these separate pieces.
 
@@ -8,3 +10,162 @@ I guess it is, but, uh....
 ---
 
 
+Types of style edits:
+
+* Typo fixes that improve (or create!) parsability
+      <id>10836370</id>
+
+-Other variants of left-anarchism think there are many other alternatives to capitalism, many of them no communistic.
++Other variants of left-anarchism think there are many other alternatives to capitalism, many of them not communistic.</text>
+
+* Simple spelling fixes
+      <id>10968176</id>
+-Slrebenstein:, +Slrubenstein:
+
+two simple spelling fixes
+
+* typo fixes - fix punctuation problems (here, paren mismatch)
+        <id>141644</id>
+-If business and government join forces (and override or prohibit individual voluntary decision -engage in coercion, then it is still capitalism according t
+o WDOEFL and according to many.
++If business and government join forces (and override or prohibit individual voluntary decision -engage in coercion), then it is still capitalism according
+to WDOEFL and according to many.</text>
+
+* Function word changes
+      <id>10929438</id>
+
+      <text xml:space="preserve">5
+-Or do you actually have a source who supports this taxonomy of the defitions?
++Or do you actually have a source which supports this taxonomy of the defitions?</text>
+
+* Freaking weird capitalization fixes
+
+<id>11117014</id>
+-I Think
++I think
+
+* Readability improvements
+
+5
+-Read the above section please --particularly the bottom 2/3.
++Read the above section please --particularly the bottom 2/3 of it.
+
+* Partial improvements
+
+      <id>10941831</id>
+      <text xml:space="preserve">5
+-RJII, anarcho-capitalism mentioned in the introudction, be content.
++RJII, anarcho-capitalism is mentioned in the introudction, be content.</text>
+
+
+* Is "recent" a content word?
+
+      <id>10959680</id>
+
+      <text xml:space="preserve">5
+-Here is another Communist text that uses the words "free market", in a speech by Castro.
++Here is another recent Communist text that uses the words "free market", in a speech by Castro.</text>
+
+* Change from word to base form (prolly wrong)
+
+      <id>10959870</id>
+      <text xml:space="preserve">5
+-::::: In Marxism, a capitalist is someone who owns capital, and capitalism is the private ownership of capital.
++::::: In Marx, a capitalist is someone who owns capital, and capitalism is the private ownership of capital.</text>
+
+* Spell fix
+
+      <id>10963354</id>
+-No suprise there.
++No surprise there.</text>
+
+      <id>31010919</id>
+
+
+* Synonym changes
+
+      <id>31235920</id>
+      <text xml:space="preserve">5
+-How you are you going to save your credibility?
++How you are you going to rescue your credibility?</text>
+
+
+
+From 816:
+
+* Abbreviation expansions (all caps -> word with the letters?)
+
+      <id>585373</id>
+-Sixpence None The Richer is a rock band from Austin, TX, named after a passage in C. S. Lewis' Mere Christianity.
++Sixpence None The Richer is a rock band from Austin, Texas, named after a passage in C. S. Lewis' Mere Christianity.</text>
+
+      <id>3659197</id>
+      <text xml:space="preserve">5
+-The Vine (Sixpence Discussion Group
++The Vine (Sixpence Discussion Group)</text>
+
+
+* Referential vs non-referential function words
+
+      <id>5121593</id>
+his new band -> "a new band"
+
+* Canonical representations of structured data
+
+      <id>8643863</id>
+      <text xml:space="preserve">5
+-The Original Demos, 1993 debut album
++The Original Demos (1993) debut album
+0.6
+-The Fatherless and the Widow, 1994 album
++The Fatherless &amp; the Widow (1994)
+1.0
+-I Prediect A Clone, 1994, Steve Taylor tribute album
++I Prediect a Clone (1994) Steve Taylor tribute album
+0.714285714286
+-This Beautiful Mess, 1995 album
++This Beautiful Mess (1995)
+0.583333333333
+-Tickets for a Prayer Wheel, 1996 ep
++Tickets for a Prayer Wheel [EP] (1996)
+0.75
+-Sixpence None The Richer, 1997 album
++Sixpence None the Richer (1997)
+1.0
+-Lynne Me Your Ears, 2002 Jeff Lynne tribute album
++Lynne Me Your Ears (2002) Jeff Lynne tribute album
+0.666666666667
+-Divine Discontent, 2002 album
++Divine Discontent (2002)</text>
+
+* Spelling
+
+      <id>20167380</id>
+
+* Whitespace fixing
+
+      <id>30351831</id>
+inNew -> in New
+
+* Capitalization of proper noun (how do you know it's a proper noun?)
+
+       <id>30980883</id>
+
+* Start-of-sentence capitalization
+
+      <id>555629</id>
+
+* Punctuation change that does (not?) improve readability
+      <id>20105362</id>
+
+-In Native American mythology, (particularly in the Cherokee tribe) 
+
+
+
+* Semantic correction (England -> Britan), not really a style edit?
+
+0.941176470588
+-In June of 1999, "Kiss Me" was featured during the BBC's worldwide broadcast of Prince Edward's wedding ceremonies, at the request of England's royal famil
+y.
++In June of 1999, "Kiss Me" was featured during the BBC's worldwide broadcast of Prince Edward's wedding ceremonies, at the request of Britain's royal famil
+y.</text>

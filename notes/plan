@@ -34,3 +34,32 @@ Northup suggests:
 An animation that takes one revision and makes an animation of keys being pressed to make the changes in WP
 --
 expand jargon as it gets replaeced
+
+
+== RIGHT NOW ==
+
+* I want ID display in the HTML version
+* pulldom?
+* or real dom?
+* or just CSS on output file?  That'd be great.
+
+
+
+Before meeting:
+
+* CSS output file (20m)
+* Look through one or two more and note edit types (20-30m)
+
+* Do we care about capitalization fixes?
+** Probably.  They're style for sure.
+** What are we evaluating?  How about answering the question of, "Does WP style improve?"
+
+* Pref make a program to identify one type of changes
+* spel fixes:
+** Not the same as "word-local change"
+** "many of them no communistic"? <- language model might help
+** 
+ 
+** some spel fixes aren't complete - they leave non-words behind
+* I won't know every word, anyway
+* toa -> to a
