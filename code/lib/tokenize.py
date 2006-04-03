@@ -45,9 +45,10 @@ def treebank_tmpfile_sed(s):
 import pexpect
 class TreebankSedExpecter:
     def __init__(self):
-        self.sed = pexpect.spawn("perl", ["-f", "tokenizer.pl"])
+        self.sed = pexpect.spawn("perl", ["tokenizer.pl"])
+        self.cache = {}
         self.sed.setecho(False)
-        self.sed.delaybeforesend = 0.0001
+        self.sed.delaybeforesend = 0
 
     def filter_line(self, u):
         if type(u) == type(''):
@@ -55,17 +56,26 @@ class TreebankSedExpecter:
         assert(type(u) == type(u''))
         #s = u.encode('utf-8') # still sad
         self.sed.sendline(u.rstrip())
-        try:
-            out = self.sed.readline().rstrip()
-        except:
-            out = '' # OW MY HEAD
-            self.__init__()
-            print >> sys.stderr, "For some reason,", u.encode('utf-8'), "failed to get sedded."
+        out = self.sed.readline().rstrip()
+#        try:
+#            
+#        except:
+#            out = '' # OW MY HEAD
+#            self.__init__()
+#            print >> sys.stderr, "For some reason,", u.encode('utf-8'), "failed to get sedded."
             
         unicode_out = unicode(out, 'utf-8')
         return unicode_out.strip()
+
+    def tokenize_word(self, u):
+        if u not in self.cache:
+            self.cache[u] = self.filter_line(u)
+        return self.cache[u]
+    
     def tokenize(self, u):
-        return self.filter_line(u).split()
+        # I'm going to cache every freaking word.
+        # Stop looking at me like that.
+        return [ self.tokenize_word(w) for w in u.split() ]
 
 if __name__ == '__main__':
     import sys

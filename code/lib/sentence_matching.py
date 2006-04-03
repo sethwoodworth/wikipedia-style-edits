@@ -252,8 +252,8 @@ def test_jaccard():
 def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
-    from_list = [s.lower() for s in tokenize.treebank_tmpfile_sed(from_s)]
-    to_list   = [s.lower() for s in tokenize.treebank_tmpfile_sed(to_s)  ]
+    from_list = [s.lower() for s in t.tokenize(from_s)]
+    to_list   = [s.lower() for s in t.tokenize(to_s)  ]
     return jaccard_two_lists(from_list, to_list)
 
 def jaccard_two_lists(from_list, to_list):
