@@ -96,6 +96,7 @@ def plus_and_minus2hunks(s):
 
     minuses = []
     plusses = []
+    confid = 5 # Fake, trackable value
     for line in lines:
         # Look for a number line first.  
         if line[0] != '-' and line[0] != '+' and plusses: # then reset state
