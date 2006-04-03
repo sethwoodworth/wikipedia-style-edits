@@ -45,7 +45,7 @@ def treebank_tmpfile_sed(s):
 import pexpect
 class TreebankSedExpecter:
     def __init__(self):
-        self.sed = pexpect.spawn("perl", ["tokenizer.pl"])
+        self.sed = pexpect.spawn("sed", ["-f", "tokenizer.sed"])
         self.cache = {}
         self.sed.setecho(False)
         self.sed.delaybeforesend = 0
@@ -55,15 +55,15 @@ class TreebankSedExpecter:
             u = unicode(u, 'utf-8')
         assert(type(u) == type(u''))
         #s = u.encode('utf-8') # still sad
-        self.sed.sendline(u.rstrip())
-        out = self.sed.readline().rstrip()
-#        try:
-#            
-#        except:
-#            out = '' # OW MY HEAD
-#            self.__init__()
-#            print >> sys.stderr, "For some reason,", u.encode('utf-8'), "failed to get sedded."
-            
+        try:
+            self.sed.sendline(u.rstrip())
+            out = self.sed.readline().rstrip()
+            unicode_out = unicode(out, 'utf-8')
+        except:
+            print >> sys.stderr, 'going to try slow tokenizing on', u
+            unicode_out = tmpfile_treebank_sed(u)
+            self.__init__()
+            print >> sys.stderr, 'slow tokenizing okay, and self reset too'
         unicode_out = unicode(out, 'utf-8')
         return unicode_out.strip()
 
@@ -75,7 +75,10 @@ class TreebankSedExpecter:
     def tokenize(self, u):
         # I'm going to cache every freaking word.
         # Stop looking at me like that.
-        return [ self.tokenize_word(w) for w in u.split() ]
+        ret = []
+        for w in u.split():
+            ret.extend(self.tokenize_word(w).split())
+        return ret
 
 if __name__ == '__main__':
     import sys
