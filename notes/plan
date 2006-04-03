@@ -22,12 +22,15 @@ Data to analyze:
 
 Clean up better after explosions.
 
-* Look into explosions involving sed...
+* Look into explosions involving perl...
 * Look into \0-related explosions...?
+
+
 
 ---
 
 Northup suggests:
 
 An animation that takes one revision and makes an animation of keys being pressed to make the changes in WP
-
+--
+expand jargon as it gets replaeced
