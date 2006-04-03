@@ -61,7 +61,7 @@ class TreebankSedExpecter:
             unicode_out = unicode(out, 'utf-8')
         except:
             print >> sys.stderr, 'going to try slow tokenizing on', u
-            unicode_out = tmpfile_treebank_sed(u)
+            unicode_out = treebank_tmpfile_sed(u)
             self.__init__()
             print >> sys.stderr, 'slow tokenizing okay, and self reset too'
         unicode_out = unicode(out, 'utf-8')
