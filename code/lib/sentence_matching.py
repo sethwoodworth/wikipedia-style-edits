@@ -249,6 +249,7 @@ def test_jaccard():
         assert(jaccard_two_sentences(from_s, to_s) == exp_val)
     print "Everything is swell."
 
+import porter
 def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
