@@ -345,7 +345,7 @@ def caching_stemmed(s):
         cash = {}
     if s not in cash:
         val = p.stem(s, 0, len(s) - 1)
-        cash[s] = val
+        cash[s] = unicode(val)
     return cash[s]
 
 if __name__ == '__main__':
