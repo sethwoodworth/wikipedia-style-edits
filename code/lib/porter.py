@@ -337,15 +337,20 @@ class PorterStemmer:
         self.step5()
         return self.b[self.k0:self.k+1]
 
+p = PorterStemmer()
+cash = {}
+def caching_stemmed(s):
+    global cash
+    if len(cash) > 10000:
+        cash = {}
+    if s not in cash:
+        val = p.stem(s, 0, len(s) - 1)
+        cash[s] = val
+    return cash[s]
 
 if __name__ == '__main__':
+    import string
     p = PorterStemmer()
-    if len(sys.argv) > 1:
-        for f in sys.argv[1:]:
-            infile = open(f, 'r')
-            while 1:
-                w = infile.readline()
-                if w == '':
-                    break
-                w = w[:-1]
-                print p.stem(w, 0,len(w)-1)
+    for line in sys.stdin:
+        words  = map(string.lower, line.split())
+        print ' '.join([ caching_stemmed(s) for s in words ])
