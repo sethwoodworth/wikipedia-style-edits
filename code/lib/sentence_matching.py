@@ -1,5 +1,4 @@
 import bag
-import re
 from sets import Set
 CUTOFF=0.42 # ?...
 
@@ -79,7 +78,7 @@ def only_typo_editops(eo):
     before_this_pair_offset = -3
     last_good_edit = []
     for edit_op in eo:
-        type, from_offset, to_offset = edit_op
+        cat, from_offset, to_offset = edit_op
         # If there's something growing
         if last_good_edit:
             # then, if we're three away from it, and it's the kind of thing we want to keep, keep it
@@ -239,8 +238,8 @@ def hunks2sentencepairs(hunks):
 # LAME:
 # On module init, I'll open a pipe to sed.
 # Sosumi.
-import tokenize
-t = tokenize.TreebankSedExpecter()
+import mytokenize
+t = mytokenize.TreebankSedExpecter()
 
 def test_jaccard():
     for from_s, to_s, exp_val in (
@@ -254,9 +253,9 @@ def jaccard_two_sentences(from_s, to_s):
     # from and to are strings.  Turn them into lists of words.
     # "Tokenize aggressively."
     from_list = [s.lower() for s in t.tokenize(from_s)]
-    from_list = map(porter.cached_stemmed, from_list)
+    from_list = map(porter.caching_stemmed, from_list)
     to_list   = [s.lower() for s in t.tokenize(to_s)  ]
-    to_list   = map(porter.cached_stemmed, to_list)
+    to_list   = map(porter.caching_stemmed, to_list)
     return jaccard_two_lists(from_list, to_list)
 
 def jaccard_two_lists(from_list, to_list):
@@ -279,9 +278,9 @@ def jaccard_two_lists(from_list, to_list):
         
     # Jaccard's coefficient: size of intersection over size of union.
     if union_count == 0:
-        return 0
+        return float(0)
     if intersection_count == 0:
-        return 0
+        return float(0)
     return float(intersection_count) / float(union_count)
 
 # Prefer a good match within the same diff hunk to a match from a
