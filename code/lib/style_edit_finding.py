@@ -39,7 +39,7 @@ def subtract_same_position_bonus(value, i, j):
 
 # Look, I make a sed pipe on module init.
 # Sosumi.
-t = tokenize.TreebankSedExpecter()
+t = mytokenize.TreebankSedExpecter()
 
 from sentence_matching import make_improved_old
 
