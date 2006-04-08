@@ -15,8 +15,9 @@ f_words = ['a', 'able', 'about', 'above', 'abroad', 'according', 'accordingly', 
 f_words.append(r'^[^A-Za-z0-9]*$')
 import mytokenize
 import Levenshtein as lev # hard to type Levenshtein...
+import porter
 
-f_word_regex = re.compile('^(' + '|'.join(f_words) + ')' + r'[^A-Za-z0-9]*$')
+f_word_regex = re.compile('^(' + '|'.join(map(porter.caching_stemmed, f_words)) + ')' + r'[^A-Za-z0-9]*$')
 is_f_word = f_word_regex.match
 
 MAX_EDIT_DISTANCE = 4 # That seems reasonable, eh?
@@ -53,6 +54,10 @@ def is_hunk_style_edit(hunk):
     # Then tokenize both
     old_tokens = t.tokenize(old_string)
     new_tokens = t.tokenize(new_string)
+
+    # Then stem both
+    old_tokens = map(porter.caching_stemmed, old_tokens)
+    new_tokens = map(porter.caching_stemmed, new_tokens)
     
     new_index = 0
     old_index = 0
