@@ -88,11 +88,3 @@ class DiffParser:
             this_hunk_from = []
             this_hunk_to = []
 
-def jaccard_from_one_sent_to_other(sent1, sent2):
-    ''' This "tokenizes aggressively." '''
-    from nltk_lite import tokenize
-    words1 = tokenize.wordpunct(sent1)
-    words2 = tokenize.wordpunct(sent2)
-    
-
-    print list(words1)
