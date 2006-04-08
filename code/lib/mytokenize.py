@@ -45,7 +45,7 @@ def treebank_tmpfile_sed(s):
 import pexpect
 class TreebankSedExpecter:
     def __init__(self):
-        self.sed = pexpect.spawn("sed", ["-f", "tokenizer.sed"])
+        self.sed = pexpect.spawn(command="sed", args=["-f", "tokenizer.sed"], timeout=0.5)
         self.cache = {}
         self.sed.setecho(False)
         self.sed.delaybeforesend = 0
