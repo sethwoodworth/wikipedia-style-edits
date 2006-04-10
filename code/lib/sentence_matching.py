@@ -64,6 +64,69 @@ def test_only_typo_editops():
         assert(only_typo_editops(everything) == good)
     print "Yay-uh!"
 
+def full_token_changing_editops(eo, old, new):
+    '''Input: a list of edit operations, plus the old and new they came from.
+    Output: A list, perhaps smaller, of edit operations. '''
+    ret = []
+    current_hope = []
+    if not eo:
+        return ret
+
+    while eo:
+        edit_op = eo.pop(0)
+        cat, from_offset, to_offset = edit_op
+
+        if cat != 'delete':
+        
+            # Let's see - are we space-padded?
+            # If either the first edit is to insert ' ', or the preceding char is ' ',
+            # then we get our hopes up.
+
+            if (to_offset == 0) or new[to_offset] == ' ' or new[to_offset-1] == ' ':
+                print 'appendong'
+                current_hope.append(edit_op)
+
+            elif current_hope and current_hope[-1][-1] == (to_offset - 1):
+                # Then we're just continuing.
+                # /me whistles
+                print 'appending'
+                current_hope.append(edit_op)
+
+            else:
+                # We've got a hope.  Does it end in either a space,
+                # something before a space, or the end of the string?
+                if to_offset == (len(new) - 1) or \
+                   new[to_offset] == ' ' or \
+                   (to_offset+1) < len(new) and new[to_offset+1] == ' ':
+                    # If so, we extend ret by it.
+                    ret.extend(current_hope)
+
+                # Either way, we clear our hope.
+                current_hope = []
+            
+    # at the end of the day, check the current hope
+    if current_hope:
+        # if the start is a space or the beginning
+        to_offset = current_hope[0][-2]
+        if (to_offset == 0) or new[to_offset] == ' ' or \
+               (to_offset > 1) and (new[to_offset-1] == ' '):
+            # so far, so good.
+            
+            # and the end if a space or the beginning
+            to_offset = current_hope[-1][-2]
+            if to_offset == (len(new) - 1) or \
+               new[to_offset] == ' ' or \
+               (to_offset+1) < len(new) and new[to_offset+1] == ' ':
+
+                # then extend ret by it
+                ret.extend(current_hope)
+    print 'yow', ret
+    return ret
+
+def only_not_full_token_changing_edit_ops(eo, old, new):
+    bad_ones = full_token_changing_editops(eo[:], old, new)
+    return [ edit for edit in eo if edit not in bad_ones ]
+
 def only_typo_editops(eo):
     ''' Input: a list of edit operations
     Output: A list, perhaps empty, perhaps smaller, of edit operations'''
