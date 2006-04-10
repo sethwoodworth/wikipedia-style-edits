@@ -99,6 +99,6 @@ all-styleedits-sans-typofixes: $(styleedits-sans-typofixes)
 %.styleedits-sans-typofixes.7z: %.styleedits.7z
 	~/dnet/run_on_machine.sh $*.styleedits.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.styleedits.7z | \
 	( set -e ; cd  ~/dnet/collab/code/ ; nice ~/bin/python styleedits2sans-typos.py  file:///dev/stdin ) \
-	| nice ~/bin/7za a -si /tmp/$*.styleedits-sans-typofixes.7z && scp /tmp/$*.content-edits.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
+	| nice ~/bin/7za a -si /tmp/$*.styleedits-sans-typofixes.7z && scp /tmp/$*.styleedits-sans-typofixes.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.styleedits-sans-typofixes.7z  "
 
