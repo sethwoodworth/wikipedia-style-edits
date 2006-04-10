@@ -5,7 +5,7 @@
 
 7ZIP=/usr/bin/7za
 
-.PHONY : chunksizes paragraphs sentences all-paragraphs all-sentences all-whitespacenormalizedsentences all-diffedsentences all-matchedsentences all-styleedits
+.PHONY : chunksizes paragraphs sentences all-paragraphs all-sentences all-whitespacenormalizedsentences all-diffedsentences all-matchedsentences all-styleedits all-content-edits all-styleedits-sans-typofixes
 
 TARGETS := $(patsubst %.chunk.7z,%.done,$(wildcard *.chunk.7z))
 
@@ -16,6 +16,8 @@ whitespacenormalizedsentences := $(patsubst %.chunk.7z,%.whitespacenormalizedsen
 diffedsentences := $(patsubst %.chunk.7z,%.diffedsentences.7z,$(wildcard *.chunk.7z))
 matchedsentences := $(patsubst %.chunk.7z,%.matchedsentences.7z,$(wildcard *.chunk.7z))
 styleedits := $(patsubst %.chunk.7z,%.styleedits.7z,$(wildcard *.chunk.7z))
+content-edits := $(patsubst %.chunk.7z,%.content-edits.7z,$(wildcard *.chunk.7z))
+styleedits-sans-typofixes := $(patsubst %.chunk.7z,%.styleedits-sans-typofixes.7z,$(wildcard *.chunk.7z))
 
 *.done:
 
@@ -59,7 +61,8 @@ all-diffedsentences: all-whitespacenormalizedsentences $(diffedsentences)
 all-matchedsentences: all-diffedsentences $(matchedsentences)
 
 all-styleedits: $(styleedits)
-# No dependency.  Let's see...
+all-content-edits: $(content-edits)
+all-styleedits-sans-typofixes: $(styleedits-sans-typofixes)
 
 %.revision-index.csv: %.7z
 	~/dnet/run_on_machine.sh $*.7z " set -e ; ~/bin/7za e -so /tmp/$*.7z | \
@@ -86,4 +89,16 @@ all-styleedits: $(styleedits)
 	( set -e ; cd  ~/dnet/collab/code/ ; nice ~/bin/python matches2styleedits.py  file:///dev/stdin ) \
 	| nice ~/bin/7za a -si /tmp/$*.styleedits.7z && scp /tmp/$*.styleedits.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.styleedits.7z  "
+
+%.content-edits.7z: %.matchedsentences.7z
+	~/dnet/run_on_machine.sh $*.matchedsentences.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.matchedsentences.7z | \
+	( set -e ; cd  ~/dnet/collab/code/ ; nice ~/bin/python matches2content-edits.py  file:///dev/stdin ) \
+	| nice ~/bin/7za a -si /tmp/$*.content-edits.7z && scp /tmp/$*.content-edits.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.content-edits.7z  "
+
+%.styleedits-sans-typofixes.7z: %.styleedits.7z
+	~/dnet/run_on_machine.sh $*.styleedits.7z " set -e ; ~/bin/7za e  -so  /tmp/$*.styleedits.7z | \
+	( set -e ; cd  ~/dnet/collab/code/ ; nice ~/bin/python styleedits2sans-typos.py  file:///dev/stdin ) \
+	| nice ~/bin/7za a -si /tmp/$*.styleedits-sans-typofixes.7z && scp /tmp/$*.content-edits.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
+	rm /tmp/$*.styleedits-sans-typofixes.7z  "
 

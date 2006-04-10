@@ -63,3 +63,7 @@ Before meeting:
 ** some spel fixes aren't complete - they leave non-words behind
 * I won't know every word, anyway
 * toa -> to a
+
+* look for high word-based edit distance but the sentence having the
+same words (except perhaps stemming - in styleedits)
+
