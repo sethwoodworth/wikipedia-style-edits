@@ -45,8 +45,11 @@ def treebank_tmpfile_sed(s):
 import pexpect
 class TreebankSedExpecter:
     def __init__(self):
-        self.sed = pexpect.spawn(command="sed", args=["-f", "tokenizer.sed"], timeout=0.5)
         self.cache = {}
+	self.create_pipe()
+
+    def create_pipe(self):
+        self.sed = pexpect.spawn(command="sed", args=["-f", "tokenizer.sed"], timeout=0.5)
         self.sed.setecho(False)
         self.sed.delaybeforesend = 0
 
@@ -62,7 +65,7 @@ class TreebankSedExpecter:
         except:
             print >> sys.stderr, 'going to try slow tokenizing on', u
             unicode_out = u' '.join(treebank_tmpfile_sed(u))
-            self.__init__()
+            self.create_pipe()
             print >> sys.stderr, 'slow tokenizing okay, and self reset too'
         return unicode_out.strip()
 
