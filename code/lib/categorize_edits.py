@@ -19,8 +19,8 @@ def hunks_sans_typos(hunk):
     assert(type(hunk.olds) == type([]))
     assert(type(hunk.news) == type([]))
 
-    old = u' '.join([u' '.join(k) for k in hunk.olds])
-    new = u' '.join([u' '.join(k) for k in hunk.news])
+    old = u' '.join([u' '.join(hunk.olds)])
+    new = u' '.join([u' '.join(hunk.news)])
 
     old = sentence_matching.old_sans_typos(old, new) # take that, tyops!
 
