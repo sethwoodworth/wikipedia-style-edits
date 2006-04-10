@@ -1,9 +1,19 @@
-contributor {
+contributor, content, timestamp, comment
+{
 display: none;
 }
 id
 {
+color: blue;
 display: block;
-margin-bottom: 30pt;
-margin-left: 0;
+}
+text
+{
+display: block;
+margin: 10px;
+}
+title 
+{
+display: block;
+color: red;
 }

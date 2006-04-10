@@ -16,7 +16,15 @@ def usage():
 
 from lib.text_normalize_filter import text_normalize_filter
 from lib.style_edit_finding import plus_and_minus2hunks
-import Levenshtein as lev
+import lib.Levenshtein as lev
+
+def sub(s):
+    ''' Input: a string that represents edits.
+    Output: an HTML fragment. '''
+    ah = AccumulatingHtml()
+    ah.accumulate(s)
+    return ah.render()
+    
 
 class AccumulatingHtml:
     def __init__(self):
@@ -72,9 +80,9 @@ class AccumulatingHtml:
                 growing_html += old[last_saw:]
 
             # Finally, put that in a <p></p>
-            ret += "<p>" + growing_html.encode('utf-8') + "</p>"
-
-        return '<html><body>' + ret + '</body></html>'
+            ret += "<p>" + growing_html + "</p>"
+        return ret
+        #return '<html><body>' + ret + '</body></html>'
     
 def htmlify(in_name, htmlname = None):
     if htmlname is None:
@@ -86,9 +94,9 @@ def htmlify(in_name, htmlname = None):
     parser = sax.make_parser()
     #XMLGenerator is a special SAX handler that merely writes
     #SAX events back into an XML document
-    downstream_handler = XMLGenerator(encoding='utf-8', out = open("/dev/null", 'w'))
+    downstream_handler = XMLGenerator(encoding='utf-8', out = open("/dev/stdout", 'w'))
     #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler, accumulated.accumulate)
+    filter_handler = text_normalize_filter(parser, downstream_handler, sub)
     #The SAX filter base is designed so that the filter takes
     #on much of the interface of the parser itself, including the
     #"parse" method
@@ -102,7 +110,7 @@ def main():
     import sys
     if len(sys.argv) <= 1:
         print >> sys.stderr, "Going to act as a pipe filter."
-        htmlify('/dev/stdin', '/dev/stdout')
+        htmlify('/dev/stdin', '/dev/null')
     else:
         filenames = sys.argv[1:] # That's right, multiple filenames
         for f in filenames:
