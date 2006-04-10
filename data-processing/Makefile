@@ -52,13 +52,13 @@ makefile-test:
 
 all-paragraphs: $(paragraphs)
 
-all-sentences: all-paragraphs $(sentences)
+all-sentences: $(sentences)
 
-all-whitespacenormalizedsentences: all-sentences $(whitespacenormalizedsentences)
+all-whitespacenormalizedsentences: $(whitespacenormalizedsentences)
 
-all-diffedsentences: all-whitespacenormalizedsentences $(diffedsentences)
+all-diffedsentences: $(diffedsentences)
 
-all-matchedsentences: all-diffedsentences $(matchedsentences)
+all-matchedsentences: $(matchedsentences)
 
 all-styleedits: $(styleedits)
 all-content-edits: $(content-edits)
