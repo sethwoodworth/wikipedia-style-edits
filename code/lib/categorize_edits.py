@@ -1,3 +1,4 @@
+import style_edit_finding
 import sentence_matching
 import mytokenize
 import Levenshtein as lev
@@ -18,13 +19,17 @@ def hunks_sans_typos(hunk):
     old = u' '.join([u' '.join(k) for k in hunk.olds])
     new = u' '.join([u' '.join(k) for k in hunk.news])
 
-    eo = lev.editops(old, new)
+    old = sentence_matching.old_sans_typos(old, new) # take that, tyops!
 
-    typo_fixes = sentence_matching.only_typo_editops(eo)
-    wanted = sentence_matching.only_not_full_token_changing_edit_ops(typo_fixes, old, new)
-    old = lev.apply_edit(wanted, old, new)
+    if old.lower() == new.lower(): # You, too, capitalization!
+        return False
 
     hunk.olds = [old]
     hunk.news = [new]
     return hunk
 
+def content_edits_sub(s):
+    return style_edit_finding.format_interesting(s=s, fn=is_content_edit)
+
+def hunks_sans_typos_sub(s):
+    return style_edit_finding.format_interesting(s=s, fn=hunks_sans_typos)
