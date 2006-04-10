@@ -67,6 +67,8 @@ def test_only_typo_editops():
 def full_token_changing_editops(eo, old, new):
     '''Input: a list of edit operations, plus the old and new they came from.
     Output: A list, perhaps smaller, of edit operations. '''
+    delim = ''',;:@#$%& '''
+    eo = eo[:]
     ret = []
     current_hope = []
     if not eo:
@@ -82,22 +84,20 @@ def full_token_changing_editops(eo, old, new):
             # If either the first edit is to insert ' ', or the preceding char is ' ',
             # then we get our hopes up.
 
-            if (to_offset == 0) or new[to_offset] == ' ' or new[to_offset-1] == ' ':
-                print 'appendong'
+            if (to_offset == 0) or new[to_offset] in delim or new[to_offset-1] == delim:
                 current_hope.append(edit_op)
 
             elif current_hope and current_hope[-1][-1] == (to_offset - 1):
                 # Then we're just continuing.
                 # /me whistles
-                print 'appending'
                 current_hope.append(edit_op)
 
             else:
                 # We've got a hope.  Does it end in either a space,
                 # something before a space, or the end of the string?
                 if to_offset == (len(new) - 1) or \
-                   new[to_offset] == ' ' or \
-                   (to_offset+1) < len(new) and new[to_offset+1] == ' ':
+                   new[to_offset] in delim or \
+                   (to_offset+1) < len(new) and new[to_offset+1] in delim:
                     # If so, we extend ret by it.
                     ret.extend(current_hope)
 
@@ -108,24 +108,47 @@ def full_token_changing_editops(eo, old, new):
     if current_hope:
         # if the start is a space or the beginning
         to_offset = current_hope[0][-2]
-        if (to_offset == 0) or new[to_offset] == ' ' or \
-               (to_offset > 1) and (new[to_offset-1] == ' '):
+        if (to_offset == 0) or new[to_offset] in delim or \
+               (to_offset > 1) and (new[to_offset-1] in delim):
             # so far, so good.
             
             # and the end if a space or the beginning
             to_offset = current_hope[-1][-2]
             if to_offset == (len(new) - 1) or \
-               new[to_offset] == ' ' or \
-               (to_offset+1) < len(new) and new[to_offset+1] == ' ':
+               new[to_offset] in delim or \
+               (to_offset+1) < len(new) and new[to_offset+1] in delim:
 
                 # then extend ret by it
                 ret.extend(current_hope)
-    print 'yow', ret
     return ret
 
 def only_not_full_token_changing_edit_ops(eo, old, new):
     bad_ones = full_token_changing_editops(eo[:], old, new)
     return [ edit for edit in eo if edit not in bad_ones ]
+
+def old_sans_typos(old, new):
+    eo = lev.editops(old, new)
+    typo_fixes = only_typo_editops(eo)
+    wanted = only_not_full_token_changing_edit_ops(typo_fixes, old, new)
+    return lev.apply_edit(wanted, old, new)
+
+def test_old_sans_typos():
+    for old, new, betterenough in (
+        ("", "a", ""),
+        ("a typo", "a typo", "a typo"),
+        ("a typoq word", "a typo word a", "a typo word"),
+        ("Whos at fault?", "Who's at fault?", "Who's at fault?"),
+        ("Whom is your father?", "Who is your father?", "Who is your father?"),
+        ("a typoq word an albino.", "a typo word, a an albino.", "a typo word an albino."),
+        ("its okay", "it's okay", "it's okay"),
+        ("a", "a", "a"),
+        ):
+        essai = old_sans_typos(old, new)
+        if essai != betterenough:
+            print old, 'became', essai, 'instead of', betterenough
+            assert(False)
+    print "Congrats!"
+
 
 def only_typo_editops(eo):
     ''' Input: a list of edit operations
@@ -166,6 +189,8 @@ import Levenshtein as lev # spellign Levnshtein...
 def make_improved_old(old, new):
     ''' 3. Modify the old version of the hunk by these typo edits, so
     that it looks more like the new version.'''
+    # To avoid MemoryErroring out, we calculate 
+    
     # Calculate the edit moves necessary
     eo = lev.editops(old, new)
 
@@ -174,6 +199,13 @@ def make_improved_old(old, new):
 
     # Now, do them to old
     return lev.apply_edit(do_these, old, new)
+
+def test_make_improved_old():
+    for old, new, better in (
+        ("Hey, you", "hey, you", "hey, you"),
+        ("hey, you", "HEY, YOU", "hey, you")):
+        assert(make_improved_old(old, new) == better)
+    print "Congrats!"
 
 def make_sorted_competitors(new, oldss, oldslicelen):
     competitors = []
