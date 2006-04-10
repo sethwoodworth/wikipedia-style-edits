@@ -107,10 +107,10 @@ def full_token_changing_editops(eo, old, new):
     # at the end of the day, check the current hope
     if current_hope:
         # if the start is a space or the beginning
-        to_offset = current_hope[0][-2]
-        print 'new "%d" ' % len(new)
-        print 'to_offset', to_offset
-        print current_hope[0]
+        to_offset = current_hope[0][-1]
+        #print 'new "%d" ' % len(new)
+        #print 'to_offset', to_offset
+        #print current_hope[0]
         if (to_offset == 0) or (new[to_offset] in delim) or \
                ((to_offset > 1) and (new[to_offset - 1] in delim)):
             # so far, so good.
