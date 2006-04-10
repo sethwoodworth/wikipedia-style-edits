@@ -1,5 +1,4 @@
 import re
-import sys
 ## Once you have a matched pair, mark it in the corpus as a STYLISTIC
 ## edit if each of the unmatched words on each side is either a spelling
 ## variant of something on the other side -- e.g., low edit distance to
@@ -59,9 +58,6 @@ def is_hunk_style_edit(hunk):
     old_tokens = map(porter.caching_stemmed, old_tokens)
     new_tokens = map(porter.caching_stemmed, new_tokens)
     
-    new_index = 0
-    old_index = 0
-
     # Remove all identical tokens
     for new_token in new_tokens[:]:
         ## A data structure with faster than O(n) search would be useful here.
@@ -116,11 +112,14 @@ def plus_and_minus2hunks(s):
     if minuses or plusses:
         yield HunkOfSentences(olds=minuses, news=plusses, confidence=confid)
 
-def sub(s):
+def format_interesting(s, fn):
     """Input: Lines like what sentence_matching's transform() outputs.
     
     Output: Lines like what sentence_matching's transform() outputs,
     but probably fewer such lines."""
     the_good_ones = [ hunk for hunk in plus_and_minus2hunks(s)
-                      if is_hunk_style_edit(hunk) ]
+                      if fn(hunk) ]
     return format_hunk_list(the_good_ones)
+
+def sub(s):
+    return format_interesting(s=s, fn=is_hunk_style_edit)
