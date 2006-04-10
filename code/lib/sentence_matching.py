@@ -116,7 +116,7 @@ def full_token_changing_editops(eo, old, new):
             # so far, so good.
             
             # and the end if a space or the beginning
-            to_offset = current_hope[-1][-2]
+            to_offset = current_hope[-1][-1]
             if to_offset == (len(new) - 1) or \
                new[to_offset] in delim or \
                (to_offset+1) < len(new) and new[to_offset+1] in delim:
