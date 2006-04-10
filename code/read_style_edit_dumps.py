@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import pdb
+import psyco
 # The idea is:
 # For each diffedsentences pair in the input file,
 # make a corresponding .html file that has deletions deletions in <strike>
@@ -14,107 +15,106 @@ def usage():
     print "The HTML will have deletions in <strike> and additions in <strong>."
     print "Replacements will be interpreted as a deletion then an insertion."
 
-from lib.text_normalize_filter import text_normalize_filter
+import xml.dom.pulldom as pulldom
+
+def doTag(saxxer, tag, characters, attrs = {}):
+    saxxer.startElement(tag, attrs)
+    saxxer.characters(characters)
+    saxxer.endElement(tag)
+
+def getText(nodelist):
+    rc = ""
+    for node in nodelist:
+        if node.nodeType == node.TEXT_NODE:
+            rc = rc + node.data
+    return rc
+
+import lib.Levenshtein as lev # !??!!
 from lib.style_edit_finding import plus_and_minus2hunks
-import lib.Levenshtein as lev
+from xml.sax.saxutils import XMLGenerator
 
-def sub(s):
-    ''' Input: a string that represents edits.
-    Output: an HTML fragment. '''
-    ah = AccumulatingHtml()
-    ah.accumulate(s)
-    return ah.render()
+class StyleEditAggregator:
+    def __init__(self, fd):
+        ''' Takes an fd as an input.
+        Creates a lot of internal state as a result. '''
+        self.current_page = ''
+        self.result = []
+        self.parse(fd)
+
+    def parse(self, fd):
+        events = pulldom.parse(fd)
+        for (event, node) in events:
+            if event == 'START_ELEMENT':
+                if node.tagName == 'title':
+                    events.expandNode(node)
+                    self.current_page = getText(node.childNodes)
+                elif node.tagName == 'revision':
+                    events.expandNode(node)
+                    eyedee = getText(node.getElementsByTagName('id')[0].childNodes)
+                    text = getText(node.getElementsByTagName('text')[0].childNodes)
+                    if text:
+                        self.result.append( (self.current_page, eyedee, plus_and_minus2hunks(text)) )
+
+    def to_html(self, outfd=None):
+        exgen = XMLGenerator(out=outfd, encoding='utf-8')
+        exgen.startElement('html', {})
+        exgen.startElement('head', {})
+        doTag(exgen, 'meta', '', {'http-equiv': "Content-Type", 'content': "text/html;charset=utf-8"})
+        exgen.endElement('head')
+        exgen.startElement('body', {})
+        exgen.startElement('ul', {})
+
+        for page, eyedee, editer in self.result:
+            for edit in editer:
+                exgen.startElement('li', {})
+                
+                exgen.characters(page + ' - ')
+                exgen.characters('id=' + eyedee + ' ')
+
+                # First, create something we can Leven
+                old = u' '.join(edit.olds)
+                new = u' '.join(edit.news)
+
+                # Now, leven them
+                editops = lev.editops(old, new)
+
+                last_saw = 0
+
+
+                growing_replaces_olds = ''
+                growing_replaces_news = ''
+
+                for k in range(len(editops)):
+                    op = editops[k]
+                    etype, old_index, new_index = op
+                    if last_saw < old_index:
+                        exgen.characters(old[last_saw:old_index])
+                    last_saw = old_index
+                    if etype == 'replace':
+                        # keep growing the replace until it's done
+                        growing_replaces_olds += old[old_index]
+                        growing_replaces_news += new[new_index]
+                        if k+1 < len(editops) and editops[k+1][0] == 'replace':
+                            # then don't do anything
+                            pass
+                        else:
+                            doTag(exgen, 'strike', growing_replaces_olds)
+                            doTag(exgen, 'u', growing_replaces_news)
+                            growing_replaces_olds = ''
+                            growing_replaces_news = ''
+                        last_saw += 1 
+                    elif etype == 'insert':
+                        doTag(exgen, 'u', new[new_index])
+                    elif etype == 'delete':
+                        doTag(exgen, 'strike', old[old_index])
+                        last_saw += 1 # I think
+                # finally, get any remaining junk
+                if last_saw < len(old) - 1:
+                    exgen.characters(old[last_saw:])
+
+                exgen.endElement('li')
     
-
-class AccumulatingHtml:
-    def __init__(self):
-        self.edits = []
-
-    def accumulate(self, s):
-        ''' Listens for a series of diff hunks expressed as strings.
-        Intern them.'''
-        for edit in plus_and_minus2hunks(s):
-            self.edits.append(edit)
-        return '' # who cares?
-        
-    def render(self):
-        ret = ''
-        for edit in self.edits:
-            # We're going to work with growing_html
-            growing_html = u''
+        exgen.endElement('ul')
+        exgen.endElement('body')
+        exgen.endElement('html')
             
-            # First, create something we can Leven
-            old = ' '.join(edit.olds)
-            new = ' '.join(edit.news)
-
-            # Now, leven them
-            editops = lev.editops(old, new)
-
-            last_saw = 0
-
-            for op in editops:
-                etype, old_index, new_index = op
-                if last_saw < old_index:
-                    growing_html += old[last_saw:old_index]
-#                    print growing_html
-#                    print old[last_saw]
-#                    print etype
-#                    print old_index
-#                    print new_index
-#                    print old[last_saw:old_index]
-#                    print 'huh'
-
-#                    pdb.set_trace()
-                last_saw = old_index
-                if etype == 'replace':
-                    growing_html += '<strike>' + old[old_index] + '</strike>'
-                    growing_html += '<strong>' + new[new_index] + '</strong>'
-                    last_saw += 1 
-                elif etype == 'insert':
-                    growing_html += '<strong>' + new[new_index] + '</strong>'
-                elif etype == 'delete':
-                    growing_html += '<strike>' + old[old_index] + '</strike>'
-                    last_saw += 1 # I think
-            # finally, get any remaining junk
-            if last_saw < len(old) - 1:
-                growing_html += old[last_saw:]
-
-            # Finally, put that in a <p></p>
-            ret += "<p>" + growing_html + "</p>"
-        return ret
-        #return '<html><body>' + ret + '</body></html>'
-    
-def htmlify(in_name, htmlname = None):
-    if htmlname is None:
-        htmlname = in_name + ".html"
-    accumulated = AccumulatingHtml()
-
-    from xml import sax
-    from xml.sax.saxutils import XMLGenerator
-    parser = sax.make_parser()
-    #XMLGenerator is a special SAX handler that merely writes
-    #SAX events back into an XML document
-    downstream_handler = XMLGenerator(encoding='utf-8', out = open("/dev/stdout", 'w'))
-    #upstream, the parser, downstream, the next handler in the chain
-    filter_handler = text_normalize_filter(parser, downstream_handler, sub)
-    #The SAX filter base is designed so that the filter takes
-    #on much of the interface of the parser itself, including the
-    #"parse" method
-    filter_handler.parse(open(in_name))
-    s = accumulated.render()
-    fd = open(htmlname, 'w')
-    fd.write(s)
-    fd.close()
-
-def main():
-    import sys
-    if len(sys.argv) <= 1:
-        print >> sys.stderr, "Going to act as a pipe filter."
-        htmlify('/dev/stdin', '/dev/null')
-    else:
-        filenames = sys.argv[1:] # That's right, multiple filenames
-        for f in filenames:
-            htmlify(f)
-    
-if __name__ == '__main__':
-    main()
