@@ -16,6 +16,9 @@ def hunks_sans_typos(hunk):
     # that ensures that the prev and next char to the start and end of
     # a chunk of edits is not ' '
 
+    assert(type(hunk.olds) == type([]))
+    assert(type(hunk.news) == type([]))
+
     old = u' '.join([u' '.join(k) for k in hunk.olds])
     new = u' '.join([u' '.join(k) for k in hunk.news])
 
