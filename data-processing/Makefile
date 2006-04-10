@@ -102,3 +102,6 @@ all-styleedits-sans-typofixes: $(styleedits-sans-typofixes)
 	| nice ~/bin/7za a -si /tmp/$*.styleedits-sans-typofixes.7z && scp /tmp/$*.styleedits-sans-typofixes.7z paulproteus@acm.jhu.edu:wikipedia-data/makefile-test/ ; \
 	rm /tmp/$*.styleedits-sans-typofixes.7z  "
 
+%.html: %.7z
+	~/bin/7za e -so $*.7z | ~/bin/python ~/collab/dnet/code/read_style_edit_dumps.py > $*.html && \
+	ln -s $*.html ~/public_html/

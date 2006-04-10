@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 import pdb
 import psyco
 # The idea is:
@@ -118,3 +119,12 @@ class StyleEditAggregator:
         exgen.endElement('body')
         exgen.endElement('html')
             
+
+def main(src_fd = sys.stdin, dst_fd = sys.stdout):
+    '''Act as a filter, by default from stdin to stdout.
+    Print an awesome (X)HTML view of the XML input.'''
+    sea = StyleEditAggregator(fd=src_fd)
+    sea.to_html(dst_fd)
+
+if __name__ == '__main__':
+    main()
